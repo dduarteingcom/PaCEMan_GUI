@@ -14,26 +14,21 @@ public class WindowPlayer extends WindowClient  {
     WindowPlayer() {
         addKeyListener(new KeyAdapter() {
             @Override
-            public void keyPressed(KeyEvent e) {
-                player.keyPressed(e);
-            }
+            public void keyPressed(KeyEvent e) {player.keyPressed(e);}
         });
-        observers = new LinkedList<>();
+
+
 
     }
-
-    public void addObserver(){
-        Window observer = new Window(false);
-        observers.add(observer);
-
-    }
-
+    @Override
     public void run(){
         //game loop
         long lastTime = System.nanoTime();
         double amountOfTicks =60.0;
         double ns = 1000000000 / amountOfTicks;
         double delta = 0;
+        observers = new LinkedList<>();
+        addObserver();
         while(true) {
             long now = System.nanoTime();
             delta += (now -lastTime)/ns;
@@ -46,12 +41,18 @@ public class WindowPlayer extends WindowClient  {
             }
         }
     }
+
+    public void addObserver(){
+        Window observer = new Window(false);
+        observers.add(observer);
+
+    }
+
+
     public void updateClients(){
-        if(!prueba){
-            addObserver();
-            prueba = true;
-        }
-        observers.getFirst().panelObserver.upDate(player.xDirection,player.yDirection);
+
+
+        observers.getFirst().panelObserver.upDate(player.x,player.y);
     }
 }
 
