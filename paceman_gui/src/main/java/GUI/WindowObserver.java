@@ -4,10 +4,21 @@ public class WindowObserver extends WindowClient{
     WindowObserver(){
     }
 
-    public void upDate(int x, int y){
+    /**
+     * Receives the updates from the player
+     * @param x Horizontal position in the panel.
+     * @param y Vertical position in the panel.
+     * @param nlevel Current level
+     */
+    void upDate(int x, int y,int[][]nlevel){
        player.x=x;
        player.y=y;
+       this.cLevel =nlevel;
     }
+
+    /**
+     * It's the game loop
+     */
     @Override
     public void run(){
         //game loop
