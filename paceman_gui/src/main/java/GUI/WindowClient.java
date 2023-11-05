@@ -20,7 +20,7 @@ public class WindowClient extends JPanel implements Runnable {
     static int[][] nlevel ;
 
     WindowClient(){
-        player = new Player(2);
+        player = new Player(1);
         this.setFocusable(true);
         this.setPreferredSize(SCREEN_SIZE);
         this.setBackground(Color.BLACK);

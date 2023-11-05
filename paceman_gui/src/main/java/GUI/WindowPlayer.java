@@ -14,7 +14,14 @@ public class WindowPlayer extends WindowClient  {
     WindowPlayer() {
         addKeyListener(new KeyAdapter() {
             @Override
-            public void keyPressed(KeyEvent e) {player.keyPressed(e);}
+            public void keyPressed(KeyEvent e) {
+                player.keyPressed(e);
+
+            }
+
+            public void keyReleased(KeyEvent e){
+                player.keyReleased(e);
+            }
         });
 
 
@@ -22,6 +29,7 @@ public class WindowPlayer extends WindowClient  {
     }
     @Override
     public void run(){
+
         //game loop
         long lastTime = System.nanoTime();
         double amountOfTicks =60.0;
@@ -37,7 +45,8 @@ public class WindowPlayer extends WindowClient  {
                 repaint();
                 elementsMovement();
                 updateClients();
-                delta--;
+
+
             }
         }
     }
