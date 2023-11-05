@@ -16,7 +16,7 @@ public class WindowPlayer extends WindowClient  {
             @Override
             public void keyPressed(KeyEvent e) {player.keyPressed(e);}
         });
-
+        player.arduino();
 
 
     }

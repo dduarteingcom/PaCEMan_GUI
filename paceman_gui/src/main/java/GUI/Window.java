@@ -7,7 +7,7 @@ public class Window extends JFrame {
     WindowPlayer  panelPlayer;
     WindowObserver panelObserver;
     Window(boolean type){
-        if(type == true) {
+        if(type) {
              panelPlayer= new WindowPlayer();
              this.add(panelPlayer);
         }

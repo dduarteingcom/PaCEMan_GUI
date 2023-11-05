@@ -3,6 +3,11 @@ package GUI;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
+import jssc.SerialPort;
+import static jssc.SerialPort.MASK_RXCHAR;
+import jssc.SerialPortEvent;
+import jssc.SerialPortException;
+import jssc.SerialPortList;
 
 
 public class Player extends Rectangle {
@@ -18,12 +23,54 @@ public class Player extends Rectangle {
         this.speed=speed;
         this.xDirection =0;
         this.yDirection=0;
-        this.image = new ImageIcon("C:\\Projects\\PaCEMan_GUI\\paceman_gui\\src\\media\\pacman-icon.png").getImage();
+        this.image = new ImageIcon("C:\\Users\\andre\\Desktop\\Paradigmas\\PaCEMan_GUI\\paceman_gui\\src\\media\\pacman-icon.png").getImage();
         this.x=20;
         this.y=20;
         this.posX=1;
         this.posY=1;
 
+    }
+    public void arduino(){
+        SerialPort port = new SerialPort("COM4");
+        try{
+            port.openPort();
+
+            port.setParams(SerialPort.BAUDRATE_9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+            port.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
+            port.addEventListener((SerialPortEvent event) ->{
+                if (event.isRXCHAR()){
+                    try{
+                        String msg = port.readString();
+                        if (msg.equals("1")){
+                            if(x % 20==0) {
+                                xDirection = 0;
+                                yDirection = -1;
+                            }
+                        } else if (msg.equals("2")) {
+                            if(x % 20==0) {
+                                xDirection = 0;
+                                yDirection = 1;
+                            }
+                        } else if (msg.equals("3")) {
+                            if(y % 20==0) {
+                                xDirection = 1;
+                                yDirection = 0;
+                            }
+                        } else if (msg.equals("4")) {
+                            if(y % 20 == 0) {
+                                xDirection = -1;
+                                yDirection = 0;
+                            }
+                        }
+                        move();
+                    } catch (SerialPortException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+        } catch (SerialPortException e) {
+            throw new RuntimeException(e);
+        }
     }
     public void keyPressed(KeyEvent e) {
 
