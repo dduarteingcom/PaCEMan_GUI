@@ -20,7 +20,7 @@ public class Player extends Rectangle {
     int posX;
     int posY;
     Player(int speed){
-        this.speed=speed;
+        this.speed=20;
         this.xDirection =0;
         this.yDirection=0;
         this.image = new ImageIcon("C:\\Users\\andre\\Desktop\\Paradigmas\\PaCEMan_GUI\\paceman_gui\\src\\media\\pacman-icon.png").getImage();
@@ -100,6 +100,16 @@ public class Player extends Rectangle {
         }
         move();
     }
+    public void keyReleased(KeyEvent e){
+        if(e.getKeyCode()==KeyEvent.VK_LEFT || e.getKeyCode()==KeyEvent.VK_RIGHT) {
+                xDirection = 0;
+        }
+        else if(e.getKeyCode()==KeyEvent.VK_UP || e.getKeyCode()==KeyEvent.VK_DOWN) {
+                yDirection = 0;
+
+
+        }
+    }
     public void move(){
         getPosition();
         //Se está moviendo horizontalmente
@@ -134,6 +144,8 @@ public class Player extends Rectangle {
         }
         y = y +(speed*yDirection);
         x = x +(speed*xDirection);
+        xDirection=0;
+        yDirection=0;
     }
     public void draw(Graphics g){
         g.drawImage(image,x,y,20,20,null);
