@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class WindowClient extends JPanel implements Runnable {
-    static final int WINDOW_WIDTH = 1151;
-    static final int WINDOW_HEIGHT = 785;
+    static final int WINDOW_WIDTH = 470;
+    static final int WINDOW_HEIGHT = 300;
 
     static final Dimension SCREEN_SIZE = new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT);
 
@@ -20,7 +20,7 @@ public class WindowClient extends JPanel implements Runnable {
     static int[][] nlevel ;
 
     WindowClient(){
-        player = new Player(7);
+        player = new Player(2);
         this.setFocusable(true);
         this.setPreferredSize(SCREEN_SIZE);
         this.setBackground(Color.BLACK);
@@ -50,7 +50,7 @@ public class WindowClient extends JPanel implements Runnable {
         for (int i = 0; i < nlevel.length; i++) {
             for (int j = 0; j < nlevel[0].length; j++) {
                 if (nlevel[i][j] == 1) {
-                    block.draw(g, j * 49, i * 49);
+                    block.draw(g, j * 20, i * 20);
                 }
             }
         }

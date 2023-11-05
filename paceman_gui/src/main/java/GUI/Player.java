@@ -19,8 +19,8 @@ public class Player extends Rectangle {
         this.xDirection =0;
         this.yDirection=0;
         this.image = new ImageIcon("C:\\Projects\\PaCEMan_GUI\\paceman_gui\\src\\media\\pacman-icon.png").getImage();
-        this.x=49;
-        this.y=49;
+        this.x=20;
+        this.y=20;
         this.posX=1;
         this.posY=1;
 
@@ -29,24 +29,24 @@ public class Player extends Rectangle {
 
 
         if(e.getKeyCode()==KeyEvent.VK_LEFT) {
-            if(y % 49 == 0) {
+            if(y % 20 == 0) {
                 xDirection = -1;
                 yDirection = 0;
             }
         }
         else if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
-            if(y % 49==0) {
+            if(y % 20==0) {
                 xDirection = 1;
                 yDirection = 0;
             }
         }
         else if (e.getKeyCode()==KeyEvent.VK_UP) {
-            if(x % 49==0) {
+            if(x % 20==0) {
                 xDirection = 0;
                 yDirection = -1;
             }
         } else if (e.getKeyCode()==KeyEvent.VK_DOWN) {
-            if(x % 49==0) {
+            if(x % 20==0) {
                 xDirection = 0;
                 yDirection = 1;
             }
@@ -89,16 +89,16 @@ public class Player extends Rectangle {
         x = x +(speed*xDirection);
     }
     public void draw(Graphics g){
-        g.drawImage(image,x,y,49,49,null);
+        g.drawImage(image,x,y,20,20,null);
     }
 
     public void getPosition(){
-        if(x% 49 ==0){
-            posX=x/49;
+        if(x% 20 ==0){
+            posX=x/20;
 
         }
-        if(y % 49==0){
-            posY=y/49;
+        if(y % 20==0){
+            posY=y/20;
         }
 
     }
