@@ -11,7 +11,7 @@ public class ResourceFactory implements ElementsFactory {
      * @param type The resource that is wanted to be created.
      * @return The resource.
      */
-    public Rectangle createElement(Graphics g, int posX, int posY, char type) {
+    public Rectangle createElement(Graphics g, Integer posX, Integer posY, Character type) {
         if(type == 'd') {
             return new Dot(g, posX, posY);
         }

@@ -7,14 +7,14 @@ import javax.swing.ImageIcon;
 
 public class Player extends Rectangle {
     //
-    private int speed;
-    int xDirection;
-    int yDirection;
+    private Integer speed;
+    Integer xDirection;
+    Integer yDirection;
     private Image image;
 
 
-    int posX;
-    int posY;
+    Integer posX;
+    Integer posY;
     Player(){
         this.speed=20;
         this.xDirection =0;
@@ -32,7 +32,7 @@ public class Player extends Rectangle {
      * @param e event
      * @param nlevel current level
      */
-     void keyPressed(KeyEvent e, int[][] nlevel) {
+     void keyPressed(KeyEvent e, Integer[][] nlevel) {
         if(e.getKeyCode()==KeyEvent.VK_LEFT) {
             if(y % 20 == 0) {
                 xDirection = -1;
@@ -78,7 +78,7 @@ public class Player extends Rectangle {
      * Movement of PaCeman depending on his direction
      * @param nlevel current level
      */
-    private void move(int[][]nlevel){
+    private void move(Integer[][]nlevel){
         getPosition();
         //Checking colissions
         //He's moving horizontally
@@ -140,11 +140,11 @@ public class Player extends Rectangle {
             posY=y/20;
         }
     }
-    public int getSpeed() {
+    public Integer getSpeed() {
         return speed;
     }
 
-    public void setSpeed(int speed) {
+    public void setSpeed(Integer speed) {
         this.speed = speed;
     }
 }

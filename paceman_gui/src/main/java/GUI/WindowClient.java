@@ -14,19 +14,29 @@ public class WindowClient extends JPanel implements Runnable {
     private Thread gameThread;
     private Image image;
     private ElementsFactory elementsFactory;
+    private Score score;
+    private Integer lives;
+
+    private Integer numPoints;
+    private Integer numLevel;
+
     /**
      * Current level
      */
-    int[][] cLevel;
+    Integer[][] cLevel;
     WindowClient(){
-        player = new Player();
+        this.player = new Player();
+        this.score = new Score();
         this.setFocusable(true);
         this.setPreferredSize(SCREEN_SIZE);
         this.setBackground(Color.BLACK);
-        gameThread = new Thread(this);
-        gameThread.start();
+        this.gameThread = new Thread(this);
+        this.gameThread.start();
+        this.cLevel = new Levels().level3;
+        this.lives=3;
+        this.numPoints=0;
+        this.numLevel=1;
 
-        cLevel = new Levels().level1;
     }
 
     /**
@@ -50,7 +60,7 @@ public class WindowClient extends JPanel implements Runnable {
      * Draws all the elements on the panel
      * @param g the <code>Graphics</code> context in which to paint
      */
-    private void draw(Graphics g) {
+     void draw(Graphics g) {
         for (int i = 0; i < cLevel.length; i++) {
             elementsFactory = new ResourceFactory();
             for (int j = 0; j < cLevel[0].length; j++) {
@@ -69,10 +79,13 @@ public class WindowClient extends JPanel implements Runnable {
             }
         }
         this.player.draw(g);
-
+        this.score.draw(g,lives,numPoints,numLevel);
     }
-
-
-
+    public void setNumPoints(Integer num){
+        this.numPoints=num;
+    }
+    public Integer getNumPoints(){
+        return this.numPoints;
+    }
 
 }

@@ -14,7 +14,7 @@ public class Resource extends Rectangle {
      * @param posX Horizontal position on the panel.
      * @param posY Vertical position on the panel.
      */
-    public void draw(Graphics g, int posX, int posY) {
+    public void draw(Graphics g, Integer posX, Integer posY) {
         g.drawImage(image, posX, posY, WindowClient.WINDOW_HEIGHT / 15, WindowClient.WINDOW_HEIGHT / 15, null);
     }
 

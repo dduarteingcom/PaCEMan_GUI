@@ -1,7 +1,12 @@
 package GUI;
 
+import java.awt.*;
+
 public class WindowObserver extends WindowClient{
+    private Integer id;
+    private ObserverLabel label;
     WindowObserver(){
+        label = new ObserverLabel();
     }
 
     /**
@@ -10,10 +15,11 @@ public class WindowObserver extends WindowClient{
      * @param y Vertical position in the panel.
      * @param nlevel Current level
      */
-    void upDate(int x, int y,int[][]nlevel){
+    void upDate(Integer x, Integer y,Integer[][]nlevel, Integer score){
        player.x=x;
        player.y=y;
        this.cLevel =nlevel;
+       setNumPoints(score);
     }
 
     /**
@@ -35,6 +41,21 @@ public class WindowObserver extends WindowClient{
                 delta--;
             }
         }
+    }
+
+    Integer getId() {
+        return id;
+    }
+
+    void setId(Integer id) {
+        this.id = id;
+    }
+    @Override
+    void draw(Graphics g) {
+        super.draw(g);
+        label.draw(g,getId());
+
+
     }
 
 }

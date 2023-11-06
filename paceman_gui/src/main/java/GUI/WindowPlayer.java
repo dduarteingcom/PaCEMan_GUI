@@ -6,21 +6,25 @@ import java.util.Random;
 
 
 public class WindowPlayer extends WindowClient  {
-    LinkedList<Window> observers;
+    private LinkedList<Window> observers;
+
+    private Integer numObservers;
 
     WindowPlayer() {
+        numObservers =0;
         //Make decisions on the basis of the keypressed
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode()==KeyEvent.VK_F){
-                    int[] coordenates=chooseLoc();
+                    Integer[] coordenates=chooseLoc();
                     cLevel[coordenates[0]][coordenates[1]]=2;
                 }
                 if(e.getKeyCode()==KeyEvent.VK_P){
-                    int[] coordenates=chooseLoc();
+                    Integer[] coordenates=chooseLoc();
                     cLevel[coordenates[0]][coordenates[1]]=3;
                 }
+
                 player.keyPressed(e, cLevel);
                 checkResources();
             }
@@ -58,14 +62,17 @@ public class WindowPlayer extends WindowClient  {
      */
     public void addObserver(){
         Window observer = new Window(false);
+        numObservers ++;
+        observer.panelObserver.setId(numObservers);
         observers.add(observer);
+
     }
 
     /**
      * Updates its clients with positions and the map status
      */
     public void updateClients(){
-        observers.getFirst().panelObserver.upDate(player.x,player.y, cLevel);
+        observers.getFirst().panelObserver.upDate(player.x,player.y, cLevel,getNumPoints());
     }
 
     /**
@@ -75,6 +82,10 @@ public class WindowPlayer extends WindowClient  {
         int valuePos = cLevel[player.posY][player.posX];
         if(valuePos==1||valuePos==2||valuePos==3){
             cLevel[player.posY][player.posX]=0;
+            if(valuePos==1){
+                Integer newScore = getNumPoints()+1;
+                setNumPoints(newScore);
+            }
         }
     }
 
@@ -82,15 +93,14 @@ public class WindowPlayer extends WindowClient  {
      * Decides where a resource must be located.
      * @return A array with the chosen coordinates.
      */
-    private int[] chooseLoc(){
-        int[] coordenates = new int[2];
+    private Integer[] chooseLoc(){
+        Integer[] coordenates = new Integer[2];
         Random random1 = new Random();
         Random random2 = new Random();
         int randomX = random1.nextInt(15);
         int randomY =random2.nextInt(17);
         int valcellFound = cLevel[randomX][randomY];
         if(valcellFound==0 && randomX!= player.posX && randomY != player.posY){
-            System.out.println(valcellFound);
             coordenates[0]=randomX;
             coordenates[1]=randomY;
             return coordenates;
@@ -98,7 +108,6 @@ public class WindowPlayer extends WindowClient  {
         else {
             return chooseLoc();
         }
-
     }
 }
 
