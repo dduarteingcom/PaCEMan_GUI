@@ -1,30 +1,10 @@
 #include <stdio.h>
 #include <winsock2.h>
 #include "UsersLinkedList/UsersList.h"
+
+SOCKET checkNewConnection(SOCKET serverSocket, SOCKET clientSocket, struct sockaddr_in clientAddr, int clientAddrLen);
+char * recieveFromClient(const SOCKET * newClientSocket);
 int main() {
-
-    struct user * user0 = createUser(0);
-    struct user * user1 = createUser(1);
-    struct user * user2 = createUser(2);
-    struct user * user3 = createUser(3);
-    struct userList * list = initializeList();
-
-    printUserList(list);
-
-    addNodeLast(list, user0);
-    addNodeLast(list, user1);
-
-    printUserList(list);
-
-    addNodeLast(list, user2);
-    addNodeLast(list, user3);
-
-    printUserList(list);
-
-    printf("Found node: %d \n", *(findUserByCode(list, 2)->userCode));
-    printf("Found node: %d \n", *(findUserByIndex(list, 3)->userCode));
-
-    /*
     WSADATA wsaData;
     SOCKET serverSocket, clientSocket;
     struct sockaddr_in serverAddr, clientAddr;
@@ -54,49 +34,73 @@ int main() {
         WSACleanup();
         return 1;
     }
+    SOCKET * newClientSocket = (SOCKET *)malloc(sizeof(SOCKET));
+    *newClientSocket = checkNewConnection(serverSocket, clientSocket, clientAddr, clientAddrLen);
+
+    if (*newClientSocket == SOCKET_ERROR || *newClientSocket == INVALID_SOCKET) {
+        perror("Connection failed");
+        closesocket(serverSocket);
+        WSACleanup();
+        return 0;
+    }
+
+    char * messageFromClient = recieveFromClient(newClientSocket);
+    printf("From client: %s \n", messageFromClient);
+    free(messageFromClient);
+
+    printf("Mensaje a enviar al cliente: \n");
+    char * message;
+    scanf("%s", message);
+    send(*newClientSocket, message, strlen(message), 0);
+
+    // Close the sockets when done
+    closesocket(*newClientSocket);
+    closesocket(serverSocket);
+    WSACleanup();
+
+    free(newClientSocket);
+
+    return 0;
+}
+
+SOCKET checkNewConnection(SOCKET serverSocket, SOCKET clientSocket, struct sockaddr_in clientAddr, int clientAddrLen){
 
     // Listen for incoming connections
     if (listen(serverSocket, 5) == SOCKET_ERROR) {
         perror("Listen failed");
         closesocket(serverSocket);
         WSACleanup();
-        return 1;
+            return SOCKET_ERROR;
     }
 
     printf("Servidor corriendo\n");
 
     // Accept incoming connections
+
+
     clientSocket = accept(serverSocket, (struct sockaddr*)&clientAddr, &clientAddrLen);
     if (clientSocket == INVALID_SOCKET) {
         perror("Accept failed");
         closesocket(serverSocket);
         WSACleanup();
-        return 1;
+        return INVALID_SOCKET;
     }
 
     printf("Nueva conexion al servidor\n");
 
-    char buffer[1024];
-    int bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
+    return clientSocket;
+}
 
-    if (bytesRead > 0) { //Se ha recibido un mensaje al servidor
+char * recieveFromClient(const SOCKET * clientSocket){
+    char * buffer = (char *)malloc(1024);
+    int bytesRead = recv(*clientSocket, buffer, 1024, 0);
+    if (bytesRead > 0) { //Se ha
+        // recibido un mensaje al servidor
         buffer[bytesRead] = '\0'; //Mensaje recibido
-        printf("Mensaje recibido: %s\n", buffer);
+        printf("Buffer here: %s \n", buffer);
+        return buffer;
     } else if (bytesRead == 0) {
-        printf("Client disconnected.\n");
-    } else {
-        perror("Receive failed");
+        return "disconnected";
     }
-
-
-    const char* message = "Hello from C Server!"; //Enviar mensaje al cliente
-    send(clientSocket, message, strlen(message), 0);
-    
-
-    // Close the sockets when done
-    closesocket(clientSocket);
-    closesocket(serverSocket);
-    WSACleanup();
-    */
-    return 0;
+    return "failed";
 }

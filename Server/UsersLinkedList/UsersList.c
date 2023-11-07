@@ -7,9 +7,9 @@
 
 
 
-struct user * createUser(int userCode){
+struct user * createUser(char userCode){
     struct user * newUser = (struct user *)malloc(sizeof(struct user));
-    int * code = (int *) malloc(sizeof (int));
+    char * code = (char *) malloc(sizeof (char));
     *code = userCode;
     newUser->userCode = code;
     newUser->nextUser = NULL;
@@ -53,7 +53,7 @@ void printUserList(struct userList * lista){
     printf("++++++++++++++++++++++ \n");
 }
 
-struct user * findUserByCode(struct userList * list, int code){
+struct user * findUserByCode(struct userList * list, char code){
     if(*(list->length) == 0){
         return NULL;
     }else{

@@ -10,7 +10,7 @@ public class JavaClient {
             OutputStream outputStream = socket.getOutputStream();
             PrintWriter out = new PrintWriter(outputStream, true);
 
-            out.println("Hello from Java Client!"); //Enviar un mensaje al servidor
+            out.println("Hello_from_Java_Client!"); //Enviar un mensaje al servidor
 
            BufferedReader in = new BufferedReader(reader);
 
