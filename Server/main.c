@@ -4,6 +4,7 @@
 
 SOCKET checkNewConnection(SOCKET serverSocket, SOCKET clientSocket, struct sockaddr_in clientAddr, int clientAddrLen);
 char * recieveFromClient(const SOCKET * newClientSocket);
+void sendDataToClient(SOCKET * clientSocket, const char * message);
 int main() {
     WSADATA wsaData;
     SOCKET serverSocket, clientSocket;
@@ -51,7 +52,7 @@ int main() {
     printf("Mensaje a enviar al cliente: \n");
     char * message;
     scanf("%s", message);
-    send(*newClientSocket, message, strlen(message), 0);
+    sendDataToClient(newClientSocket, message);
 
     // Close the sockets when done
     closesocket(*newClientSocket);
@@ -103,4 +104,8 @@ char * recieveFromClient(const SOCKET * clientSocket){
         return "disconnected";
     }
     return "failed";
+}
+
+void sendDataToClient(SOCKET * clientSocket, const char * message){
+    send(*clientSocket, message, strlen(message), 0);
 }
