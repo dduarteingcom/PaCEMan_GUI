@@ -1,13 +1,30 @@
 package GUI;
 
+import java.awt.*;
+
 public class WindowObserver extends WindowClient{
+    private Integer id;
+    private ObserverLabel label;
     WindowObserver(){
+        label = new ObserverLabel();
     }
 
-    public void upDate(int x, int y){
+    /**
+     * Receives the updates from the player
+     * @param x Horizontal position in the panel.
+     * @param y Vertical position in the panel.
+     * @param nlevel Current level
+     */
+    void upDate(Integer x, Integer y,Integer[][]nlevel, Integer score){
        player.x=x;
        player.y=y;
+       this.cLevel =nlevel;
+       setNumPoints(score);
     }
+
+    /**
+     * It's the game loop
+     */
     @Override
     public void run(){
         //game loop
@@ -24,6 +41,21 @@ public class WindowObserver extends WindowClient{
                 delta--;
             }
         }
+    }
+
+    Integer getId() {
+        return id;
+    }
+
+    void setId(Integer id) {
+        this.id = id;
+    }
+    @Override
+    void draw(Graphics g) {
+        super.draw(g);
+        label.draw(g,getId());
+
+
     }
 
 }

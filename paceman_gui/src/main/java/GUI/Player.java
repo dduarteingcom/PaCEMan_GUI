@@ -11,17 +11,16 @@ import jssc.SerialPortList;
 
 
 public class Player extends Rectangle {
+    //
+    private Integer speed;
+    Integer xDirection;
+    Integer yDirection;
+    private Image image;
 
-    int speed;
-    int xDirection;
-    int yDirection;
-    Image image;
-    Arduino ard = Arduino.getInstance();
 
-
-    int posX;
-    int posY;
-    Player(int speed){
+    Integer posX;
+    Integer posY;
+    Player(){
         this.speed=20;
         this.xDirection =0;
         this.yDirection=0;
@@ -62,9 +61,13 @@ public class Player extends Rectangle {
             move();
         }
     }
-    public void keyPressed(KeyEvent e) {
 
-
+    /**
+     * Indicates the new direction of PaCEman by the Key pressed
+     * @param e event
+     * @param nlevel current level
+     */
+     void keyPressed(KeyEvent e, Integer[][] nlevel) {
         if(e.getKeyCode()==KeyEvent.VK_LEFT) {
             if(y % 20 == 0) {
                 xDirection = -1;
@@ -88,9 +91,14 @@ public class Player extends Rectangle {
                 yDirection = 1;
             }
         }
-        move();
+        move(nlevel);
     }
-    public void keyReleased(KeyEvent e){
+
+    /**
+     * Indicates when PaCEman must stop moving when the key is not pressed anymore.
+     * @param e Event
+     */
+    void keyReleased(KeyEvent e){
         if(e.getKeyCode()==KeyEvent.VK_LEFT || e.getKeyCode()==KeyEvent.VK_RIGHT) {
                 xDirection = 0;
         }
@@ -100,48 +108,65 @@ public class Player extends Rectangle {
 
         }
     }
-    public void move(){
+
+    /**
+     * Movement of PaCeman depending on his direction
+     * @param nlevel current level
+     */
+    private void move(Integer[][]nlevel){
         getPosition();
-        //Se está moviendo horizontalmente
+        //Checking colissions
+        //He's moving horizontally
         if(yDirection==0){
-            //Se mueve hacia la izquierda
+            //He's moving to the left
             if(xDirection==-1){
-                if(WindowPlayer.nlevel[posY][posX-1]==1){
+                if(nlevel[posY][posX-1]==4){
                     xDirection=0;
                 }
             }
+            //He's moving to the right
             else if (xDirection==1) {
-                if(WindowPlayer.nlevel[posY][posX+1]==1){
+                if(nlevel[posY][posX+1]==4){
                     xDirection=0;
                 }
             }
         }
-        //Se está moviendo verticalmente
+        //He's moving vertically
         else if(xDirection==0){
-            //Se mueve hacia arriba
+            //He is moving upward
             if(yDirection==-1){
-                if(WindowPlayer.nlevel[posY-1][posX]==1){
+                if(nlevel[posY-1][posX]==4){
                     yDirection=0;
                 }
             }
-            //Se mueve hacia abajo
+            //He is moving downward
             else if(yDirection==1){
-                if(WindowPlayer.nlevel[posY+1][posX]==1){
+                if(nlevel[posY+1][posX]==4){
                     yDirection=0;
                 }
             }
 
         }
+        //Movement
         y = y +(speed*yDirection);
         x = x +(speed*xDirection);
+        //This way PaceMan just moves ones
         xDirection=0;
         yDirection=0;
     }
-    public void draw(Graphics g){
+
+    /**
+     * Draws PaCEman on the Panel
+     * @param g The Graphics
+     */
+    void draw(Graphics g){
         g.drawImage(image,x,y,20,20,null);
     }
 
-    public void getPosition(){
+    /**
+     * Calculates the position in the matrix
+     */
+    private void getPosition(){
         if(x% 20 ==0){
             posX=x/20;
 
@@ -149,6 +174,12 @@ public class Player extends Rectangle {
         if(y % 20==0){
             posY=y/20;
         }
+    }
+    public Integer getSpeed() {
+        return speed;
+    }
 
+    public void setSpeed(Integer speed) {
+        this.speed = speed;
     }
 }
