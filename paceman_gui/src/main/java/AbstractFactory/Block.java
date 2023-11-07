@@ -10,7 +10,7 @@ import GUI.WindowClient;
 public class Block extends Resource {
 
     Block(Graphics g, Integer posX, Integer posY) {
-        this.image = new ImageIcon("C:\\Projects\\PaCEMan_GUI\\paceman_gui\\src\\media\\cubo par diseño 2.jpg").getImage();
+        this.image = new ImageIcon("C:\\Users\\andre\\Desktop\\Paradigmas\\PaCEMan_GUI\\paceman_gui\\src\\media\\cubo par diseño 2.jpg").getImage();
         draw(g,posX,posY);
         createResource();
     }

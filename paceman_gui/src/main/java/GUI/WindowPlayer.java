@@ -7,14 +7,13 @@ import java.util.Random;
 
 public class WindowPlayer extends WindowClient  {
     private LinkedList<Window> observers;
+    private Integer numObservers;
 
-    LinkedList<Window> observers;
     String playername;
-
-    boolean prueba = false;
 
     WindowPlayer(String playername) {
         this.playername = playername;
+        numObservers = 0;
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -57,7 +56,6 @@ public class WindowPlayer extends WindowClient  {
             lastTime = now;
             if(delta >=1) {
                 repaint();
-                elementsMovement();
 
                 if(observers.size() > 0) {
                     updateClients();
@@ -67,7 +65,7 @@ public class WindowPlayer extends WindowClient  {
 
             }
             if (counter == 2000000){
-                player.arduino();
+                player.arduino(cLevel);
                 counter = 0;
             }
         }
@@ -79,7 +77,6 @@ public class WindowPlayer extends WindowClient  {
     public void addObserver(){
         Integer number = observers.size() + 1;
         Window observer = new Window(false, playername + " Observer" + number);
-        Window observer = new Window(false);
         numObservers ++;
         observer.panelObserver.setId(numObservers);
         observers.add(observer);
@@ -89,10 +86,10 @@ public class WindowPlayer extends WindowClient  {
     /**
      * Updates its clients with positions and the map status
      */
-    public void updateClients(){
-        for (Integer i = 0; i < observers.size(); i++){
-            observers.get(i).panelObserver.upDate(player.x, player.y);
-        observers.getFirst().panelObserver.upDate(player.x,player.y, cLevel,getNumPoints());
+    public void updateClients() {
+        for (Integer i = 0; i < observers.size(); i++) {
+            observers.get(i).panelObserver.upDate(player.x, player.y, cLevel, getNumPoints());
+        }
     }
 
     /**

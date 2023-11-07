@@ -16,6 +16,7 @@ public class Player extends Rectangle {
     Integer xDirection;
     Integer yDirection;
     private Image image;
+    Arduino ard = Arduino.getInstance();
 
 
     Integer posX;
@@ -30,7 +31,7 @@ public class Player extends Rectangle {
         this.posX=1;
         this.posY=1;
     }
-    public void arduino(){
+    public void arduino(Integer[][] nlevel){
         if (ard.msg != null){
             switch (ard.msg) {
                 case "1":
@@ -58,7 +59,7 @@ public class Player extends Rectangle {
                     }
                     break;
             }
-            move();
+            move(nlevel);
         }
     }
 
