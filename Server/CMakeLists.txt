@@ -11,5 +11,6 @@ add_executable(Server main.c
         UsersLinkedList/UsersList.c
         UsersLinkedList/UsersList.h
         ServerSocket/SocketManagement.c
-        ServerSocket/SocketManagement.h)
+        ServerSocket/SocketManagement.h
+        ServerSocket/SocketManagement.c)
 target_link_libraries(Server ws2_32)

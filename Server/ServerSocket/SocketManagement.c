@@ -11,6 +11,7 @@ SOCKET startUpServer(SOCKET serverSocket, WSADATA * wsaData, struct sockaddr_in 
         exit(0);
     }
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
+
     if (serverSocket == INVALID_SOCKET) {
         perror("Socket creation failed");
         WSACleanup();
@@ -21,10 +22,7 @@ SOCKET startUpServer(SOCKET serverSocket, WSADATA * wsaData, struct sockaddr_in 
     serverAddr.sin_addr.s_addr = INADDR_ANY;
     serverAddr.sin_port = htons(12345); // You can choose a port number
     if (bind(serverSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR) {
-        perror("Bind failed");
-        closesocket(serverSocket);
-        WSACleanup();
-        exit(0);
+        closingProtocol(serverSocket, "Bind failed");
     }
     return serverSocket;
 }
@@ -33,23 +31,17 @@ SOCKET checkNewConnection(SOCKET serverSocket, SOCKET clientSocket, struct socka
 
     // Listen for incoming connections
     if (listen(serverSocket, 5) == SOCKET_ERROR) {
-        perror("Listen failed");
-        closesocket(serverSocket);
-        WSACleanup();
-        return SOCKET_ERROR;
+        closingProtocol(serverSocket, "Listen failed");
     }
 
-    printf("Servidor corriendo\n");
+    printf("Esperando nuevas conexiones...\n");
 
     // Accept incoming connections
 
 
     clientSocket = accept(serverSocket, (struct sockaddr*)&clientAddr, &clientAddrLen);
     if (clientSocket == INVALID_SOCKET) {
-        perror("Accept failed");
-        closesocket(serverSocket);
-        WSACleanup();
-        return INVALID_SOCKET;
+        closingProtocol(serverSocket, "Accept refused");
     }
 
     printf("Nueva conexion al servidor\n");
@@ -72,4 +64,11 @@ char * recieveFromClient(const SOCKET * clientSocket){
 
 void sendDataToClient(const SOCKET * clientSocket, const char * message){
     send(*clientSocket, message, strlen(message), 0);
+}
+
+void closingProtocol(SOCKET serverSocket, char * errorMessage){
+    perror(errorMessage);
+    closesocket(serverSocket);
+    WSACleanup();
+    exit(0);
 }

@@ -4,11 +4,11 @@
 
 #ifndef SERVER_USERSLIST_H
 #define SERVER_USERSLIST_H
-#include <winsock2.h>
 typedef struct user{
-    char * userCode;
-    SOCKET * userSocket;
+    const char * userCode;
+
     struct user * nextUser;
+
 }user;
 
 typedef struct userList{
@@ -16,11 +16,11 @@ typedef struct userList{
     struct user * head;
 }userList;
 
-struct user * createUser(char userCode);
+struct user * createUser(char * userCode);
 struct userList * initializeList();
 void addNodeLast(struct userList * lista, struct user * newUser);
 void printUserList(struct userList * lista);
-struct user * findUserByCode(struct userList * list, char code);
+struct user * findUserByCode(struct userList * list, char * code);
 struct user * findUserByIndex(struct userList * list, int index);
 
 

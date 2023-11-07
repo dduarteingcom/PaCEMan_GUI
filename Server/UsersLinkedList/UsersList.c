@@ -3,15 +3,15 @@
 //
 #include <stdio.h>
 #include <malloc.h>
+#include <string.h>
 #include "UsersList.h"
 
 
 
-struct user * createUser(char userCode){
+struct user * createUser(char * userCode){
     struct user * newUser = (struct user *)malloc(sizeof(struct user));
-    char * code = (char *) malloc(sizeof (char));
-    *code = userCode;
-    newUser->userCode = code;
+
+    newUser->userCode = userCode;
     newUser->nextUser = NULL;
     return newUser;
 }
@@ -44,7 +44,7 @@ void printUserList(struct userList * lista){
         struct user * temp = lista->head;
 
         for (int i = 0; i < (*(lista->length)); ++i) {
-            printf("User: %d \n", *(temp->userCode));
+            printf("User: %s \n", temp->userCode);
             temp = temp->nextUser;
         }
     }else{
@@ -53,18 +53,19 @@ void printUserList(struct userList * lista){
     printf("++++++++++++++++++++++ \n");
 }
 
-struct user * findUserByCode(struct userList * list, char code){
+struct user * findUserByCode(struct userList * list, char * code){
     if(*(list->length) == 0){
         return NULL;
     }else{
+        printf("Here 2 \n");
         struct user * temp = list->head;
         while(temp->nextUser != NULL){
-            if(*(temp->userCode) == code){
+            if(strcmp(temp->userCode, code) ==0){
                 return temp;
             }
             temp = temp->nextUser;
         }
-        if(*(temp->userCode) == code){
+        if(strcmp(temp->userCode, code) ==0){
             return temp;
         }
     }

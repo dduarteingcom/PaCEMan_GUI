@@ -15,5 +15,6 @@ SOCKET startUpServer(SOCKET serverSocket, WSADATA * wsaData, struct sockaddr_in 
 SOCKET checkNewConnection(SOCKET serverSocket, SOCKET clientSocket, struct sockaddr_in clientAddr, int clientAddrLen);
 char * recieveFromClient(const SOCKET * newClientSocket);
 void sendDataToClient(const SOCKET * clientSocket, const char * message);
+void closingProtocol(SOCKET serverSocket, char * errorMessage);
 
 #endif //SERVER_SOCKETMANAGEMENT_H
