@@ -3,6 +3,11 @@ package GUI;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
+import jssc.SerialPort;
+import static jssc.SerialPort.MASK_RXCHAR;
+import jssc.SerialPortEvent;
+import jssc.SerialPortException;
+import jssc.SerialPortList;
 
 
 public class Player extends Rectangle {
@@ -11,6 +16,7 @@ public class Player extends Rectangle {
     Integer xDirection;
     Integer yDirection;
     private Image image;
+    Arduino ard = Arduino.getInstance();
 
 
     Integer posX;
@@ -19,12 +25,42 @@ public class Player extends Rectangle {
         this.speed=20;
         this.xDirection =0;
         this.yDirection=0;
-        this.image = new ImageIcon("C:\\Projects\\PaCEMan_GUI\\paceman_gui\\src\\media\\pacman-icon.png").getImage();
+        this.image = new ImageIcon("C:\\Users\\andre\\Desktop\\Paradigmas\\PaCEMan_GUI\\paceman_gui\\src\\media\\pacman-icon.png").getImage();
         this.x=20;
         this.y=20;
         this.posX=1;
         this.posY=1;
-
+    }
+    public void arduino(Integer[][] nlevel){
+        if (ard.msg != null){
+            switch (ard.msg) {
+                case "1":
+                    if (x % 20 == 0) {
+                        xDirection = 0;
+                        yDirection = -1;
+                    }
+                    break;
+                case "2":
+                    if (x % 20 == 0) {
+                        xDirection = 0;
+                        yDirection = 1;
+                    }
+                    break;
+                case "3":
+                    if (y % 20 == 0) {
+                        xDirection = 1;
+                        yDirection = 0;
+                    }
+                    break;
+                case "4":
+                    if (y % 20 == 0) {
+                        xDirection = -1;
+                        yDirection = 0;
+                    }
+                    break;
+            }
+            move(nlevel);
+        }
     }
 
     /**

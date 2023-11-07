@@ -7,12 +7,13 @@ import java.util.Random;
 
 public class WindowPlayer extends WindowClient  {
     private LinkedList<Window> observers;
-
     private Integer numObservers;
 
-    WindowPlayer() {
-        numObservers =0;
-        //Make decisions on the basis of the keypressed
+    String playername;
+
+    WindowPlayer(String playername) {
+        this.playername = playername;
+        numObservers = 0;
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -32,6 +33,8 @@ public class WindowPlayer extends WindowClient  {
                 player.keyReleased(e);
             }
         });
+
+
     }
 
     /**
@@ -44,15 +47,26 @@ public class WindowPlayer extends WindowClient  {
         double amountOfTicks =60.0;
         double ns = 1000000000 / amountOfTicks;
         double delta = 0;
+        int counter = 0;
         observers = new LinkedList<>();
-        addObserver();
         while(true) {
+            counter++;
             long now = System.nanoTime();
             delta += (now -lastTime)/ns;
             lastTime = now;
             if(delta >=1) {
                 repaint();
-                updateClients();
+
+                if(observers.size() > 0) {
+                    updateClients();
+                }
+
+
+
+            }
+            if (counter == 2000000){
+                player.arduino(cLevel);
+                counter = 0;
             }
         }
     }
@@ -61,7 +75,8 @@ public class WindowPlayer extends WindowClient  {
      * Creates and adds observers to the Linked List observers.
      */
     public void addObserver(){
-        Window observer = new Window(false);
+        Integer number = observers.size() + 1;
+        Window observer = new Window(false, playername + " Observer" + number);
         numObservers ++;
         observer.panelObserver.setId(numObservers);
         observers.add(observer);
@@ -71,8 +86,10 @@ public class WindowPlayer extends WindowClient  {
     /**
      * Updates its clients with positions and the map status
      */
-    public void updateClients(){
-        observers.getFirst().panelObserver.upDate(player.x,player.y, cLevel,getNumPoints());
+    public void updateClients() {
+        for (Integer i = 0; i < observers.size(); i++) {
+            observers.get(i).panelObserver.upDate(player.x, player.y, cLevel, getNumPoints());
+        }
     }
 
     /**
