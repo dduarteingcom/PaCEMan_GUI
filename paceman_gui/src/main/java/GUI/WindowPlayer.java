@@ -86,6 +86,10 @@ public class WindowPlayer extends WindowClient  {
                 Integer newScore = getNumPoints()+1;
                 setNumPoints(newScore);
             }
+            else if (valuePos==2){
+                Integer newScore = getNumPoints()+3;
+                setNumPoints(newScore);
+            }
         }
     }
 

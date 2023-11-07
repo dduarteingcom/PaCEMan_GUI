@@ -32,7 +32,7 @@ public class WindowClient extends JPanel implements Runnable {
         this.setBackground(Color.BLACK);
         this.gameThread = new Thread(this);
         this.gameThread.start();
-        this.cLevel = new Levels().level3;
+        this.cLevel = new Levels().level1;
         this.lives=3;
         this.numPoints=0;
         this.numLevel=1;
