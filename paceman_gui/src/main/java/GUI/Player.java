@@ -11,10 +11,12 @@ import jssc.SerialPortList;
 
 
 public class Player extends Rectangle {
+
     int speed;
     int xDirection;
     int yDirection;
     Image image;
+    Arduino ard = Arduino.getInstance();
 
 
     int posX;
@@ -28,48 +30,36 @@ public class Player extends Rectangle {
         this.y=20;
         this.posX=1;
         this.posY=1;
-
     }
     public void arduino(){
-        SerialPort port = new SerialPort("COM4");
-        try{
-            port.openPort();
-
-            port.setParams(SerialPort.BAUDRATE_9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            port.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
-            port.addEventListener((SerialPortEvent event) ->{
-                if (event.isRXCHAR()){
-                    try{
-                        String msg = port.readString();
-                        if (msg.equals("1")){
-                            if(x % 20==0) {
-                                xDirection = 0;
-                                yDirection = -1;
-                            }
-                        } else if (msg.equals("2")) {
-                            if(x % 20==0) {
-                                xDirection = 0;
-                                yDirection = 1;
-                            }
-                        } else if (msg.equals("3")) {
-                            if(y % 20==0) {
-                                xDirection = 1;
-                                yDirection = 0;
-                            }
-                        } else if (msg.equals("4")) {
-                            if(y % 20 == 0) {
-                                xDirection = -1;
-                                yDirection = 0;
-                            }
-                        }
-                        move();
-                    } catch (SerialPortException e) {
-                        throw new RuntimeException(e);
+        if (ard.msg != null){
+            switch (ard.msg) {
+                case "1":
+                    if (x % 20 == 0) {
+                        xDirection = 0;
+                        yDirection = -1;
                     }
-                }
-            });
-        } catch (SerialPortException e) {
-            throw new RuntimeException(e);
+                    break;
+                case "2":
+                    if (x % 20 == 0) {
+                        xDirection = 0;
+                        yDirection = 1;
+                    }
+                    break;
+                case "3":
+                    if (y % 20 == 0) {
+                        xDirection = 1;
+                        yDirection = 0;
+                    }
+                    break;
+                case "4":
+                    if (y % 20 == 0) {
+                        xDirection = -1;
+                        yDirection = 0;
+                    }
+                    break;
+            }
+            move();
         }
     }
     public void keyPressed(KeyEvent e) {
