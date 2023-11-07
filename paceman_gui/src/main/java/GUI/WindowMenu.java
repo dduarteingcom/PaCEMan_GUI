@@ -18,12 +18,12 @@ public class WindowMenu extends Window{
         panel.setLayout(null);
 
         // Load the background image
-        ImageIcon backgroundImage = new ImageIcon("C:\\Users\\andre\\Desktop\\Paradigmas\\PaCEMan_GUI\\paceman_gui\\src\\media\\bg.png");
+        ImageIcon backgroundImage = new ImageIcon("src/media/bg.png");
         Image img=backgroundImage.getImage();
         Image temp=img.getScaledInstance(650,650,Image.SCALE_SMOOTH);
         backgroundImage=new ImageIcon(temp);
-        ImageIcon jugar = new ImageIcon("C:\\Users\\andre\\Desktop\\Paradigmas\\PaCEMan_GUI\\paceman_gui\\src\\media\\jugar.png");
-        ImageIcon expectar = new ImageIcon("C:\\Users\\andre\\Desktop\\Paradigmas\\PaCEMan_GUI\\paceman_gui\\src\\media\\expectar.png");
+        ImageIcon jugar = new ImageIcon("src/media/jugar.png");
+        ImageIcon expectar = new ImageIcon("src/media/Expectar.png");
 
 
         // Create a JLabel and set the image as its icon
@@ -52,7 +52,7 @@ public class WindowMenu extends Window{
             }
             else{
                 String[] playerlist = new String[games.size()];
-                ImageIcon icon = new ImageIcon("C:\\Users\\andre\\Desktop\\Paradigmas\\PaCEMan_GUI\\paceman_gui\\src\\media\\expectator.png");
+                ImageIcon icon = new ImageIcon("src/media/expectator.png");
                 Image iconimage = icon.getImage();
                 Image temp2=iconimage.getScaledInstance(500,500,Image.SCALE_SMOOTH);
                 icon=new ImageIcon(temp2);

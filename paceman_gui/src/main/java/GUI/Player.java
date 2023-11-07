@@ -17,49 +17,50 @@ public class Player extends Rectangle {
     Integer yDirection;
     private Image image;
     Arduino ard = Arduino.getInstance();
-
-
     Integer posX;
     Integer posY;
+    Boolean permission;
     Player(){
         this.speed=20;
         this.xDirection =0;
         this.yDirection=0;
-        this.image = new ImageIcon("C:\\Users\\andre\\Desktop\\Paradigmas\\PaCEMan_GUI\\paceman_gui\\src\\media\\pacman-icon.png").getImage();
+        this.image = new ImageIcon("src/media/pacman-icon.png").getImage();
         this.x=20;
         this.y=20;
         this.posX=1;
         this.posY=1;
     }
     public void arduino(Integer[][] nlevel){
-        if (ard.msg != null){
-            switch (ard.msg) {
-                case "1":
-                    if (x % 20 == 0) {
-                        xDirection = 0;
-                        yDirection = -1;
-                    }
-                    break;
-                case "2":
-                    if (x % 20 == 0) {
-                        xDirection = 0;
-                        yDirection = 1;
-                    }
-                    break;
-                case "3":
-                    if (y % 20 == 0) {
-                        xDirection = 1;
-                        yDirection = 0;
-                    }
-                    break;
-                case "4":
-                    if (y % 20 == 0) {
-                        xDirection = -1;
-                        yDirection = 0;
-                    }
-                    break;
+        if (permission) {
+            if (ard.msg != null) {
+                switch (ard.msg) {
+                    case "1":
+                        if (x % 20 == 0) {
+                            xDirection = 0;
+                            yDirection = -1;
+                        }
+                        break;
+                    case "2":
+                        if (x % 20 == 0) {
+                            xDirection = 0;
+                            yDirection = 1;
+                        }
+                        break;
+                    case "3":
+                        if (y % 20 == 0) {
+                            xDirection = 1;
+                            yDirection = 0;
+                        }
+                        break;
+                    case "4":
+                        if (y % 20 == 0) {
+                            xDirection = -1;
+                            yDirection = 0;
+                        }
+                        break;
+                }
+                move(nlevel);
             }
-            move(nlevel);
         }
     }
 
@@ -167,7 +168,7 @@ public class Player extends Rectangle {
     /**
      * Calculates the position in the matrix
      */
-    private void getPosition(){
+    public void getPosition(){
         if(x% 20 ==0){
             posX=x/20;
 

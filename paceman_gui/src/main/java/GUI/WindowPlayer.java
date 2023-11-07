@@ -27,10 +27,24 @@ public class WindowPlayer extends WindowClient  {
                 }
 
                 player.keyPressed(e, cLevel);
+                player.getPosition();
                 checkResources();
+
             }
             public void keyReleased(KeyEvent e){
                 player.keyReleased(e);
+            }
+        });
+
+        addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                player.permission = true;
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                player.permission = false;
             }
         });
 
