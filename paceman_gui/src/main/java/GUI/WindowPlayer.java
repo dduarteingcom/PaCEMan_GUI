@@ -1,5 +1,8 @@
 package GUI;
 
+import AbstractFactory.Ghost;
+import AbstractFactory.GhostFactory;
+
 import java.awt.event.*;
 import java.util.LinkedList;
 import java.util.Random;
@@ -29,6 +32,9 @@ public class WindowPlayer extends WindowClient  {
                 if(e.getKeyCode()==KeyEvent.VK_G){ //With key G is possible to create a ghost
                     Integer[] coordenates=chooseLoc();
                     cLevel[coordenates[0]][coordenates[1]]=6; //Updates de level matrix
+                }
+                if(e.getKeyCode()==KeyEvent.VK_M){ //With key G is possible to create a ghost
+
                 }
 
                 player.keyPressed(e, cLevel);

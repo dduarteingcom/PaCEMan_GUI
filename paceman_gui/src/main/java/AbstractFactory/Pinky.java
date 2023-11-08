@@ -11,7 +11,7 @@ public class Pinky extends Ghost{
     }
     @Override
     public void move(){
-        draw(g, posX+20, posY);
+        y = y+20;
     }
 
 }

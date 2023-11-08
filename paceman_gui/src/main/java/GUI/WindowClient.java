@@ -30,6 +30,7 @@ public class WindowClient extends JPanel implements Runnable {
     Integer[][] cLevel;
     WindowClient(){
         ghostLinkedList = new LinkedList<>();
+
         this.player = new Player();
         this.score = new Score();
         this.setFocusable(true);
@@ -83,7 +84,8 @@ public class WindowClient extends JPanel implements Runnable {
                     elementsFactory.createElement(g,j*20,i*20, 'p');
                 }
                 else if (cLevel[i][j] == 6){ //There is a ghost in this position
-                    ghostLinkedList.add(ghostFactory.createGhost(g, j*20,i*20, 'p'));//Ghost is then created
+                     Ghost ghost= ghostFactory.createGhost(g, j*20,i*20, 'p');//Ghost is then created
+                    ghost.move();
 
                 }
             }
