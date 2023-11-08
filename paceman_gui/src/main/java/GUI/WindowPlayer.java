@@ -17,6 +17,7 @@ public class WindowPlayer extends WindowClient  {
     Pinky ghost;
 
     WindowPlayer(String playername) {
+
         this.playername = playername;
         numObservers = 0;
         addKeyListener(new KeyAdapter() {
@@ -129,7 +130,7 @@ public class WindowPlayer extends WindowClient  {
                 setNumPoints(newScore);
             }
             else if (valuePos==2){
-                Integer newScore = getNumPoints()+3;
+                Integer newScore = getNumPoints()+getCurrentValueFruit();
                 setNumPoints(newScore);
             }
         }

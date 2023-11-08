@@ -51,8 +51,8 @@ public class WindowObserver extends WindowClient{
         this.id = id;
     }
     @Override
-    void draw(Graphics g) {
-        super.draw(g);
+    void drawOnMove(Graphics g) {
+        super.drawOnMove(g);
         label.draw(g,getId());
 
 
