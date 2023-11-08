@@ -11,6 +11,16 @@
 struct user * createUser(char * userCode){
     struct user * newUser = (struct user *)malloc(sizeof(struct user));
 
+    newUser->score = (int *) malloc(sizeof(int));
+    newUser->lives = (int *) malloc(sizeof(int));
+    newUser->level = (int *) malloc(sizeof(int));
+    newUser->speed = (int *) malloc(sizeof(int));
+
+    *(newUser->score) = 0;
+    *(newUser->lives) = 0;
+    *(newUser->level) = 0;
+    *(newUser->speed) = 0;
+
     newUser->userCode = userCode;
     newUser->nextUser = NULL;
     return newUser;
@@ -57,7 +67,6 @@ struct user * findUserByCode(struct userList * list, char * code){
     if(*(list->length) == 0){
         return NULL;
     }else{
-        printf("Here 2 \n");
         struct user * temp = list->head;
         while(temp->nextUser != NULL){
             if(strcmp(temp->userCode, code) ==0){
@@ -90,4 +99,47 @@ struct user * findUserByIndex(struct userList * list, int index){
         }
     }
     return NULL;
+}
+
+void checkAndUpdateUserInfo(struct userList * list,char * infoFromClient){
+    char * copy = strdup(infoFromClient);
+    char * data = strtok(copy, "_");
+    struct user * client = findUserByCode(list, data);
+    if(client == NULL){
+        printf("Registering client... \n");
+        char * userCode = strdup(data);
+        client = createUser(userCode);
+        printf("Registered!");
+        addNodeLast(list, client);
+    }else{
+        printf("Client registered \n");
+    }
+    int i = 0;
+
+    while(data != NULL){
+        switch (i) {
+            case 0:
+                printf("%s \n",client->userCode);
+                break;
+            case 1:
+                *(client->score) = atoi(data);
+                printf("%d \n",*(client->score));
+                break;
+            case 2:
+                *(client->lives) = atoi(data);
+                printf("%d \n",*(client->lives));
+                break;
+            case 3:
+                *(client->level) = atoi(data);
+                printf("%d \n",*(client->level));
+                break;
+            case 4:
+                *(client->speed) = atoi(data);
+                printf("%d \n",*(client->speed));
+                break;
+        }
+        i++;
+        data = strtok(NULL, "_");
+    }
+    free(copy);
 }

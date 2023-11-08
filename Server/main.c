@@ -4,10 +4,11 @@
 #include "ServerSocket/SocketManagement.h"
 
 int displayMainMenu(SOCKET * clientSocket, struct userList * clientList);
-void checkClientData(struct userList * list, char * messageFromUser);
 void trim(char * dest, char * src);
+void listTestFunction();
 
 int main() {
+    //listTestFunction(); //Eliminar al final!!!!!!!!!
     WSADATA * wsaData = (WSADATA*) malloc(sizeof(WSADATA));
     SOCKET serverSocket, clientSocket;
     struct sockaddr_in serverAddr, clientAddr;
@@ -46,15 +47,16 @@ int displayMainMenu(SOCKET * clientSocket, struct userList * clientList){
     printf("0 - Terminar conexion \n 1 - Enviar mensaje a cliente \n");
     printf("___________________________\n");
     scanf("%d", option);
-    char * clientName;
+    char * messageFromClient;
     switch(*option){
         case 0:
             printf("Adios :) \n");
             free(option);
             return 0;
         case 1:
-            clientName = recieveFromClient(clientSocket);
-            checkClientData(clientList, clientName);
+            messageFromClient = recieveFromClient(clientSocket);
+            checkAndUpdateUserInfo(clientList, messageFromClient);
+            printUserList(clientList);
             printf("Mensaje a enviar al cliente: \n");
             char * message = (char *)malloc(sizeof(char));
             scanf("%s", message);
@@ -67,17 +69,7 @@ int displayMainMenu(SOCKET * clientSocket, struct userList * clientList){
     return -1;
 }
 
-void checkClientData(struct userList * list, char * messageFromUser){
-    trim(messageFromUser, messageFromUser);
-    struct user * client = findUserByCode(list,messageFromUser);
-    if(client == NULL){
-        struct user * newClient = createUser(messageFromUser);
-        addNodeLast(list, newClient);
-    }else{
-        printf("Client registered \n");
-    }
-    printUserList(list);
-}
+
 
 void trim (char *dest, char *src)
 {
@@ -112,8 +104,18 @@ void trim (char *dest, char *src)
     *dest = '\0';
 }
 
+void listTestFunction(){
+    struct userList * clientList = initializeList();
+    struct user * user1 = createUser("Alvarado");
+    struct user * user2 = createUser("Alfredo");
+    struct user * user3 = createUser("Alexis");
+    struct user * user4 = createUser("Alivio");
 
-
-
-
-
+    addNodeLast(clientList, user1);
+    addNodeLast(clientList, user2);
+    addNodeLast(clientList, user3);
+    addNodeLast(clientList, user4);
+    checkAndUpdateUserInfo(clientList, "Alexis_1_2_3_4");
+    free(clientList);
+    exit(0);
+}

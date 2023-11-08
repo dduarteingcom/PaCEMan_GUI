@@ -67,6 +67,12 @@ build CMakeFiles/Server.dir/ServerSocket/SocketManagement.c.obj: C_COMPILER__Ser
   OBJECT_DIR = CMakeFiles\Server.dir
   OBJECT_FILE_DIR = CMakeFiles\Server.dir\ServerSocket
 
+build CMakeFiles/Server.dir/UsersLinkedList/UserCommandsList/ComList.c.obj: C_COMPILER__Server_unscanned_Debug D$:/Alexis/A_TEC/Semestre_4/Paradigmas/PaCEMan_GUI/Server/UsersLinkedList/UserCommandsList/ComList.c || cmake_object_order_depends_target_Server
+  DEP_FILE = CMakeFiles\Server.dir\UsersLinkedList\UserCommandsList\ComList.c.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Server.dir
+  OBJECT_FILE_DIR = CMakeFiles\Server.dir\UsersLinkedList\UserCommandsList
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Server
@@ -75,7 +81,7 @@ build CMakeFiles/Server.dir/ServerSocket/SocketManagement.c.obj: C_COMPILER__Ser
 #############################################
 # Link the executable Server.exe
 
-build Server.exe: C_EXECUTABLE_LINKER__Server_Debug CMakeFiles/Server.dir/main.c.obj CMakeFiles/Server.dir/UsersLinkedList/UsersList.c.obj CMakeFiles/Server.dir/ServerSocket/SocketManagement.c.obj
+build Server.exe: C_EXECUTABLE_LINKER__Server_Debug CMakeFiles/Server.dir/main.c.obj CMakeFiles/Server.dir/UsersLinkedList/UsersList.c.obj CMakeFiles/Server.dir/ServerSocket/SocketManagement.c.obj CMakeFiles/Server.dir/UsersLinkedList/UserCommandsList/ComList.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lws2_32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Server.dir

@@ -6,9 +6,11 @@
 #define SERVER_USERSLIST_H
 typedef struct user{
     const char * userCode;
-
     struct user * nextUser;
-
+    int * lives;
+    int * score;
+    int * level;
+    int * speed;
 }user;
 
 typedef struct userList{
@@ -22,6 +24,6 @@ void addNodeLast(struct userList * lista, struct user * newUser);
 void printUserList(struct userList * lista);
 struct user * findUserByCode(struct userList * list, char * code);
 struct user * findUserByIndex(struct userList * list, int index);
-
+void checkAndUpdateUserInfo(struct userList * list , char * infoFromClient);
 
 #endif //SERVER_USERSLIST_H
