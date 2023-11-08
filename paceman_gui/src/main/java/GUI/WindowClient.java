@@ -35,10 +35,7 @@ public class WindowClient extends JPanel implements Runnable {
     private Integer numPoints;
     private Integer numLevel;
 
-    private int numGhosts;
-
-    private int currentValueFruit;
-
+    private Integer numGhosts;
 
     /**
      * Current level
@@ -60,9 +57,6 @@ public class WindowClient extends JPanel implements Runnable {
         this.numLevel = 1;
         ghostFactory = new EnemyFactory();
         this.numGhosts = 0;
-        this.currentValueFruit=0;
-
-
     }
 
     /**
@@ -147,7 +141,7 @@ public class WindowClient extends JPanel implements Runnable {
     }
 
     public void moveGhost() {
-        pinky.move();
+        pinky.move(20,20);
     }
     public void createGhost() {
         switch (numGhosts) {
@@ -169,15 +163,17 @@ public class WindowClient extends JPanel implements Runnable {
                 break;
         }
     }
-    public void increseLives(){
+    public void increseLives() {
         this.lives++;
     }
-
-    public int getCurrentValueFruit() {
-        return currentValueFruit;
+    public void setcLevel(Integer[][] cLevel){
+        this.cLevel = cLevel;
+    }
+    public void setNumLevel(Integer numLevel){
+        this.numLevel = numLevel;
+    }
+    public Integer getNumlevel(){
+        return this.numLevel;
     }
 
-    public void setCurrentValueFruit(int currentValueFruit) {
-        this.currentValueFruit = currentValueFruit;
-    }
 }

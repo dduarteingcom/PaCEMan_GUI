@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.Random;
 
 
+
 public class WindowPlayer extends WindowClient  {
     private LinkedList<Window> observers;
     private Integer numObservers;
@@ -15,28 +16,21 @@ public class WindowPlayer extends WindowClient  {
 
     String playername;
     Pinky ghost;
+    private int currentValueFruit;
 
     WindowPlayer(String playername) {
+
+        this.currentValueFruit=0;
 
         this.playername = playername;
         numObservers = 0;
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode()==KeyEvent.VK_F){
-                    Integer[] coordenates=chooseLoc();
-                    cLevel[coordenates[0]][coordenates[1]]=2;
-                }
-                if(e.getKeyCode()==KeyEvent.VK_P){
-                    Integer[] coordenates=chooseLoc();
-                    cLevel[coordenates[0]][coordenates[1]]=3;
-                }
+
                 if(e.getKeyCode()==KeyEvent.VK_G){ //With key G is possible to create a ghost
                     Integer[] coordenates=chooseLoc();
                     cLevel[coordenates[0]][coordenates[1]]=6; //Updates de level matrix
-                }
-                if(e.getKeyCode()==KeyEvent.VK_M){ //With key G is possible to create a ghost
-                    moveGhost();
                 }
 
                 player.keyPressed(e, cLevel);
@@ -54,16 +48,12 @@ public class WindowPlayer extends WindowClient  {
             public void focusGained(FocusEvent e) {
                 player.permission = true;
             }
-
             @Override
             public void focusLost(FocusEvent e) {
                 player.permission = false;
             }
         });
-
-
     }
-
     /**
      * It's the game loop.
      */
@@ -92,6 +82,7 @@ public class WindowPlayer extends WindowClient  {
             if ((menu != null)&& (menu.getGames().size() != 0)&&(counter == (2000000/menu.getGames().size()))){
                 player.arduino(cLevel);
                 checkResources();
+                //moveGhost();
                 counter = 0;
             }
         }
@@ -113,6 +104,11 @@ public class WindowPlayer extends WindowClient  {
      * Updates its clients with positions and the map status
      */
     public void updateClients() {
+        for (Integer i = 0; i < observers.size(); i++) {
+            observers.get(i).panelObserver.upDate(player.x, player.y, cLevel, getNumPoints());
+        }
+    }
+    public void updateClients(Integer numLevel) {
         for (Integer i = 0; i < observers.size(); i++) {
             observers.get(i).panelObserver.upDate(player.x, player.y, cLevel, getNumPoints());
         }
@@ -155,6 +151,48 @@ public class WindowPlayer extends WindowClient  {
         else {
             return chooseLoc();
         }
+    }
+    private boolean locAvailable(Integer posX, Integer posY){
+        int valcellFound = cLevel[posX][posY];
+        if(valcellFound==0 && posX!= player.posX && posY != player.posY){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    public int getCurrentValueFruit() {
+        return currentValueFruit;
+    }
+
+    public void setCurrentValueFruit(Integer currentValueFruit) {
+        this.currentValueFruit = currentValueFruit;
+    }
+    public void createFruit(Integer value, Integer posX, Integer posY) {
+        setCurrentValueFruit(value);
+        if (locAvailable(posX,posY)){
+            cLevel[posX][posY]=2;
+        }
+
+    }
+    public void createPill(Integer posX, Integer posY) {
+        if (locAvailable(posX, posY)) {
+            cLevel[posX][posY] = 3;
+        }
+    }
+    public void nextLevel(){
+        player.x=20;
+        player.y=20;
+        switch (getNumlevel()){
+            case 1:
+                setcLevel(new Levels().level2);
+                break;
+            case 2:
+                setcLevel(new Levels().level2);
+                break;
+
+        }
+        updateClients(getNumlevel());
     }
 }
 

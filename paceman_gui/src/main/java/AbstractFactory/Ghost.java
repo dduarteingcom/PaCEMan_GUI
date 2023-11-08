@@ -15,7 +15,11 @@ public class Ghost extends Rectangle {
         g.drawImage(image,x,y,20,20,null);
     }
 
-    public void move(){
+    private void move(Integer[][]nlevel, Integer yDirection, Integer xDirection){
+
+    }
+
+    public void createMovement(Integer[][]nlevel){
 
     }
 

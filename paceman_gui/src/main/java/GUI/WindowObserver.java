@@ -21,6 +21,13 @@ public class WindowObserver extends WindowClient{
        this.cLevel =nlevel;
        setNumPoints(score);
     }
+    void upDate(Integer x, Integer y,Integer[][]nlevel, Integer score,Integer numlevel){
+        player.x=x;
+        player.y=y;
+        this.cLevel =nlevel;
+        setNumPoints(score);
+        setNumLevel(numlevel);
+    }
 
     /**
      * It's the game loop
