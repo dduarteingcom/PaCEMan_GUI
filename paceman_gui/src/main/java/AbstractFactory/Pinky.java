@@ -2,6 +2,7 @@ package AbstractFactory;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class Pinky extends Ghost{
 
@@ -19,7 +20,6 @@ public class Pinky extends Ghost{
         this.image = new ImageIcon("src/media/pinky.png").getImage();
         createGhost();
     }
-    @Override
     private void move(Integer[][]nlevel, Integer yDirection, Integer xDirection){
         getPosition();
         //Checking colissions
@@ -61,6 +61,22 @@ public class Pinky extends Ghost{
     }
     @Override
     public void createMovement(Integer[][] nlevel){
+        Random random = new Random();
+        int randomNumber = random.nextInt(2);
+        int change = random.nextInt(2);
+        int other;
+        if (randomNumber ==1){
+            other = 0;
+        }
+        else{
+            other = 1;
+        }
+        if (change == 1){
+            randomNumber = randomNumber *-1;
+            other = other * -1;
+        }
+        move(nlevel,randomNumber, other);
+
 
     }
 
