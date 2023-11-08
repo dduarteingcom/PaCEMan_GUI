@@ -108,36 +108,27 @@ void checkAndUpdateUserInfo(struct userList * list,char * infoFromClient){
     char * data = strtok(copy, "_");
     struct user * client = findUserByCode(list, data);
     if(client == NULL){
-        printf("Registering client... \n");
+        //printf("Registering client... \n");
         char * userCode = strdup(data);
         client = createUser(userCode);
-        printf("Registered!");
+        //printf("Registered!");
         addNodeLast(list, client);
-    }else{
-        printf("Client registered \n");
     }
     int i = 0;
 
     while(data != NULL){
         switch (i) {
-            case 0:
-                printf("%s \n",client->userCode);
-                break;
             case 1:
                 *(client->score) = atoi(data);
-                printf("%d \n",*(client->score));
                 break;
             case 2:
                 *(client->lives) = atoi(data);
-                printf("%d \n",*(client->lives));
                 break;
             case 3:
                 *(client->level) = atoi(data);
-                printf("%d \n",*(client->level));
                 break;
             case 4:
                 *(client->speed) = atoi(data);
-                printf("%d \n",*(client->speed));
                 break;
         }
         i++;

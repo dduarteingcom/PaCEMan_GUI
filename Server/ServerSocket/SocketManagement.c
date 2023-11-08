@@ -34,7 +34,7 @@ SOCKET checkNewConnection(SOCKET serverSocket, SOCKET clientSocket, struct socka
         closingProtocol(serverSocket, "Listen failed");
     }
 
-    printf("Esperando nuevas conexiones...\n");
+    //printf("Esperando nuevas conexiones...\n");
 
     // Accept incoming connections
 
@@ -44,7 +44,7 @@ SOCKET checkNewConnection(SOCKET serverSocket, SOCKET clientSocket, struct socka
         closingProtocol(serverSocket, "Accept refused");
     }
 
-    printf("Nueva conexion al servidor\n");
+    //printf("Nueva conexion al servidor\n");
 
     return clientSocket;
 }
@@ -72,3 +72,4 @@ void closingProtocol(SOCKET serverSocket, char * errorMessage){
     WSACleanup();
     exit(0);
 }
+
