@@ -86,9 +86,6 @@ public class WindowPlayer extends WindowClient  {
             if ((menu != null)&& (menu.getGames().size() != 0)&&(counter == (2000000/menu.getGames().size()))){
                 player.arduino(cLevel);
                 checkResources();
-                if (!ghostLinkedList.isEmpty()){
-                    ghostLinkedList.getFirst().move();
-                }
                 counter = 0;
             }
         }
