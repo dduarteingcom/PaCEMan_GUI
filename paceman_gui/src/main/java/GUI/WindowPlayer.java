@@ -1,7 +1,6 @@
 package GUI;
 
 import AbstractFactory.Pinky;
-import AbstractFactory.GhostFactory;
 
 import java.awt.event.*;
 import java.io.*;
@@ -90,12 +89,9 @@ public class WindowPlayer extends WindowClient  {
             if ((menu != null)&& (menu.getGames().size() != 0)&&(counter == (2000000/menu.getGames().size()))){
                 //player.arduino(cLevel); //DESCOMENTAR LUEGO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 try {
-                    String message = getMessageFromServer();
-                    if(!message.equals("void_")){
-                        System.out.println(message);//Acá se recibe el mensaje del Server
-                    }
+                    getMessageFromServer();
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    System.out.println("Error: refused or smthg :/");
                 }
                 checkResources();
                 moveGhost();
@@ -164,23 +160,50 @@ public class WindowPlayer extends WindowClient  {
         }
     }
 
-    private String getMessageFromServer() throws IOException {
+    private void processMessageBack(String message){
+        String command = message.split("_")[0];
+        if(command.equals("ghost")){
+            String ghostName = message.split("_")[1];
+            System.out.println("Generate ghost, type: " + ghostName);
+
+        } else if (command.equals("pill")) {
+            Integer columna = Integer.valueOf((message.split("_")[1]));
+            Integer fila = Integer.valueOf((message.split("_")[2]));
+            System.out.println("Generate pill en " + columna + " " + fila);
+
+        }else if (command.equals("fruit")) {
+            Integer pointsWorth = Integer.valueOf((message.split("_")[1]));
+            System.out.println("Generate fruit of " + pointsWorth + " points");
+
+        }else if (command.equals("speed")) {
+            Integer speed = Integer.valueOf((message.split("_")[1]));
+            System.out.println("Change ghost speed to " + speed);
+
+        } else if (command.equals("addLife")) {
+            this.setToNextLevel(this.getNumPoints());
+            this.setLives(this.getLives()+1);
+
+        } else if (command.equals("next")) {
+            System.out.println("Jump to next level");
+        }
+    }
+
+    private void getMessageFromServer() throws IOException {
         Socket socket = new Socket("127.0.0.1", 12345); // Ip y puerto
         InputStream inputStream = socket.getInputStream();
         InputStreamReader reader = new InputStreamReader(inputStream);
         BufferedReader in = new BufferedReader(reader);
-        sendMessageToServer(socket, "Alejandro_51_10300_0_48");
-        String messageRecieved = in.readLine();
-        return messageRecieved;
+        sendMessageToServer(socket);
+        processMessageBack(in.readLine());
     }
-    private void sendMessageToServer(Socket socket, String message) throws IOException {
+    private void sendMessageToServer(Socket socket) throws IOException {
         OutputStream outputStream = socket.getOutputStream();
         PrintWriter out = new PrintWriter(outputStream, true);
         out.println(craftMessageToServer()); //Enviar un mensaje al servidor
     }
 
     private String craftMessageToServer(){
-        return this.playername + "_" + getNumPoints() + "_" + getToNextLife()+ "_" + getToNextLevel() + "_" + getSpeed();
+        return this.playername + "_" + getNumPoints() + "_" + (getNumPoints() - getLastExtraLife())+ "_" + getToNextLevel() + "_" + getSpeed();
     }
 }
 

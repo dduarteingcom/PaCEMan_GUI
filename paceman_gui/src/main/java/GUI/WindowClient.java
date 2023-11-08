@@ -2,12 +2,9 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.*;
-import java.net.Socket;
 import java.util.LinkedList;
 
 import AbstractFactory.*;
-import AbstractFactory.Pinky;
 
 public class WindowClient extends JPanel implements Runnable {
     public static final int WINDOW_WIDTH = 470;
@@ -31,7 +28,7 @@ public class WindowClient extends JPanel implements Runnable {
 
     private Integer numPoints;
     private Integer numLevel;
-    private Integer toNextLife;
+    private Integer lastExtraLife;
     private Integer toNextLevel;
 
     private Integer speed;
@@ -55,8 +52,8 @@ public class WindowClient extends JPanel implements Runnable {
         this.numPoints=0;
         this.numLevel=1;
         this.speed = 5;
-        this.toNextLevel = 500;
-        this.toNextLife = 10000;
+        this.toNextLevel = 10000;
+        this.lastExtraLife = 0;
         ghostFactory = new EnemyFactory();
         this.ghost = ghostFactory.createGhost(20,20,'p');
 
@@ -129,15 +126,23 @@ public class WindowClient extends JPanel implements Runnable {
          ghost.createMovement(cLevel);
     }
 
+    public Integer getLives() {
+        return lives;
+    }
+
+    public void setLives(Integer lives) {
+        this.lives = lives;
+    }
+
     public Integer getSpeed(){return this.speed;}
     public void setSpeed(Integer speed){this.speed = speed;}
 
-    public Integer getToNextLife() {
-        return toNextLife;
+    public Integer getLastExtraLife() {
+        return lastExtraLife;
     }
 
-    public void setToNextLife(Integer toNextLife) {
-        this.toNextLife = toNextLife;
+    public void setLastExtraLife(Integer lastExtraLife) {
+        this.lastExtraLife = lastExtraLife;
     }
 
     public Integer getToNextLevel() {

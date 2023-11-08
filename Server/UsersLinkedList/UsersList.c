@@ -146,17 +146,15 @@ struct user * checkAndUpdateUserInfo(struct userList * list,char * infoFromClien
                 *(client->score) = (atoi(data))*10;
                 break;
             case 2:
-                *(client->lives) = atoi(data);
+                *(client->lives) = atoi(data)*10;
                 if(*(client->lives) >= 10000){
                     addCommandFirst(client->commands, createCommand("addLife_"));
-                    (*(client->lives)) -= 10000;
                 }
                 break;
             case 3:
                 *(client->level) = atoi(data);
                 if(*(client->level) <= 0){
                     addCommandFirst(client->commands, createCommand("next_"));
-                    (*(client->lives)) = 0;
                 }
                 break;
             case 4:

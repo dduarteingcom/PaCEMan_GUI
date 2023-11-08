@@ -39,13 +39,12 @@ void * ServerThread(void *vargp){
     SOCKET * newClientSocket = (SOCKET *)malloc(sizeof(SOCKET));
     *newClientSocket = checkNewConnection(serverSocket, clientSocket, clientAddr, clientAddrLen);
     char * messageFromClient;
-
+    char * message;
     while(1){
         messageFromClient = recieveFromClient(newClientSocket);
         struct user * client = checkAndUpdateUserInfo(clientList, messageFromClient);
-        char * message = getCommandReady(client);
+        message = getCommandReady(client);
         sendDataToClient(newClientSocket, message);
-        free(message);
         closesocket(*newClientSocket);
         *newClientSocket = checkNewConnection(serverSocket, clientSocket, clientAddr, clientAddrLen);
     }
@@ -73,7 +72,7 @@ int mainControlMenu(struct userList * clientList){
     }else{
         printf("Opción inválida \n");
     }
-
+    free(option);
     return -1;
 }
 

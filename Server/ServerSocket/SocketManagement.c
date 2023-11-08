@@ -84,7 +84,7 @@ void sendDataToClient(const SOCKET * clientSocket, const char * message){
 /**
  * @brief Small closing protocol (in case a socket needs to be closed)
  * @param serverSocket socket structure to connect
- * @param errorMessage error to be desplayed
+ * @param errorMessage error to be desplay
  */
 void closingProtocol(SOCKET serverSocket, char * errorMessage){
     perror(errorMessage);

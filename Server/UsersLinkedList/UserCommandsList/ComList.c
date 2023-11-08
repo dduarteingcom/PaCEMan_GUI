@@ -4,6 +4,7 @@
 #include "ComList.h"
 #include <stdio.h>
 #include <malloc.h>
+#include <string.h>
 
 /**
  * @brief Creates a command struct, with memory allocation
