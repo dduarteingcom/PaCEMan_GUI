@@ -34,9 +34,6 @@ public class WindowPlayer extends WindowClient  {
                     Integer[] coordenates=chooseLoc();
                     cLevel[coordenates[0]][coordenates[1]]=6; //Updates de level matrix
                 }
-                if(e.getKeyCode()==KeyEvent.VK_M){ //With key G is possible to create a ghost
-                    moveGhost();
-                }
 
                 player.keyPressed(e, cLevel);
                 player.getPosition();
@@ -91,6 +88,7 @@ public class WindowPlayer extends WindowClient  {
             if ((menu != null)&& (menu.getGames().size() != 0)&&(counter == (2000000/menu.getGames().size()))){
                 player.arduino(cLevel);
                 checkResources();
+                moveGhost();
                 counter = 0;
             }
         }

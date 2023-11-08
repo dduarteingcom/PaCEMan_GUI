@@ -118,8 +118,7 @@ public class WindowClient extends JPanel implements Runnable {
     }
 
     public void moveGhost(){
-         ghost.move();
-        System.out.println("AHHHH");
+         ghost.createMovement(cLevel);
     }
 
 }
