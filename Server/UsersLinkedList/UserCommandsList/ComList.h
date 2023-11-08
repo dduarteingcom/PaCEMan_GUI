@@ -18,6 +18,7 @@ typedef struct commandList{
 struct command * createCommand(char * text);
 struct commandList * initializeCommandList();
 void addCommandLast(struct commandList * list, struct command * newCommand);
+void addCommandFirst(struct commandList * list, struct command * newCommand);
 void printCommandList(struct commandList * lista);
 void deleteHeadCommand(struct commandList * list);
 

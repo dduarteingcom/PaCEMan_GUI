@@ -24,6 +24,7 @@ struct user * createUser(char * userCode);
 struct userList * initializeList();
 void addNodeLast(struct userList * lista, struct user * newUser);
 void printUserList(struct userList * lista);
+void printDataFromUser(struct user * userTargeted);
 struct user * findUserByCode(struct userList * list, char * code);
 struct user * checkAndUpdateUserInfo(struct userList * list , char * infoFromClient);
 char * getCommandReady(struct user * client);

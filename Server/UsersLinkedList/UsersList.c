@@ -65,6 +65,20 @@ void printUserList(struct userList * lista){
     printf("++++++++++++++++++++++ \n");
 }
 
+void printDataFromUser(struct user * userTargeted){
+    printf("......................................... \n");
+    if(userTargeted != NULL){
+        printf("User: %s \n", userTargeted->userCode);
+        printf("To next life: %d \n", *(userTargeted->lives));
+        printf("Score: %d \n", *(userTargeted->score));
+        printf("To next level: %d \n", *(userTargeted->level));
+        printf("Ghost speed: %d \n", *(userTargeted->speed));
+    }else{
+        printf("No hay tal usuario registrado \n");
+    }
+    printf("......................................... \n");
+}
+
 struct user * findUserByCode(struct userList * list, char * code){
     if(*(list->length) == 0){
         return NULL;
@@ -96,13 +110,21 @@ struct user * checkAndUpdateUserInfo(struct userList * list,char * infoFromClien
     while(data != NULL){
         switch (i) {
             case 1:
-                *(client->score) = atoi(data);
+                *(client->score) = (atoi(data))*10;
                 break;
             case 2:
                 *(client->lives) = atoi(data);
+                if(*(client->lives) >= 10000){
+                    addCommandFirst(client->commands, createCommand("addLife_"));
+                    (*(client->lives)) -= 10000;
+                }
                 break;
             case 3:
                 *(client->level) = atoi(data);
+                if(*(client->level) <= 0){
+                    addCommandFirst(client->commands, createCommand("next_"));
+                    (*(client->lives)) = 0;
+                }
                 break;
             case 4:
                 *(client->speed) = atoi(data);

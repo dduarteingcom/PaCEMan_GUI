@@ -53,14 +53,17 @@ void * ServerThread(void *vargp){
 int mainControlMenu(struct userList * clientList){
     int * option = (int *)malloc(sizeof(int));
     printf("Opcion a ejecutar: \n 0 - Salir \n 1 - Crear fantasma \n 2 - Crear partilla \n"
-           "3 - Crear fruta \n 4 - Cambiar velocidad de fantasmas \n");
+           "3 - Crear fruta \n 4 - Cambiar velocidad de fantasmas \n 5 - Imprimir"
+           " datos de un usuario \n 6 - Imprimir lista de clientes \n");
     scanf("%d", option);
     if(*option == 0){
         printf("Adios :(");
         free(option);
         return 0;
-    }else if(*option > 0 && *option < 5){
+    }else if(*option > 0 && *option < 6) {
         createObject(clientList, *option);
+    }else if(*option == 6){
+        printUserList(clientList);
     }else{
         printf("Opción inválida \n");
     }

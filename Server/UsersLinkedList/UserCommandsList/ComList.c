@@ -34,6 +34,12 @@ void addCommandLast(struct commandList * list, struct command * newCommand){
     (*(list->length))++;
 }
 
+void addCommandFirst(struct commandList * list, struct command * newCommand){
+    newCommand->nextCommand = list->head;
+    list->head = newCommand;
+    (*(list->length))++;
+}
+
 void printCommandList(struct commandList * lista){
     if(*(lista->length) > 0){
         struct command * temp = lista->head;

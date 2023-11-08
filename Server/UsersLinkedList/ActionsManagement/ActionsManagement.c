@@ -8,7 +8,7 @@
 
 
 void createObject(struct userList * list, int operation){
-    printf("Id del usuario para crear el objeto: \n");
+    printf("Id del usuario: \n");
     char * userCode = (char *)malloc(sizeof(char *));
     scanf("%s", userCode);
     struct user * userTargeted = findUserByCode(list, userCode);
@@ -28,6 +28,8 @@ void createObject(struct userList * list, int operation){
             case 4:
                 changeGhostSpeedCommand(userTargeted);
                 break;
+            case 5:
+                printDataFromUser(userTargeted);
             default:
                 break;
         }
@@ -36,7 +38,13 @@ void createObject(struct userList * list, int operation){
 }
 
 void createGhostCommand(struct user * userTargeted){
-    queueCommand(userTargeted, "ghost_");
+    char * message = strdup("ghost_");
+    char * phantom = (char *)malloc(sizeof(char ));
+    printf("Escriba el nombre del tipo de fantasma a aparecer: \n");
+    scanf("%s", phantom);
+    strcat(message, phantom);
+    free(phantom);
+    queueCommand(userTargeted, message);
 }
 
 void createPillCommand(struct user * userTargeted){
