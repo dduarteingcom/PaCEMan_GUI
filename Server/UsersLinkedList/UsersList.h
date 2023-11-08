@@ -4,9 +4,11 @@
 
 #ifndef SERVER_USERSLIST_H
 #define SERVER_USERSLIST_H
+#include "UserCommandsList/ComList.h"
 typedef struct user{
     const char * userCode;
     struct user * nextUser;
+    struct commandList * commands;
     int * lives;
     int * score;
     int * level;

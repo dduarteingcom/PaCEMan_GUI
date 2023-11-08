@@ -3,12 +3,15 @@
 #include "UsersLinkedList/UsersList.h"
 #include "ServerSocket/SocketManagement.h"
 
+
 int displayMainMenu(SOCKET * clientSocket, struct userList * clientList);
 void trim(char * dest, char * src);
 void listTestFunction();
+void comListTestFunction();
 
 int main() {
     //listTestFunction(); //Eliminar al final!!!!!!!!!
+    //comListTestFunction(); //Eliminar al final!!!!!!!!!
     WSADATA * wsaData = (WSADATA*) malloc(sizeof(WSADATA));
     SOCKET serverSocket, clientSocket;
     struct sockaddr_in serverAddr, clientAddr;
@@ -115,7 +118,55 @@ void listTestFunction(){
     addNodeLast(clientList, user2);
     addNodeLast(clientList, user3);
     addNodeLast(clientList, user4);
-    checkAndUpdateUserInfo(clientList, "Alexis_1_2_3_4");
+
+    printUserList(clientList);
+
+    addCommandLast(user1->commands, createCommand("create_1_2"));
+
+    addCommandLast(user2->commands, createCommand("destroy_5_6"));
+    addCommandLast(user2->commands, createCommand("create_12_45"));
+    addCommandLast(user2->commands, createCommand("ghost"));
+
+    addCommandLast(user3->commands, createCommand("create_42_69"));
+    addCommandLast(user3->commands, createCommand("speed_45"));
+
+    printUserList(clientList);
+
+    deleteHeadCommand(user2->commands);
+    deleteHeadCommand(user2->commands);
+
+    deleteHeadCommand(user1->commands);
+
+    printUserList(clientList);
+
+
+    //checkAndUpdateUserInfo(clientList, "Alexis_1_2_3_4");
     free(clientList);
+    exit(0);
+}
+
+void comListTestFunction(){
+    struct commandList * list = initializeCommandList();
+    struct command * comm1 = createCommand("Alexis_1_2");
+    struct command * comm2 = createCommand("Alvaro_1_2");
+    struct command * comm3 = createCommand("Francisco_create_5_4");
+    struct command * comm4 = createCommand("Marta_set_4_2");
+
+    addCommandLast(list, comm1);
+    addCommandLast(list, comm2);
+    addCommandLast(list, comm3);
+    addCommandLast(list, comm4);
+
+    printCommandList(list);
+    deleteHeadCommand(list);
+    printCommandList(list);
+    deleteHeadCommand(list);
+    printCommandList(list);
+    deleteHeadCommand(list);
+    printCommandList(list);
+    deleteHeadCommand(list);
+    printCommandList(list);
+
+    free(list);
     exit(0);
 }

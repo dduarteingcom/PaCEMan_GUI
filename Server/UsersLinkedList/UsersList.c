@@ -10,6 +10,7 @@
 
 struct user * createUser(char * userCode){
     struct user * newUser = (struct user *)malloc(sizeof(struct user));
+    newUser->commands = initializeCommandList();
 
     newUser->score = (int *) malloc(sizeof(int));
     newUser->lives = (int *) malloc(sizeof(int));
@@ -55,6 +56,7 @@ void printUserList(struct userList * lista){
 
         for (int i = 0; i < (*(lista->length)); ++i) {
             printf("User: %s \n", temp->userCode);
+            printCommandList(temp->commands);
             temp = temp->nextUser;
         }
     }else{
