@@ -6,7 +6,11 @@
 #include "ActionsManagement.h"
 
 
-
+/**
+ * @brief Develops a general dialog and redirects to the actual user's target
+ * @param list Linked list with all the users
+ * @param operation Type of operation done, according to the menu
+ */
 void createObject(struct userList * list, int operation){
     printf("Id del usuario: \n");
     char * userCode = (char *)malloc(sizeof(char *));
@@ -37,6 +41,10 @@ void createObject(struct userList * list, int operation){
     free(userCode);
 }
 
+/**
+ * @brief sends a command to create a ghost
+ * @param userTargeted user to attach the command to
+ */
 void createGhostCommand(struct user * userTargeted){
     char * message = strdup("ghost_");
     char * phantom = (char *)malloc(sizeof(char ));
@@ -47,6 +55,10 @@ void createGhostCommand(struct user * userTargeted){
     queueCommand(userTargeted, message);
 }
 
+/**
+ * @brief sends a command to create a pill
+ * @param userTargeted user to attach the command to
+ */
 void createPillCommand(struct user * userTargeted){
     char * fila = (char *)malloc(sizeof(char ));
     char * columna = (char *)malloc(sizeof(char ));
@@ -63,7 +75,10 @@ void createPillCommand(struct user * userTargeted){
     free(columna);
     queueCommand(userTargeted, message);
 }
-
+/**
+ * @brief sends a command to create a fruit
+ * @param userTargeted user to attach the command to
+ */
 void createFruitCommand(struct user * userTargeted){
     char * points = (char *)malloc(sizeof(char *));
     char * message = strdup("fruit_");
@@ -73,7 +88,10 @@ void createFruitCommand(struct user * userTargeted){
     free(points);
     queueCommand(userTargeted, message);
 }
-
+/**
+ * @brief sends a command to change the ghost speed
+ * @param userTargeted user to attach the command to
+ */
 void changeGhostSpeedCommand(struct user * userTargeted){
     char * speed = (char *)malloc(sizeof(char *));
     char * message = strdup("speed_");
@@ -83,7 +101,11 @@ void changeGhostSpeedCommand(struct user * userTargeted){
     free(speed);
     queueCommand(userTargeted, message);
 }
-
+/**
+ * @brief sends the command to the user
+ * @param message command to store
+ * @param userTargeted user to attach the command to
+ */
 void queueCommand(struct user * userTargeted, char * message){
     printf("En seguida se configurara el comando... \n");
     addCommandLast(userTargeted->commands, createCommand(message));

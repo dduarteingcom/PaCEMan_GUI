@@ -4,6 +4,8 @@ import AbstractFactory.Pinky;
 import AbstractFactory.GhostFactory;
 
 import java.awt.event.*;
+import java.io.*;
+import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -86,7 +88,7 @@ public class WindowPlayer extends WindowClient  {
 
             }
             if ((menu != null)&& (menu.getGames().size() != 0)&&(counter == (2000000/menu.getGames().size()))){
-                player.arduino(cLevel);
+                //player.arduino(cLevel); //DESCOMENTAR LUEGO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 checkResources();
                 moveGhost();
                 counter = 0;
@@ -153,5 +155,7 @@ public class WindowPlayer extends WindowClient  {
             return chooseLoc();
         }
     }
+
+
 }
 

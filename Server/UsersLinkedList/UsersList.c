@@ -7,7 +7,11 @@
 #include "UsersList.h"
 
 
-
+/**
+ * @brief Creates an user struct, with memory allocation
+ * @param userCode player's name or identification
+ * @return new user created
+ */
 struct user * createUser(char * userCode){
     struct user * newUser = (struct user *)malloc(sizeof(struct user));
     newUser->commands = initializeCommandList();
@@ -27,6 +31,10 @@ struct user * createUser(char * userCode){
     return newUser;
 }
 
+/**
+ * @brief initializes a command list
+ * @return the new list initialized
+ */
 struct userList * initializeList(){
     struct userList * newList = (struct userList *) malloc(sizeof (struct userList));
     int * listLenght = (int *)malloc(sizeof (int));
@@ -36,6 +44,11 @@ struct userList * initializeList(){
     return newList;
 }
 
+/**
+* @brief Adds node to the bottom of the list
+* @param list list of commands
+* @param newUser user to add
+*/
 void addNodeLast(struct userList * lista, struct user * newUser){
     if(*(lista->length) == 0){
         lista->head = newUser;
@@ -49,6 +62,10 @@ void addNodeLast(struct userList * lista, struct user * newUser){
     (*(lista->length))++;
 }
 
+/**
+ * @brief prints the full length of the list, including any posible sublist inside
+ * @param lista list to print
+ */
 void printUserList(struct userList * lista){
     printf("++++++++++++++++++++++ \n");
     if(*(lista->length) > 0){
@@ -64,7 +81,10 @@ void printUserList(struct userList * lista){
     }
     printf("++++++++++++++++++++++ \n");
 }
-
+/**
+ * @brief prints the data from an specific user
+ * @param userTargeted user to print
+ */
 void printDataFromUser(struct user * userTargeted){
     printf("......................................... \n");
     if(userTargeted != NULL){
@@ -79,6 +99,12 @@ void printDataFromUser(struct user * userTargeted){
     printf("......................................... \n");
 }
 
+/**
+ * @brief finds an user based on its code
+ * @param list list to find in
+ * @param code name of the client
+ * @return user found
+ */
 struct user * findUserByCode(struct userList * list, char * code){
     if(*(list->length) == 0){
         return NULL;
@@ -97,6 +123,13 @@ struct user * findUserByCode(struct userList * list, char * code){
     return NULL;
 }
 
+/**
+ * @brief checks the info in a message from the client. Adds the user if it's new, and updates the information with the
+ * arraving data
+ * @param list list to
+ * @param infoFromClient name of the client (userCode)
+ * @return user created (or updated)
+ */
 struct user * checkAndUpdateUserInfo(struct userList * list,char * infoFromClient){
     char * copy = strdup(infoFromClient);
     char * data = strtok(copy, "_");
@@ -137,6 +170,11 @@ struct user * checkAndUpdateUserInfo(struct userList * list,char * infoFromClien
     return client;
 }
 
+/**
+ * @brief looks and returns any pendant command for the client
+ * @param client client to evaluate
+ * @return char array with the command, or "void_" if there is no pendant command.
+ */
 char * getCommandReady(struct user * client){
     if(*(client->commands->length) == 0){
         return strdup("void_");

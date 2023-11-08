@@ -16,7 +16,8 @@ public class Player extends Rectangle {
     Integer xDirection;
     Integer yDirection;
     private Image image;
-    Arduino ard = Arduino.getInstance();
+    //Arduino ard = Arduino.getInstance();
+    Arduino ard;
     Integer posX;
     Integer posY;
     Boolean permission;
