@@ -148,13 +148,13 @@ struct user * checkAndUpdateUserInfo(struct userList * list,char * infoFromClien
             case 2:
                 *(client->lives) = atoi(data)*10;
                 if(*(client->lives) >= 10000){
-                    addCommandFirst(client->commands, createCommand("addLife_"));
+                    addSpecialCommand(client, "addLife_");
                 }
                 break;
             case 3:
                 *(client->level) = atoi(data);
                 if(*(client->level) <= 0){
-                    addCommandFirst(client->commands, createCommand("next_"));
+                    addSpecialCommand(client, "next_");
                 }
                 break;
             case 4:
@@ -181,4 +181,12 @@ char * getCommandReady(struct user * client){
         deleteHeadCommand(client->commands);
         return message;
     }
+}
+
+void addSpecialCommand(struct user * client, char * string){
+    char * message = strdup(string);
+    char * suppName = strdup(client->userCode);
+    strcat(message, suppName);
+    addCommandFirst(client->commands, createCommand(string));
+    free(suppName);
 }

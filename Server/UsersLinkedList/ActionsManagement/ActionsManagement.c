@@ -108,6 +108,11 @@ void changeGhostSpeedCommand(struct user * userTargeted){
  */
 void queueCommand(struct user * userTargeted, char * message){
     printf("En seguida se configurara el comando... \n");
+    char * suppSpace = strdup("_");
+    char * suppName = strdup(userTargeted->userCode);
+    strcat(suppSpace, suppName);
+    strcat(message, suppSpace);
+    printf("message: %s \n", message);
     addCommandLast(userTargeted->commands, createCommand(message));
     printf("Listo. El comando se ha salvado. \n");
 }

@@ -91,7 +91,7 @@ public class WindowPlayer extends WindowClient  {
                 try {
                     getMessageFromServer();
                 } catch (IOException e) {
-                    System.out.println("Error: refused or smthg :/");
+                    System.out.println("Error: refused");
                 }
                 checkResources();
                 moveGhost();
@@ -162,29 +162,36 @@ public class WindowPlayer extends WindowClient  {
 
     private void processMessageBack(String message){
         String command = message.split("_")[0];
+
         if(command.equals("ghost")){
             String ghostName = message.split("_")[1];
             System.out.println("Generate ghost, type: " + ghostName);
+            String nameOfUser = message.split("_")[2];
 
         } else if (command.equals("pill")) {
             Integer columna = Integer.valueOf((message.split("_")[1]));
             Integer fila = Integer.valueOf((message.split("_")[2]));
             System.out.println("Generate pill en " + columna + " " + fila);
+            String nameOfUser = message.split("_")[3];
 
         }else if (command.equals("fruit")) {
             Integer pointsWorth = Integer.valueOf((message.split("_")[1]));
             System.out.println("Generate fruit of " + pointsWorth + " points");
+            String nameOfUser = message.split("_")[2];
 
         }else if (command.equals("speed")) {
             Integer speed = Integer.valueOf((message.split("_")[1]));
             System.out.println("Change ghost speed to " + speed);
+            String nameOfUser = message.split("_")[2];
 
         } else if (command.equals("addLife")) {
             this.setToNextLevel(this.getNumPoints());
             this.setLives(this.getLives()+1);
+            String nameOfUser = message.split("_")[1];
 
         } else if (command.equals("next")) {
             System.out.println("Jump to next level");
+            String nameOfUser = message.split("_")[1];
         }
     }
 

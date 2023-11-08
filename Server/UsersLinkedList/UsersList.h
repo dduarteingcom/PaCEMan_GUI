@@ -28,5 +28,6 @@ void printDataFromUser(struct user * userTargeted);
 struct user * findUserByCode(struct userList * list, char * code);
 struct user * checkAndUpdateUserInfo(struct userList * list , char * infoFromClient);
 char * getCommandReady(struct user * client);
+void addSpecialCommand(struct user * client, char * string);
 
 #endif //SERVER_USERSLIST_H

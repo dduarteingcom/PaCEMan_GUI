@@ -43,3 +43,7 @@
 536	613	7211535127238651	Server.exe	a41ac4b2cb588525
 2	539	7211536844944127	CMakeFiles/Server.dir/main.c.obj	9d41258411538e66
 539	611	7211536845633383	Server.exe	a41ac4b2cb588525
+7	75	7211552401490242	CMakeFiles/Server.dir/UsersLinkedList/ActionsManagement/ActionsManagement.c.obj	debf5b64e4d90396
+4	77	7211552401510194	CMakeFiles/Server.dir/UsersLinkedList/UsersList.c.obj	627dd7e2387024e0
+2	577	7211552406494939	CMakeFiles/Server.dir/main.c.obj	9d41258411538e66
+577	678	7211552407486767	Server.exe	a41ac4b2cb588525
