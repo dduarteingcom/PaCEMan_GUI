@@ -72,9 +72,6 @@ public class WindowMenu extends Window{
 
         });
 
-
-
-
         panel.add(button);
         panel.add(expect);
         // Add the panel to the frame

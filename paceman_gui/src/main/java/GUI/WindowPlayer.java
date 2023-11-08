@@ -1,6 +1,6 @@
 package GUI;
 
-import AbstractFactory.Ghost;
+import AbstractFactory.Pinky;
 import AbstractFactory.GhostFactory;
 
 import java.awt.event.*;
@@ -14,6 +14,7 @@ public class WindowPlayer extends WindowClient  {
     WindowMenu menu = WindowMenu.getInstance();
 
     String playername;
+    Pinky ghost;
 
     WindowPlayer(String playername) {
         this.playername = playername;
@@ -34,7 +35,7 @@ public class WindowPlayer extends WindowClient  {
                     cLevel[coordenates[0]][coordenates[1]]=6; //Updates de level matrix
                 }
                 if(e.getKeyCode()==KeyEvent.VK_M){ //With key G is possible to create a ghost
-
+                    moveGhost();
                 }
 
                 player.keyPressed(e, cLevel);
@@ -85,8 +86,6 @@ public class WindowPlayer extends WindowClient  {
                 if(observers.size() > 0) {
                     updateClients();
                 }
-
-
 
             }
             if ((menu != null)&& (menu.getGames().size() != 0)&&(counter == (2000000/menu.getGames().size()))){
