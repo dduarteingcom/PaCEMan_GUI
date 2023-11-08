@@ -2,6 +2,7 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.LinkedList;
 
 import AbstractFactory.*;
 
@@ -14,6 +15,9 @@ public class WindowClient extends JPanel implements Runnable {
     private Thread gameThread;
     private Image image;
     private ElementsFactory elementsFactory;
+    private GhostFactory ghostFactory;
+
+    public LinkedList<Ghost> ghostLinkedList;
     private Score score;
     private Integer lives;
 
@@ -25,6 +29,7 @@ public class WindowClient extends JPanel implements Runnable {
      */
     Integer[][] cLevel;
     WindowClient(){
+        ghostLinkedList = new LinkedList<>();
         this.player = new Player();
         this.score = new Score();
         this.setFocusable(true);
@@ -63,6 +68,7 @@ public class WindowClient extends JPanel implements Runnable {
      void draw(Graphics g) {
         for (int i = 0; i < cLevel.length; i++) {
             elementsFactory = new ResourceFactory();
+            ghostFactory = new EnemyFactory();
             for (int j = 0; j < cLevel[0].length; j++) {
                 if (cLevel[i][j] == 4) {
                     //Draws the blocks
@@ -75,6 +81,10 @@ public class WindowClient extends JPanel implements Runnable {
                     elementsFactory.createElement(g,j*20,i*20, 'f');
                 } else if (cLevel[i][j] == 3) {
                     elementsFactory.createElement(g,j*20,i*20, 'p');
+                }
+                else if (cLevel[i][j] == 6){ //There is a ghost in this position
+                    ghostLinkedList.add(ghostFactory.createGhost(g, j*20,i*20, 'p'));//Ghost is then created
+
                 }
             }
         }

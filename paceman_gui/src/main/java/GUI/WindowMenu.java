@@ -44,6 +44,7 @@ public class WindowMenu extends Window{
             if ((playername != null) && (playername.length() > 0)){
                 Window window = new Window(true, playername);
                 games.add(window);
+
             }
         });
         expect.addActionListener(e -> {
@@ -87,4 +88,8 @@ public class WindowMenu extends Window{
     }
 
     public static WindowMenu getInstance(){ return Singleton.INSTANCE;}
+
+    public LinkedList<Window> getGames() {
+        return games;
+    }
 }

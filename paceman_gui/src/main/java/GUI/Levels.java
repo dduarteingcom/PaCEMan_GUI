@@ -8,6 +8,7 @@ public class Levels {
      * 3 = There's a dot
      * 4 = There's a block
      * 5 = There's PaCEman
+     * 6 = There's a Ghost
      *******************************************************/
      Integer[][] level1 = {
             {4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4},

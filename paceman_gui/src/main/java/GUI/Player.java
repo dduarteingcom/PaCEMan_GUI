@@ -60,6 +60,7 @@ public class Player extends Rectangle {
                         break;
                 }
                 move(nlevel);
+
             }
         }
     }
