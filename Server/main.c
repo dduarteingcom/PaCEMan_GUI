@@ -25,7 +25,7 @@ int main() {
 /**
  * @brief Server's communication thread
  * @param vargp
- * @return 
+ * @return
  */
 void * ServerThread(void *vargp){
 

@@ -89,6 +89,14 @@ public class WindowPlayer extends WindowClient  {
             }
             if ((menu != null)&& (menu.getGames().size() != 0)&&(counter == (2000000/menu.getGames().size()))){
                 //player.arduino(cLevel); //DESCOMENTAR LUEGO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                try {
+                    String message = getMessageFromServer();
+                    if(!message.equals("void_")){
+                        System.out.println(message);//Acá se recibe el mensaje del Server
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 checkResources();
                 moveGhost();
                 counter = 0;
@@ -156,6 +164,23 @@ public class WindowPlayer extends WindowClient  {
         }
     }
 
+    private String getMessageFromServer() throws IOException {
+        Socket socket = new Socket("127.0.0.1", 12345); // Ip y puerto
+        InputStream inputStream = socket.getInputStream();
+        InputStreamReader reader = new InputStreamReader(inputStream);
+        BufferedReader in = new BufferedReader(reader);
+        sendMessageToServer(socket, "Alejandro_51_10300_0_48");
+        String messageRecieved = in.readLine();
+        return messageRecieved;
+    }
+    private void sendMessageToServer(Socket socket, String message) throws IOException {
+        OutputStream outputStream = socket.getOutputStream();
+        PrintWriter out = new PrintWriter(outputStream, true);
+        out.println(craftMessageToServer()); //Enviar un mensaje al servidor
+    }
 
+    private String craftMessageToServer(){
+        return this.playername + "_" + getNumPoints() + "_" + getToNextLife()+ "_" + getToNextLevel() + "_" + getSpeed();
+    }
 }
 

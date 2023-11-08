@@ -31,7 +31,10 @@ public class WindowClient extends JPanel implements Runnable {
 
     private Integer numPoints;
     private Integer numLevel;
+    private Integer toNextLife;
+    private Integer toNextLevel;
 
+    private Integer speed;
 
     /**
      * Current level
@@ -51,6 +54,9 @@ public class WindowClient extends JPanel implements Runnable {
         this.lives=3;
         this.numPoints=0;
         this.numLevel=1;
+        this.speed = 5;
+        this.toNextLevel = 500;
+        this.toNextLife = 10000;
         ghostFactory = new EnemyFactory();
         this.ghost = ghostFactory.createGhost(20,20,'p');
 
@@ -123,8 +129,22 @@ public class WindowClient extends JPanel implements Runnable {
          ghost.createMovement(cLevel);
     }
 
+    public Integer getSpeed(){return this.speed;}
+    public void setSpeed(Integer speed){this.speed = speed;}
 
+    public Integer getToNextLife() {
+        return toNextLife;
+    }
 
+    public void setToNextLife(Integer toNextLife) {
+        this.toNextLife = toNextLife;
+    }
 
+    public Integer getToNextLevel() {
+        return toNextLevel;
+    }
 
+    public void setToNextLevel(Integer toNextLevel) {
+        this.toNextLevel = toNextLevel;
+    }
 }
