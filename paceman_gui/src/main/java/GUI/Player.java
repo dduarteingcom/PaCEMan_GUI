@@ -3,103 +3,186 @@ package GUI;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
+import jssc.SerialPort;
+import static jssc.SerialPort.MASK_RXCHAR;
+import jssc.SerialPortEvent;
+import jssc.SerialPortException;
+import jssc.SerialPortList;
 
 
 public class Player extends Rectangle {
-    int speed;
-    int xDirection;
-    int yDirection;
-    Image image;
-
-
-    int posX;
-    int posY;
-    Player(int speed){
-        this.speed=speed;
+    //
+    private Integer speed;
+    Integer xDirection;
+    Integer yDirection;
+    private Image image;
+    Arduino ard = Arduino.getInstance();
+    Integer posX;
+    Integer posY;
+    Boolean permission;
+    Player(){
+        this.speed=20;
         this.xDirection =0;
         this.yDirection=0;
-        this.image = new ImageIcon("C:\\Projects\\PaCEMan_GUI\\paceman_gui\\src\\media\\pacman-icon.png").getImage();
-        this.x=49;
-        this.y=49;
+        this.image = new ImageIcon("src/media/pacman-icon.png").getImage();
+        this.x=20;
+        this.y=20;
         this.posX=1;
         this.posY=1;
-
     }
-    public void keyPressed(KeyEvent e) {
+    public void arduino(Integer[][] nlevel){
+        if (permission) {
+            if (ard.msg != null) {
+                switch (ard.msg) {
+                    case "1":
+                        if (x % 20 == 0) {
+                            xDirection = 0;
+                            yDirection = -1;
+                        }
+                        break;
+                    case "2":
+                        if (x % 20 == 0) {
+                            xDirection = 0;
+                            yDirection = 1;
+                        }
+                        break;
+                    case "3":
+                        if (y % 20 == 0) {
+                            xDirection = 1;
+                            yDirection = 0;
+                        }
+                        break;
+                    case "4":
+                        if (y % 20 == 0) {
+                            xDirection = -1;
+                            yDirection = 0;
+                        }
+                        break;
+                }
+                move(nlevel);
 
+            }
+        }
+    }
 
+    /**
+     * Indicates the new direction of PaCEman by the Key pressed
+     * @param e event
+     * @param nlevel current level
+     */
+     void keyPressed(KeyEvent e, Integer[][] nlevel) {
         if(e.getKeyCode()==KeyEvent.VK_LEFT) {
-            if(y % 49 == 0) {
+            if(y % 20 == 0) {
                 xDirection = -1;
                 yDirection = 0;
             }
         }
         else if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
-            if(y % 49==0) {
+            if(y % 20==0) {
                 xDirection = 1;
                 yDirection = 0;
             }
         }
         else if (e.getKeyCode()==KeyEvent.VK_UP) {
-            if(x % 49==0) {
+            if(x % 20==0) {
                 xDirection = 0;
                 yDirection = -1;
             }
         } else if (e.getKeyCode()==KeyEvent.VK_DOWN) {
-            if(x % 49==0) {
+            if(x % 20==0) {
                 xDirection = 0;
                 yDirection = 1;
             }
         }
-        move();
+        move(nlevel);
     }
-    public void move(){
+
+    /**
+     * Indicates when PaCEman must stop moving when the key is not pressed anymore.
+     * @param e Event
+     */
+    void keyReleased(KeyEvent e){
+        if(e.getKeyCode()==KeyEvent.VK_LEFT || e.getKeyCode()==KeyEvent.VK_RIGHT) {
+                xDirection = 0;
+        }
+        else if(e.getKeyCode()==KeyEvent.VK_UP || e.getKeyCode()==KeyEvent.VK_DOWN) {
+                yDirection = 0;
+
+
+        }
+    }
+
+    /**
+     * Movement of PaCeman depending on his direction
+     * @param nlevel current level
+     */
+    private void move(Integer[][]nlevel){
         getPosition();
-        //Se está moviendo horizontalmente
+        //Checking colissions
+        //He's moving horizontally
         if(yDirection==0){
-            //Se mueve hacia la izquierda
+            //He's moving to the left
             if(xDirection==-1){
-                if(WindowPlayer.nlevel[posY][posX-1]==1){
+                if(nlevel[posY][posX-1]==4){
                     xDirection=0;
                 }
             }
+            //He's moving to the right
             else if (xDirection==1) {
-                if(WindowPlayer.nlevel[posY][posX+1]==1){
+                if(nlevel[posY][posX+1]==4){
                     xDirection=0;
                 }
             }
         }
-        //Se está moviendo verticalmente
+        //He's moving vertically
         else if(xDirection==0){
-            //Se mueve hacia arriba
+            //He is moving upward
             if(yDirection==-1){
-                if(WindowPlayer.nlevel[posY-1][posX]==1){
+                if(nlevel[posY-1][posX]==4){
                     yDirection=0;
                 }
             }
-            //Se mueve hacia abajo
+            //He is moving downward
             else if(yDirection==1){
-                if(WindowPlayer.nlevel[posY+1][posX]==1){
+                if(nlevel[posY+1][posX]==4){
                     yDirection=0;
                 }
             }
 
         }
+        //Movement
         y = y +(speed*yDirection);
         x = x +(speed*xDirection);
-    }
-    public void draw(Graphics g){
-        g.drawImage(image,x,y,49,49,null);
+        //This way PaceMan just moves ones
+        xDirection=0;
+        yDirection=0;
     }
 
+    /**
+     * Draws PaCEman on the Panel
+     * @param g The Graphics
+     */
+    void draw(Graphics g){
+        g.drawImage(image,x,y,20,20,null);
+    }
+
+    /**
+     * Calculates the position in the matrix
+     */
     public void getPosition(){
-        if(x% 49 ==0){
-            posX=x/49;
+        if(x% 20 ==0){
+            posX=x/20;
 
         }
-        if(y % 49==0){
-            posY=y/49;
+        if(y % 20==0){
+            posY=y/20;
         }
+    }
+    public Integer getSpeed() {
+        return speed;
+    }
 
+    public void setSpeed(Integer speed) {
+        this.speed = speed;
     }
 }

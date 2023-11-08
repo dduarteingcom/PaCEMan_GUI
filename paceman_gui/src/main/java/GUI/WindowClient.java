@@ -2,52 +2,68 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.LinkedList;
+
+import AbstractFactory.*;
+import AbstractFactory.Pinky;
 
 public class WindowClient extends JPanel implements Runnable {
-    static final int WINDOW_WIDTH = 1151;
-    static final int WINDOW_HEIGHT = 785;
-
+    public static final int WINDOW_WIDTH = 470;
+    public static final int WINDOW_HEIGHT = 300;
     static final Dimension SCREEN_SIZE = new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT);
-
-    Graphics graphics;
-
+    private Graphics graphics;
     Player player;
-    Thread gameThread;
+    private final Thread gameThread;
+    private Image image;
+    private ElementsFactory elementsFactory;
 
-    Image image;
-    Block block;
+    private GhostFactory ghostFactory;
 
-    static int[][] nlevel ;
+    public Ghost ghost;
 
+    public LinkedList<Ghost> ghostLinkedList;
+
+    private final Score score;
+
+    private Integer lives;
+
+    private Integer numPoints;
+    private Integer numLevel;
+
+
+    /**
+     * Current level
+     */
+    Integer[][] cLevel;
     WindowClient(){
-        player = new Player(7);
+        ghostLinkedList = new LinkedList<>();
+
+        this.player = new Player();
+        this.score = new Score();
         this.setFocusable(true);
         this.setPreferredSize(SCREEN_SIZE);
         this.setBackground(Color.BLACK);
-        gameThread = new Thread(this);
-        gameThread.start();
-        block = new Block();
-        nlevel = Levels.level1;
+        this.gameThread = new Thread(this);
+        this.gameThread.start();
+        this.cLevel = new Levels().level1;
+        this.lives=3;
+        this.numPoints=0;
+        this.numLevel=1;
+        ghostFactory = new EnemyFactory();
+        this.ghost = ghostFactory.createGhost(20,20,'p');
+
     }
+
+    /**
+     * It's the game loop.
+     */
     public void run(){
-        //game loop
-        long lastTime = System.nanoTime();
-        double amountOfTicks =60.0;
-        double ns = 1000000000 / amountOfTicks;
-        double delta = 0;
-        while(true) {
-            long now = System.nanoTime();
-            delta += (now -lastTime)/ns;
-            lastTime = now;
-            if(delta >=1) {
-                repaint();
-                elementsMovement();
-                delta--;
-            }
-        }
     }
 
-
+    /**
+     * Refresh the elements of the panel
+     * @param g  the <code>Graphics</code> context in which to paint
+     */
     public void paint(Graphics g) {
         image = createImage(getWidth(), getHeight());
         graphics = image.getGraphics();
@@ -55,25 +71,54 @@ public class WindowClient extends JPanel implements Runnable {
         g.drawImage(image, 0, 0, this);
     }
 
+    /**
+     * Draws all the elements on the panel
+     * @param g the <code>Graphics</code> context in which to paint
+     */
+     void draw(Graphics g) {
+        for (int i = 0; i < cLevel.length; i++) {
+            elementsFactory = new ResourceFactory();
 
-    public void draw(Graphics g) {
-        this.player.draw(g);
-        Toolkit.getDefaultToolkit().sync(); // I forgot to add this line of code in the video, it helps with the animation
+            for (int j = 0; j < cLevel[0].length; j++) {
+                if (cLevel[i][j] == 4) {
+                    //Draws the blocks
+                    switch (numLevel){
+                        case 1:
+                            elementsFactory.createElement(g,j*20,i*20, "b1");
+                            break;
+                        case 2:
+                            elementsFactory.createElement(g,j*20,i*20, "b2");
+                            break;
+                        case 3:
+                            elementsFactory.createElement(g,j*20,i*20, "b3");
+                            break;
 
-
-        for (int i = 0; i < nlevel.length; i++) {
-            for (int j = 0; j < nlevel[0].length; j++) {
-                if (nlevel[i][j] == 1) {
-                    block.draw(g, j * 49, i * 49);
+                    }
+                } else if (cLevel[i][j] == 1) {
+                    //Draws the dots
+                    elementsFactory.createElement(g,j*20,i*20, "d");
+                } else if (cLevel[i][j] == 2) {
+                    //Draws the pills
+                    elementsFactory.createElement(g,j*20,i*20, "f");
+                } else if (cLevel[i][j] == 3) {
+                    elementsFactory.createElement(g,j*20,i*20, "p");
                 }
             }
         }
+        this.player.draw(g);
+        this.score.draw(g,lives,numPoints,numLevel);
+        ghost.draw(g);
 
     }
+    public void setNumPoints(Integer num){
+        this.numPoints=num;
+    }
+    public Integer getNumPoints(){
+        return this.numPoints;
+    }
 
-    public void elementsMovement() {
-        this.player.move();
-
+    public void moveGhost(){
+         ghost.createMovement(cLevel);
     }
 
 }
