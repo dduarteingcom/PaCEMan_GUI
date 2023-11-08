@@ -223,6 +223,9 @@ public class WindowPlayer extends WindowClient  {
             String ghostName = message.split("_")[1];
             System.out.println("Generate ghost, type: " + ghostName);
             String nameOfUser = message.split("_")[2];
+            if(nameOfUser.equals(playername)){
+                createGhost();
+            }
 
 
         } else if (command.equals("pill")) {

@@ -131,15 +131,26 @@ public class WindowClient extends JPanel implements Runnable {
     void drawOnMove(Graphics g) {
         this.player.draw(g);
         this.score.draw(g, lives, numPoints, numLevel);
+
         switch (numGhosts) {
             case 1:
                 pinky.draw(g);
+                break;
             case 2:
+                pinky.draw(g);
                 blinky.draw(g);
+                break;
             case 3:
+                pinky.draw(g);
+                blinky.draw(g);
                 inky.draw(g);
+                break;
             case 4:
+                pinky.draw(g);
+                blinky.draw(g);
+                inky.draw(g);
                 clyde.draw(g);
+                break;
         }
     }
 
@@ -222,4 +233,5 @@ public class WindowClient extends JPanel implements Runnable {
             }
         }
     }
+
 }
