@@ -34,8 +34,14 @@ public class WindowClient extends JPanel implements Runnable {
 
     private Integer numPoints;
     private Integer numLevel;
+    private Integer lastExtraLife;
+    private Integer toNextLevel;
+
 
     private Integer numGhosts;
+
+    private Integer speed;
+
 
     /**
      * Current level
@@ -52,10 +58,15 @@ public class WindowClient extends JPanel implements Runnable {
         this.gameThread = new Thread(this);
         this.gameThread.start();
         this.cLevel = new Levels().level1;
-        this.lives = 3;
-        this.numPoints = 0;
-        this.numLevel = 1;
-        ghostFactory = new EnemyFactory();
+        this.lives=3;
+        this.numPoints=0;
+        this.numLevel=1;
+        this.toNextLevel = 0;
+        countPoints();
+        this.speed = 5;
+
+        this.lastExtraLife = 0;
+        this.ghostFactory = new EnemyFactory();
         this.numGhosts = 0;
     }
 
@@ -163,12 +174,11 @@ public class WindowClient extends JPanel implements Runnable {
                 break;
         }
     }
-    public void increseLives() {
-        this.lives++;
-    }
+
     public void setcLevel(Integer[][] cLevel){
         this.cLevel = cLevel;
     }
+
     public void setNumLevel(Integer numLevel){
         this.numLevel = numLevel;
     }
@@ -176,4 +186,40 @@ public class WindowClient extends JPanel implements Runnable {
         return this.numLevel;
     }
 
+    public Integer getLives() {
+        return lives;
+    }
+
+    public void setLives(Integer lives) {
+        this.lives = lives;
+    }
+
+    public Integer getSpeed(){return this.speed;}
+    public void setSpeed(Integer speed){this.speed = speed;}
+
+    public Integer getLastExtraLife() {
+        return lastExtraLife;
+    }
+
+    public void setLastExtraLife(Integer lastExtraLife) {
+        this.lastExtraLife = lastExtraLife;
+    }
+
+    public Integer getToNextLevel() {
+        return toNextLevel;
+    }
+
+    public void setToNextLevel(Integer toNextLevel) {
+        this.toNextLevel = toNextLevel;
+    }
+
+    void countPoints(){
+        for (Integer i=0;i<cLevel.length;i++){
+            for(Integer j=0;j<cLevel[0].length;j++){
+                if (cLevel[i][j]==1){
+                    toNextLevel+=10;
+                }
+            }
+        }
+    }
 }
