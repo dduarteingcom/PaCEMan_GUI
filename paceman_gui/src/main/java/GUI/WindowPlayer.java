@@ -1,5 +1,8 @@
 package GUI;
 
+import AbstractFactory.Ghost;
+import AbstractFactory.GhostFactory;
+
 import java.awt.event.*;
 import java.util.LinkedList;
 import java.util.Random;
@@ -8,6 +11,7 @@ import java.util.Random;
 public class WindowPlayer extends WindowClient  {
     private LinkedList<Window> observers;
     private Integer numObservers;
+    WindowMenu menu = WindowMenu.getInstance();
 
     String playername;
 
@@ -24,6 +28,13 @@ public class WindowPlayer extends WindowClient  {
                 if(e.getKeyCode()==KeyEvent.VK_P){
                     Integer[] coordenates=chooseLoc();
                     cLevel[coordenates[0]][coordenates[1]]=3;
+                }
+                if(e.getKeyCode()==KeyEvent.VK_G){ //With key G is possible to create a ghost
+                    Integer[] coordenates=chooseLoc();
+                    cLevel[coordenates[0]][coordenates[1]]=6; //Updates de level matrix
+                }
+                if(e.getKeyCode()==KeyEvent.VK_M){ //With key G is possible to create a ghost
+
                 }
 
                 player.keyPressed(e, cLevel);
@@ -78,8 +89,9 @@ public class WindowPlayer extends WindowClient  {
 
 
             }
-            if (counter == 2000000){
+            if ((menu != null)&& (menu.getGames().size() != 0)&&(counter == (2000000/menu.getGames().size()))){
                 player.arduino(cLevel);
+                checkResources();
                 counter = 0;
             }
         }
@@ -126,7 +138,7 @@ public class WindowPlayer extends WindowClient  {
 
     /**
      * Decides where a resource must be located.
-     * @return A array with the chosen coordinates.
+     * @return An array with the chosen coordinates.
      */
     private Integer[] chooseLoc(){
         Integer[] coordenates = new Integer[2];
