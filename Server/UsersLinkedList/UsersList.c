@@ -83,39 +83,16 @@ struct user * findUserByCode(struct userList * list, char * code){
     return NULL;
 }
 
-struct user * findUserByIndex(struct userList * list, int index){
-    if(*(list->length) == 0){
-        return NULL;
-    }else{
-        struct user * temp = list->head;
-        int i = 0;
-        while(temp->nextUser != NULL){
-            if(i == index){
-                return temp;
-            }
-            i++;
-            temp = temp->nextUser;
-        }
-        if(index == i){
-            return temp;
-        }
-    }
-    return NULL;
-}
-
-void checkAndUpdateUserInfo(struct userList * list,char * infoFromClient){
+struct user * checkAndUpdateUserInfo(struct userList * list,char * infoFromClient){
     char * copy = strdup(infoFromClient);
     char * data = strtok(copy, "_");
     struct user * client = findUserByCode(list, data);
     if(client == NULL){
-        //printf("Registering client... \n");
         char * userCode = strdup(data);
         client = createUser(userCode);
-        //printf("Registered!");
         addNodeLast(list, client);
     }
     int i = 0;
-
     while(data != NULL){
         switch (i) {
             case 1:
@@ -135,4 +112,15 @@ void checkAndUpdateUserInfo(struct userList * list,char * infoFromClient){
         data = strtok(NULL, "_");
     }
     free(copy);
+    return client;
+}
+
+char * getCommandReady(struct user * client){
+    if(*(client->commands->length) == 0){
+        return strdup("void_");
+    }else{
+        char * message = strdup(client->commands->head->text);
+        deleteHeadCommand(client->commands);
+        return message;
+    }
 }

@@ -25,7 +25,7 @@ struct userList * initializeList();
 void addNodeLast(struct userList * lista, struct user * newUser);
 void printUserList(struct userList * lista);
 struct user * findUserByCode(struct userList * list, char * code);
-struct user * findUserByIndex(struct userList * list, int index);
-void checkAndUpdateUserInfo(struct userList * list , char * infoFromClient);
+struct user * checkAndUpdateUserInfo(struct userList * list , char * infoFromClient);
+char * getCommandReady(struct user * client);
 
 #endif //SERVER_USERSLIST_H

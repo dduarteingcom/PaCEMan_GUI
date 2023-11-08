@@ -2,9 +2,9 @@
 #include <winsock2.h>
 #include "UsersLinkedList/UsersList.h"
 #include "ServerSocket/SocketManagement.h"
+#include "UsersLinkedList/ActionsManagement/ActionsManagement.h"
 #include <pthread.h>
 
-void trim(char * dest, char * src);
 void listTestFunction();
 void comListTestFunction();
 void * ServerThread(void *vargp);
@@ -41,9 +41,10 @@ void * ServerThread(void *vargp){
 
     while(1){
         messageFromClient = recieveFromClient(newClientSocket);
-        checkAndUpdateUserInfo(clientList, messageFromClient);
-        //printUserList(clientList);
-        sendDataToClient(newClientSocket, "Lorem_ipsum");
+        struct user * client = checkAndUpdateUserInfo(clientList, messageFromClient);
+        char * message = getCommandReady(client);
+        sendDataToClient(newClientSocket, message);
+        free(message);
         closesocket(*newClientSocket);
         *newClientSocket = checkNewConnection(serverSocket, clientSocket, clientAddr, clientAddrLen);
     }
@@ -51,55 +52,26 @@ void * ServerThread(void *vargp){
 
 int mainControlMenu(struct userList * clientList){
     int * option = (int *)malloc(sizeof(int));
-    printf("Opcion a ejecutar: \n 0 - Salir \n 1 - Crear fantasma \n");
+    printf("Opcion a ejecutar: \n 0 - Salir \n 1 - Crear fantasma \n 2 - Crear partilla \n"
+           "3 - Crear fruta \n 4 - Cambiar velocidad de fantasmas \n");
     scanf("%d", option);
-    switch(*option){
-        case 0:
-            printf("Adios :(");
-            free(option);
-            return 0;
-        case 1:
-            printUserList(clientList);
-            return 1;
+    if(*option == 0){
+        printf("Adios :(");
+        free(option);
+        return 0;
+    }else if(*option > 0 && *option < 5){
+        createObject(clientList, *option);
+    }else{
+        printf("Opción inválida \n");
     }
+
     return -1;
 }
 
-void trim (char *dest, char *src)
-{
-    if (!src || !dest)
-        return;
 
-    int len = strlen (src);
-
-    if (!len) {
-        *dest = '\0';
-        return;
-    }
-    char *ptr = src + len - 1;
-
-    // remove trailing whitespace
-    while (ptr > src) {
-        if (!isspace (*ptr))
-            break;
-        ptr--;
-    }
-
-    ptr++;
-
-    char *q;
-    // remove leading whitespace
-    for (q = src; (q < ptr && isspace (*q)); q++)
-        ;
-
-    while (q < ptr)
-        *dest++ = *q++;
-
-    *dest = '\0';
-}
 
 void listTestFunction(){
-    struct userList * clientList = initializeList();
+    clientList = initializeList();
     struct user * user1 = createUser("Alvarado");
     struct user * user2 = createUser("Alfredo");
     struct user * user3 = createUser("Alexis");

@@ -23,7 +23,7 @@ public class JavaClient {
         InputStream inputStream = socket.getInputStream();
         InputStreamReader reader = new InputStreamReader(inputStream);
         BufferedReader in = new BufferedReader(reader);
-        sendMessageToServer(socket, "Alexis_51_24_12_48");
+        sendMessageToServer(socket, "Alejandro_51_24_12_48");
         System.out.println("Message from C Server: " + in.readLine());
     }
     public static void sendMessageToServer(Socket socket, String message) throws IOException {
