@@ -1,11 +1,13 @@
 package GUI;
 
 import AbstractFactory.Pinky;
-import AbstractFactory.GhostFactory;
 
 import java.awt.event.*;
+import java.io.*;
+import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Random;
+
 
 
 public class WindowPlayer extends WindowClient  {
@@ -15,21 +17,18 @@ public class WindowPlayer extends WindowClient  {
 
     String playername;
     Pinky ghost;
+    private int currentValueFruit;
 
     WindowPlayer(String playername) {
+
+        this.currentValueFruit=0;
+
         this.playername = playername;
         numObservers = 0;
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode()==KeyEvent.VK_F){
-                    Integer[] coordenates=chooseLoc();
-                    cLevel[coordenates[0]][coordenates[1]]=2;
-                }
-                if(e.getKeyCode()==KeyEvent.VK_P){
-                    Integer[] coordenates=chooseLoc();
-                    cLevel[coordenates[0]][coordenates[1]]=3;
-                }
+
                 if(e.getKeyCode()==KeyEvent.VK_G){ //With key G is possible to create a ghost
                     Integer[] coordenates=chooseLoc();
                     cLevel[coordenates[0]][coordenates[1]]=6; //Updates de level matrix
@@ -42,6 +41,7 @@ public class WindowPlayer extends WindowClient  {
             }
             public void keyReleased(KeyEvent e){
                 player.keyReleased(e);
+
             }
         });
 
@@ -50,16 +50,12 @@ public class WindowPlayer extends WindowClient  {
             public void focusGained(FocusEvent e) {
                 player.permission = true;
             }
-
             @Override
             public void focusLost(FocusEvent e) {
                 player.permission = false;
             }
         });
-
-
     }
-
     /**
      * It's the game loop.
      */
@@ -86,9 +82,14 @@ public class WindowPlayer extends WindowClient  {
 
             }
             if ((menu != null)&& (menu.getGames().size() != 0)&&(counter == (2000000/menu.getGames().size()))){
-                player.arduino(cLevel);
+                //player.arduino(cLevel); //DESCOMENTAR LUEGO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                try {
+                    getMessageFromServer();
+                } catch (IOException e) {
+                    System.out.println("Error: refused");
+                }
                 checkResources();
-                moveGhost();
+                //moveGhost();
                 counter = 0;
             }
         }
@@ -102,6 +103,7 @@ public class WindowPlayer extends WindowClient  {
         Window observer = new Window(false, playername + " Observer" + number);
         numObservers ++;
         observer.panelObserver.setId(numObservers);
+        observer.panelObserver.setNumLevel(getNumlevel());
         observers.add(observer);
 
     }
@@ -115,6 +117,12 @@ public class WindowPlayer extends WindowClient  {
         }
     }
 
+    public void updateClients(Integer numLevel) {
+        for (Integer i = 0; i < observers.size(); i++) {
+            observers.get(i).panelObserver.upDate(player.x, player.y, cLevel, getNumPoints(),numLevel);
+        }
+    }
+
     /**
      * Checks if PaCE has eatean a pill, fruit or dot
      */
@@ -123,11 +131,12 @@ public class WindowPlayer extends WindowClient  {
         if(valuePos==1||valuePos==2||valuePos==3){
             cLevel[player.posY][player.posX]=0;
             if(valuePos==1){
-                Integer newScore = getNumPoints()+1;
+                Integer newScore = getNumPoints()+10;
+                setToNextLevel(getToNextLevel()-10);
                 setNumPoints(newScore);
             }
             else if (valuePos==2){
-                Integer newScore = getNumPoints()+3;
+                Integer newScore = getNumPoints()+getCurrentValueFruit();
                 setNumPoints(newScore);
             }
         }
@@ -153,5 +162,135 @@ public class WindowPlayer extends WindowClient  {
             return chooseLoc();
         }
     }
+
+    private boolean locAvailable(Integer posX, Integer posY){
+        int valcellFound = cLevel[posX][posY];
+        if(valcellFound==0 && posX!= player.posX && posY != player.posY){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    public int getCurrentValueFruit() {
+        return currentValueFruit;
+    }
+
+    public void setCurrentValueFruit(Integer currentValueFruit) {
+        this.currentValueFruit = currentValueFruit;
+    }
+    public void createFruit(Integer value, Integer posX, Integer posY) {
+        System.out.println("Entré");
+        setCurrentValueFruit(value);
+        if (locAvailable(posX,posY)){
+            cLevel[posX][posY]=2;
+        }
+
+    }
+    public void createPill(Integer posX, Integer posY) {
+        if (locAvailable(posX, posY)) {
+            cLevel[posX][posY] = 3;
+        }
+    }
+    public void nextLevel() {
+        player.posX=0;
+        player.posY=0;
+        player.x = 20;
+        player.y = 20;
+        switch (getNumlevel()) {
+            case 1:
+                setcLevel(new Levels().level2);
+
+                break;
+            case 2:
+                setcLevel(new Levels().level3);
+                break;
+
+        }
+        countPoints();
+        setNumLevel(getNumlevel()+1);
+        updateClients(getNumlevel());
+
+
+    }
+
+
+    private void processMessageBack(String message){
+        String command = message.split("_")[0];
+
+
+        if(command.equals("ghost")){
+            String ghostName = message.split("_")[1];
+            System.out.println("Generate ghost, type: " + ghostName);
+            String nameOfUser = message.split("_")[2];
+            if(nameOfUser.equals(playername)){
+                createGhost();
+            }
+
+
+        } else if (command.equals("pill")) {
+            Integer columna = Integer.valueOf((message.split("_")[1]));
+            Integer fila = Integer.valueOf((message.split("_")[2]));
+            System.out.println("Generate pill en " + columna + " " + fila);
+            String nameOfUser = message.split("_")[3];
+            if(nameOfUser.equals(playername)){
+                createPill(columna,fila);
+            }
+
+        }else if (command.equals("fruit")) {
+            Integer columna = Integer.valueOf((message.split("_")[2]));
+            Integer fila = Integer.valueOf((message.split("_")[3]));
+            Integer pointsWorth = Integer.valueOf((message.split("_")[1]));
+            System.out.println("Generate fruit of " + pointsWorth + " points");
+            String nameOfUser = message.split("_")[4];
+
+            if(nameOfUser.equals(playername)){
+                createFruit(pointsWorth,columna,fila);
+            }
+
+        }else if (command.equals("speed")) {
+            Integer speed = Integer.valueOf((message.split("_")[1]));
+            System.out.println("Change ghost speed to " + speed);
+            String nameOfUser = message.split("_")[2];
+
+        }
+        else if (command.equals("addLife")) {
+            this.setLastExtraLife(this.getNumPoints());
+            this.setLives(this.getLives()+1);
+            String nameOfUser = message.split("_")[1];
+        }
+
+        else if (command.equals("next")) {
+            System.out.println(message);
+            System.out.println("Jump to next level");
+            Integer[] lastCoord={player.posY, player.posX};
+
+            String nameOfUser = message.split("_")[1];
+            if(nameOfUser.equals(playername)){
+                nextLevel();
+            }
+
+        }
+    }
+
+    private void getMessageFromServer() throws IOException {
+        Socket socket = new Socket("127.0.0.1", 12345); // Ip y puerto
+        InputStream inputStream = socket.getInputStream();
+        InputStreamReader reader = new InputStreamReader(inputStream);
+        BufferedReader in = new BufferedReader(reader);
+        sendMessageToServer(socket);
+        processMessageBack(in.readLine());
+    }
+    private void sendMessageToServer(Socket socket) throws IOException {
+        OutputStream outputStream = socket.getOutputStream();
+        PrintWriter out = new PrintWriter(outputStream, true);
+        out.println(craftMessageToServer()); //Enviar un mensaje al servidor
+    }
+
+    private String craftMessageToServer(){
+        return this.playername + "_" + getNumPoints() + "_" + (getNumPoints() - getLastExtraLife())+ "_" + getToNextLevel() + "_" + getSpeed();
+
+    }
+
 }
 

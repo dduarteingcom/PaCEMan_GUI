@@ -5,7 +5,6 @@ import java.awt.*;
 import java.util.LinkedList;
 
 import AbstractFactory.*;
-import AbstractFactory.Pinky;
 
 public class WindowClient extends JPanel implements Runnable {
     public static final int WINDOW_WIDTH = 470;
@@ -19,7 +18,13 @@ public class WindowClient extends JPanel implements Runnable {
 
     private GhostFactory ghostFactory;
 
-    public Ghost ghost;
+    public Ghost pinky;
+
+    public Ghost blinky;
+
+    public Ghost inky;
+
+    public Ghost clyde;
 
     public LinkedList<Ghost> ghostLinkedList;
 
@@ -29,15 +34,22 @@ public class WindowClient extends JPanel implements Runnable {
 
     private Integer numPoints;
     private Integer numLevel;
+    private Integer lastExtraLife;
+    private Integer toNextLevel;
+
+
+    private Integer numGhosts;
+
+    private Integer speed;
 
 
     /**
      * Current level
      */
     Integer[][] cLevel;
-    WindowClient(){
-        ghostLinkedList = new LinkedList<>();
 
+    WindowClient() {
+        ghostLinkedList = new LinkedList<>();
         this.player = new Player();
         this.score = new Score();
         this.setFocusable(true);
@@ -49,76 +61,177 @@ public class WindowClient extends JPanel implements Runnable {
         this.lives=3;
         this.numPoints=0;
         this.numLevel=1;
-        ghostFactory = new EnemyFactory();
-        this.ghost = ghostFactory.createGhost(20,20,'b');
+        this.toNextLevel = 0;
+        countPoints();
+        this.speed = 5;
 
+        this.lastExtraLife = 0;
+        this.ghostFactory = new EnemyFactory();
+        this.numGhosts = 0;
     }
 
     /**
      * It's the game loop.
      */
-    public void run(){
+    public void run() {
     }
 
     /**
      * Refresh the elements of the panel
-     * @param g  the <code>Graphics</code> context in which to paint
+     *
+     * @param g the <code>Graphics</code> context in which to paint
      */
     public void paint(Graphics g) {
         image = createImage(getWidth(), getHeight());
         graphics = image.getGraphics();
-        draw(graphics);
+        drawStaticE(graphics);
+        drawOnMove(graphics);
+
         g.drawImage(image, 0, 0, this);
     }
 
     /**
      * Draws all the elements on the panel
+     *
      * @param g the <code>Graphics</code> context in which to paint
      */
-     void draw(Graphics g) {
+    void drawStaticE(Graphics g) {
         for (int i = 0; i < cLevel.length; i++) {
             elementsFactory = new ResourceFactory();
 
             for (int j = 0; j < cLevel[0].length; j++) {
                 if (cLevel[i][j] == 4) {
                     //Draws the blocks
-                    switch (numLevel){
+                    switch (numLevel) {
                         case 1:
-                            elementsFactory.createElement(g,j*20,i*20, "b1");
+                            elementsFactory.createElement(g, j * 20, i * 20, "b1");
                             break;
                         case 2:
-                            elementsFactory.createElement(g,j*20,i*20, "b2");
+                            elementsFactory.createElement(g, j * 20, i * 20, "b2");
                             break;
                         case 3:
-                            elementsFactory.createElement(g,j*20,i*20, "b3");
+                            elementsFactory.createElement(g, j * 20, i * 20, "b3");
                             break;
 
                     }
                 } else if (cLevel[i][j] == 1) {
                     //Draws the dots
-                    elementsFactory.createElement(g,j*20,i*20, "d");
+                    elementsFactory.createElement(g, j * 20, i * 20, "d");
                 } else if (cLevel[i][j] == 2) {
                     //Draws the pills
-                    elementsFactory.createElement(g,j*20,i*20, "f");
+                    elementsFactory.createElement(g, j * 20, i * 20, "f");
                 } else if (cLevel[i][j] == 3) {
-                    elementsFactory.createElement(g,j*20,i*20, "p");
+                    elementsFactory.createElement(g, j * 20, i * 20, "p");
                 }
             }
         }
-        this.player.draw(g);
-        this.score.draw(g,lives,numPoints,numLevel);
-        ghost.draw(g);
 
     }
-    public void setNumPoints(Integer num){
-        this.numPoints=num;
+
+    void drawOnMove(Graphics g) {
+        this.player.draw(g);
+        this.score.draw(g, lives, numPoints, numLevel);
+
+        switch (numGhosts) {
+            case 1:
+                pinky.draw(g);
+                break;
+            case 2:
+                pinky.draw(g);
+                blinky.draw(g);
+                break;
+            case 3:
+                pinky.draw(g);
+                blinky.draw(g);
+                inky.draw(g);
+                break;
+            case 4:
+                pinky.draw(g);
+                blinky.draw(g);
+                inky.draw(g);
+                clyde.draw(g);
+                break;
+        }
     }
-    public Integer getNumPoints(){
+
+    public void setNumPoints(Integer num) {
+        this.numPoints = num;
+    }
+
+    public Integer getNumPoints() {
         return this.numPoints;
     }
 
-    public void moveGhost(){
-         ghost.createMovement(cLevel);
+    public void moveGhost() {
+        pinky.move(20,20);
+    }
+    public void createGhost() {
+        switch (numGhosts) {
+            case 0:
+                pinky = ghostFactory.createGhost(20, 20, 'p');
+                numGhosts++;
+                break;
+            case 1:
+                blinky = ghostFactory.createGhost(20,20,'b');
+                numGhosts++;
+                break;
+            case 2:
+                inky = ghostFactory.createGhost(20,20,'i');
+                numGhosts++;
+                break;
+            case 3:
+                clyde = ghostFactory.createGhost(20,20,'c');
+                numGhosts++;
+                break;
+        }
+    }
+
+    public void setcLevel(Integer[][] cLevel){
+        this.cLevel = cLevel;
+    }
+
+    public void setNumLevel(Integer numLevel){
+        this.numLevel = numLevel;
+    }
+    public Integer getNumlevel(){
+        return this.numLevel;
+    }
+
+    public Integer getLives() {
+        return lives;
+    }
+
+    public void setLives(Integer lives) {
+        this.lives = lives;
+    }
+
+    public Integer getSpeed(){return this.speed;}
+    public void setSpeed(Integer speed){this.speed = speed;}
+
+    public Integer getLastExtraLife() {
+        return lastExtraLife;
+    }
+
+    public void setLastExtraLife(Integer lastExtraLife) {
+        this.lastExtraLife = lastExtraLife;
+    }
+
+    public Integer getToNextLevel() {
+        return toNextLevel;
+    }
+
+    public void setToNextLevel(Integer toNextLevel) {
+        this.toNextLevel = toNextLevel;
+    }
+
+    void countPoints(){
+        for (Integer i=0;i<cLevel.length;i++){
+            for(Integer j=0;j<cLevel[0].length;j++){
+                if (cLevel[i][j]==1){
+                    toNextLevel+=10;
+                }
+            }
+        }
     }
 
 }
