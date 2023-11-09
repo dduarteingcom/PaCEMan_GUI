@@ -7,22 +7,33 @@ import java.io.*;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Random;
+import AbstractFactory.Ghost;
 
 
-
-public class WindowPlayer extends WindowClient  {
+public class WindowPlayer extends WindowClient {
     private LinkedList<Window> observers;
     private Integer numObservers;
     WindowMenu menu = WindowMenu.getInstance();
 
     String playername;
     Pinky ghost;
-    private int currentValueFruit;
+
+    private Integer lastExtraLife;
+    private Integer toNextLevel;
+    private Integer currentValueFruit;
+
+
 
     WindowPlayer(String playername) {
 
+        this.toNextLevel = 0;
+        countPoints();
+        this.lastExtraLife = 0;
+
         this.currentValueFruit=0;
 
+        this.toNextLevel = 0;
+        countPoints();
         this.playername = playername;
         numObservers = 0;
         addKeyListener(new KeyAdapter() {
@@ -89,7 +100,8 @@ public class WindowPlayer extends WindowClient  {
                     System.out.println("Error: refused");
                 }
                 checkResources();
-                //moveGhost();
+                moveGhost();
+                updateGhosts();
                 counter = 0;
             }
         }
@@ -104,6 +116,24 @@ public class WindowPlayer extends WindowClient  {
         numObservers ++;
         observer.panelObserver.setId(numObservers);
         observer.panelObserver.setNumLevel(getNumlevel());
+        for (Integer i = 0; i < ghostLinkedList.size(); i++) {
+            Ghost cGhost= ghostLinkedList.get(i);
+            switch (cGhost.getName()){
+                case "Blinky":
+                    observer.panelObserver.createGhost(cGhost.getPosX(),cGhost.getPosY(),'b');
+                    break;
+                case "Clyde":
+                    observer.panelObserver.createGhost(cGhost.getPosX(),cGhost.getPosY(),'c');
+                    break;
+                case "Inky":
+                    observer.panelObserver.createGhost(cGhost.getPosX(),cGhost.getPosY(),'i');
+                    break;
+                case "Pinky":
+                    observer.panelObserver.createGhost(cGhost.getPosX(),cGhost.getPosY(),'p');
+                    break;
+            }
+
+        }
         observers.add(observer);
 
     }
@@ -111,13 +141,13 @@ public class WindowPlayer extends WindowClient  {
     /**
      * Updates its clients with positions and the map status
      */
-    public void updateClients() {
+    private void updateClients() {
         for (Integer i = 0; i < observers.size(); i++) {
             observers.get(i).panelObserver.upDate(player.x, player.y, cLevel, getNumPoints());
         }
     }
 
-    public void updateClients(Integer numLevel) {
+    private void updateClients(Integer numLevel) {
         for (Integer i = 0; i < observers.size(); i++) {
             observers.get(i).panelObserver.upDate(player.x, player.y, cLevel, getNumPoints(),numLevel);
         }
@@ -163,10 +193,15 @@ public class WindowPlayer extends WindowClient  {
         }
     }
 
-    private boolean locAvailable(Integer posX, Integer posY){
+    private Boolean locAvailable(Integer posX, Integer posY){
         int valcellFound = cLevel[posX][posY];
-        if(valcellFound==0 && posX!= player.posX && posY != player.posY){
-            return true;
+        if(!posX.equals(player.posX) || !posY.equals(player.posY)){
+            if(valcellFound==0 ) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
         else {
             return false;
@@ -210,11 +245,7 @@ public class WindowPlayer extends WindowClient  {
         countPoints();
         setNumLevel(getNumlevel()+1);
         updateClients(getNumlevel());
-
-
     }
-
-
     private void processMessageBack(String message){
         String command = message.split("_")[0];
 
@@ -222,9 +253,30 @@ public class WindowPlayer extends WindowClient  {
         if(command.equals("ghost")){
             String ghostName = message.split("_")[1];
             System.out.println("Generate ghost, type: " + ghostName);
-            String nameOfUser = message.split("_")[2];
+            Integer columna = Integer.valueOf(message.split("_")[2]);
+            Integer fila = Integer.valueOf(message.split("_")[3]);
+            String nameOfUser = message.split("_")[4];
             if(nameOfUser.equals(playername)){
-                createGhost();
+
+                switch (ghostName){
+                    case "Pinky":
+                        createGhost(columna, fila, 'p');
+                        createGhostsOb(columna,fila,'p');
+                        break;
+                    case "Blinky":
+                        createGhost(columna, fila, 'b');
+                        createGhostsOb(columna,fila,'b');
+                        break;
+                    case "Clyde":
+                        createGhost(columna, fila, 'c');
+                        createGhostsOb(columna,fila,'c');
+                        break;
+                    case "Inky":
+                        createGhost(columna, fila, 'i');
+                        createGhostsOb(columna,fila,'i');
+                        break;
+                }
+
             }
 
 
@@ -249,15 +301,20 @@ public class WindowPlayer extends WindowClient  {
             }
 
         }else if (command.equals("speed")) {
-            Integer speed = Integer.valueOf((message.split("_")[1]));
-            System.out.println("Change ghost speed to " + speed);
-            String nameOfUser = message.split("_")[2];
 
+            String nameOfUser = message.split("_")[2];
+            if(nameOfUser.equals(playername)) {
+                Integer speed = Integer.valueOf((message.split("_")[1]));
+                System.out.println("Change ghost speed to " + speed);
+            }
         }
         else if (command.equals("addLife")) {
-            this.setLastExtraLife(this.getNumPoints());
-            this.setLives(this.getLives()+1);
             String nameOfUser = message.split("_")[1];
+            if(nameOfUser.equals(playername)) {
+                this.setLastExtraLife(this.getNumPoints());
+                this.setLives(this.getLives()+1);
+                updateLives();
+            }
         }
 
         else if (command.equals("next")) {
@@ -291,6 +348,64 @@ public class WindowPlayer extends WindowClient  {
         return this.playername + "_" + getNumPoints() + "_" + (getNumPoints() - getLastExtraLife())+ "_" + getToNextLevel() + "_" + getSpeed();
 
     }
+    public Integer getLastExtraLife() {
+        return lastExtraLife;
+    }
+
+    public void setLastExtraLife(Integer lastExtraLife) {
+        this.lastExtraLife = lastExtraLife;
+    }
+
+    public Integer getToNextLevel() {
+        return toNextLevel;
+    }
+
+    public void setToNextLevel(Integer toNextLevel) {
+        this.toNextLevel = toNextLevel;
+    }
+
+    void countPoints(){
+        for (Integer i=0;i<cLevel.length;i++){
+            for(Integer j=0;j<cLevel[0].length;j++){
+                if (cLevel[i][j]==1){
+                    toNextLevel+=10;
+                }
+            }
+        }
+    }
+    private void createGhostsOb(Integer posX, Integer posY, Character type){
+        for (Integer i = 0; i < observers.size(); i++) {
+            observers.get(i).panelObserver.createGhost(posX,posY,type);
+        }
+    }
+    private void updateGhosts(){
+        if(cCreated){
+            for (Integer i = 0; i < observers.size(); i++) {
+                observers.get(i).panelObserver.updateClyde(clyde.x,clyde.y);
+            }
+        }
+        if(bCreated){
+            for (Integer i = 0; i < observers.size(); i++) {
+                observers.get(i).panelObserver.updateBlinky(blinky.x,blinky.y);
+            }
+        }
+        if(iCreated){
+            for (Integer i = 0; i < observers.size(); i++) {
+                observers.get(i).panelObserver.updateInky(inky.x,inky.y);
+            }
+        }
+        if(pCreated){
+            for (Integer i = 0; i < observers.size(); i++) {
+                observers.get(i).panelObserver.updatePinky(pinky.x,pinky.y);
+            }
+        }
+    }
+    private void updateLives(){
+        for (Integer i = 0; i < observers.size(); i++) {
+            observers.get(i).panelObserver.updateLives(getLives());
+        }
+    }
+
 
 }
 

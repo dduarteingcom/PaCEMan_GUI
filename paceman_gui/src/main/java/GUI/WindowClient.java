@@ -34,8 +34,12 @@ public class WindowClient extends JPanel implements Runnable {
 
     private Integer numPoints;
     private Integer numLevel;
-    private Integer lastExtraLife;
-    private Integer toNextLevel;
+
+
+    Boolean pCreated;
+    Boolean cCreated;
+    Boolean bCreated;
+    Boolean iCreated;
 
 
     private Integer numGhosts;
@@ -61,13 +65,13 @@ public class WindowClient extends JPanel implements Runnable {
         this.lives=3;
         this.numPoints=0;
         this.numLevel=1;
-        this.toNextLevel = 0;
-        countPoints();
         this.speed = 5;
-
-        this.lastExtraLife = 0;
         this.ghostFactory = new EnemyFactory();
         this.numGhosts = 0;
+        this.bCreated=false;
+        this.cCreated=false;
+        this.iCreated=false;
+        this.pCreated=false;
     }
 
     /**
@@ -132,25 +136,12 @@ public class WindowClient extends JPanel implements Runnable {
         this.player.draw(g);
         this.score.draw(g, lives, numPoints, numLevel);
 
-        switch (numGhosts) {
-            case 1:
-                pinky.draw(g);
-                break;
-            case 2:
-                pinky.draw(g);
-                blinky.draw(g);
-                break;
-            case 3:
-                pinky.draw(g);
-                blinky.draw(g);
-                inky.draw(g);
-                break;
-            case 4:
-                pinky.draw(g);
-                blinky.draw(g);
-                inky.draw(g);
-                clyde.draw(g);
-                break;
+        if (ghostLinkedList != null && ghostLinkedList.size() > 0) {
+            for (Ghost ghost : ghostLinkedList) {
+                if (ghost != null){
+                    ghost.draw(g);
+                }
+            }
         }
     }
 
@@ -163,27 +154,36 @@ public class WindowClient extends JPanel implements Runnable {
     }
 
     public void moveGhost() {
-        pinky.move(20,20);
-    }
-    public void createGhost() {
-        switch (numGhosts) {
-            case 0:
-                pinky = ghostFactory.createGhost(20, 20, 'p');
-                numGhosts++;
-                break;
-            case 1:
-                blinky = ghostFactory.createGhost(20,20,'b');
-                numGhosts++;
-                break;
-            case 2:
-                inky = ghostFactory.createGhost(20,20,'i');
-                numGhosts++;
-                break;
-            case 3:
-                clyde = ghostFactory.createGhost(20,20,'c');
-                numGhosts++;
-                break;
+        if (ghostLinkedList != null && ghostLinkedList.size() > 0) {
+            for (Ghost ghost : ghostLinkedList) {
+                if (ghost != null){
+                    ghost.createMovement(cLevel);
+                }
+            }
         }
+    }
+    public void createGhost(Integer x, Integer y, Character type) {
+        switch (type){
+            case 'p':
+                pinky = ghostFactory.createGhost(x*20, y*20, type);
+                ghostLinkedList.add(pinky);
+                pCreated=true;
+                break;
+            case 'b':
+                blinky = ghostFactory.createGhost(x*20, y*20, type);
+                bCreated=true;
+                ghostLinkedList.add(blinky);
+            case 'i':
+                inky = ghostFactory.createGhost(x*20, y*20, type);
+                iCreated=true;
+                ghostLinkedList.add(inky);
+            case 'c':
+                clyde = ghostFactory.createGhost(x*20, y*20, type);
+                cCreated=true;
+                ghostLinkedList.add(clyde);
+
+        }
+        numGhosts++;
     }
 
     public void setcLevel(Integer[][] cLevel){
@@ -208,30 +208,8 @@ public class WindowClient extends JPanel implements Runnable {
     public Integer getSpeed(){return this.speed;}
     public void setSpeed(Integer speed){this.speed = speed;}
 
-    public Integer getLastExtraLife() {
-        return lastExtraLife;
-    }
 
-    public void setLastExtraLife(Integer lastExtraLife) {
-        this.lastExtraLife = lastExtraLife;
-    }
 
-    public Integer getToNextLevel() {
-        return toNextLevel;
-    }
 
-    public void setToNextLevel(Integer toNextLevel) {
-        this.toNextLevel = toNextLevel;
-    }
-
-    void countPoints(){
-        for (Integer i=0;i<cLevel.length;i++){
-            for(Integer j=0;j<cLevel[0].length;j++){
-                if (cLevel[i][j]==1){
-                    toNextLevel+=10;
-                }
-            }
-        }
-    }
 
 }

@@ -64,5 +64,24 @@ public class WindowObserver extends WindowClient{
 
 
     }
+    void updateClyde(Integer x, Integer y) {
+        clyde.x = x;
+        clyde.y = y;
+    }
+    void updateBlinky(Integer x, Integer y) {
+        blinky.x = x;
+        blinky.y = y;
+    }
+    void updateInky(Integer x, Integer y) {
+        inky.x = x;
+        inky.y = y;
+    }
+    void updatePinky(Integer x, Integer y) {
+        pinky.x = x;
+        pinky.y = y;
+    }
+    void updateLives(Integer lives){
+        setLives(lives);
+    }
 
 }
