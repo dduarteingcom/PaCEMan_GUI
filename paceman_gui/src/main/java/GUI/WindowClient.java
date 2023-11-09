@@ -50,7 +50,7 @@ public class WindowClient extends JPanel implements Runnable {
         this.numPoints=0;
         this.numLevel=1;
         ghostFactory = new EnemyFactory();
-        this.ghost = ghostFactory.createGhost(20,20,'p');
+        this.ghost = ghostFactory.createGhost(20,20,'b');
 
     }
 
