@@ -86,10 +86,10 @@ public class WindowPlayer extends WindowClient  {
                 try {
                     getMessageFromServer();
                 } catch (IOException e) {
-                    System.out.println("Desconectado del servidor");
+                    System.out.println("Error: refused");
                 }
                 checkResources();
-                moveGhost();
+                //moveGhost();
                 counter = 0;
             }
         }
@@ -217,27 +217,14 @@ public class WindowPlayer extends WindowClient  {
 
     private void processMessageBack(String message){
         String command = message.split("_")[0];
+
+
         if(command.equals("ghost")){
             String ghostName = message.split("_")[1];
             System.out.println("Generate ghost, type: " + ghostName);
-            Integer columna = Integer.valueOf(message.split("_")[2]);
-            Integer fila = Integer.valueOf(message.split("_")[3]);
-            String nameOfUser = message.split("_")[4];
+            String nameOfUser = message.split("_")[2];
             if(nameOfUser.equals(playername)){
-                switch (ghostName){
-                    case "Pinky":
-                        createGhost(columna, fila, 'p');
-                        break;
-                    case "Blinky":
-                        createGhost(columna, fila, 'b');
-                        break;
-                    case "Clyde":
-                        createGhost(columna, fila, 'c');
-                        break;
-                    case "Inky":
-                        createGhost(columna, fila, 'i');
-                        break;
-                }
+                createGhost();
             }
 
 

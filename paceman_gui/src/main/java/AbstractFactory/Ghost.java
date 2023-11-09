@@ -1,21 +1,12 @@
 package AbstractFactory;
 
-import GUI.Pathfinder;
 import GUI.WindowClient;
 
 import java.awt.*;
-import java.util.LinkedList;
-import java.util.List;
 
 public class Ghost extends Rectangle {
     Image image;
-    Integer posX;
-    Integer posY;
 
-    Integer speed;
-
-
-    LinkedList<Pathfinder.Point> path;
 
 
 
@@ -24,44 +15,7 @@ public class Ghost extends Rectangle {
         g.drawImage(image,x,y,20,20,null);
     }
 
-    public void move(Integer[][]nlevel, Integer yDirection, Integer xDirection){
-        getPosition();
-        //Checking colissions
-        //He's moving horizontally
-        if(yDirection==0){
-            //He's moving to the left
-            if(xDirection==-1){
-                if(nlevel[posY][posX-1]==4){
-                    xDirection=0;
-                }
-            }
-            //He's moving to the right
-            else if (xDirection==1) {
-                if(nlevel[posY][posX+1]==4){
-                    xDirection=0;
-                }
-            }
-        }
-        //He's moving vertically
-        else if(xDirection==0){
-            //He is moving upward
-            if(yDirection==-1){
-                if(nlevel[posY-1][posX]==4){
-                    yDirection=0;
-                }
-            }
-            //He is moving downward
-            else if(yDirection==1){
-                if(nlevel[posY+1][posX]==4){
-                    yDirection=0;
-                }
-            }
-
-        }
-        //Movement
-        y = y +(speed*yDirection);
-        x = x +(speed*xDirection);
-
+    private void move(Integer[][]nlevel, Integer yDirection, Integer xDirection){
 
     }
 
@@ -76,16 +30,5 @@ public class Ghost extends Rectangle {
     public Ghost createGhost(){
         return this;
     }
-
-    private void getPosition(){
-        if(x% 20 ==0){
-            posX=x/20;
-
-        }
-        if(y % 20==0){
-            posY=y/20;
-        }
-    }
-
 
 }

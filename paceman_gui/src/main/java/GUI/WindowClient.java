@@ -132,12 +132,25 @@ public class WindowClient extends JPanel implements Runnable {
         this.player.draw(g);
         this.score.draw(g, lives, numPoints, numLevel);
 
-        if (ghostLinkedList != null && ghostLinkedList.size() > 0) {
-            for (Ghost ghost : ghostLinkedList) {
-                if (ghost != null){
-                    ghost.draw(g);
-                }
-            }
+        switch (numGhosts) {
+            case 1:
+                pinky.draw(g);
+                break;
+            case 2:
+                pinky.draw(g);
+                blinky.draw(g);
+                break;
+            case 3:
+                pinky.draw(g);
+                blinky.draw(g);
+                inky.draw(g);
+                break;
+            case 4:
+                pinky.draw(g);
+                blinky.draw(g);
+                inky.draw(g);
+                clyde.draw(g);
+                break;
         }
     }
 
@@ -150,32 +163,27 @@ public class WindowClient extends JPanel implements Runnable {
     }
 
     public void moveGhost() {
-        if (ghostLinkedList != null && ghostLinkedList.size() > 0) {
-            for (Ghost ghost : ghostLinkedList) {
-                if (ghost != null){
-                    ghost.createMovement(cLevel);
-                }
-            }
-        }
+        pinky.move(20,20);
     }
-    public void createGhost(Integer x, Integer y, Character type) {
-        switch (type){
-            case 'p':
-                pinky = ghostFactory.createGhost(x*20, y*20, type);
-                ghostLinkedList.add(pinky);
+    public void createGhost() {
+        switch (numGhosts) {
+            case 0:
+                pinky = ghostFactory.createGhost(20, 20, 'p');
+                numGhosts++;
                 break;
-            case 'b':
-                blinky = ghostFactory.createGhost(x*20, y*20, type);
-                ghostLinkedList.add(blinky);
-            case 'i':
-                inky = ghostFactory.createGhost(x*20, y*20, type);
-                ghostLinkedList.add(inky);
-            case 'c':
-                clyde = ghostFactory.createGhost(x*20, y*20, type);
-                ghostLinkedList.add(clyde);
-
+            case 1:
+                blinky = ghostFactory.createGhost(20,20,'b');
+                numGhosts++;
+                break;
+            case 2:
+                inky = ghostFactory.createGhost(20,20,'i');
+                numGhosts++;
+                break;
+            case 3:
+                clyde = ghostFactory.createGhost(20,20,'c');
+                numGhosts++;
+                break;
         }
-        numGhosts++;
     }
 
     public void setcLevel(Integer[][] cLevel){
