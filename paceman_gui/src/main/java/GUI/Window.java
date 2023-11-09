@@ -8,6 +8,7 @@ public class Window extends JFrame {
     WindowPlayer  panelPlayer;
     WindowObserver panelObserver;
 
+
     String player; //Indica el nombre del jugador de la partida
 
     Window(boolean type, String playername){ //Constructor de ventanas de expectador y jugador

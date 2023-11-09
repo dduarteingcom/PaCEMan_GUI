@@ -41,6 +41,7 @@ public class WindowClient extends JPanel implements Runnable {
     private Integer numGhosts;
 
     private Integer speed;
+    boolean running;
 
 
     /**
@@ -49,6 +50,7 @@ public class WindowClient extends JPanel implements Runnable {
     Integer[][] cLevel;
 
     WindowClient() {
+        running = true;
         ghostLinkedList = new LinkedList<>();
         this.player = new Player();
         this.score = new Score();
@@ -136,6 +138,26 @@ public class WindowClient extends JPanel implements Runnable {
             for (Ghost ghost : ghostLinkedList) {
                 if (ghost != null){
                     ghost.draw(g);
+                }
+            }
+        }
+    }
+
+    void checkColissions(){ //Checks for colissions between player and ghosts
+        if (ghostLinkedList != null && ghostLinkedList.size() > 0) {
+            for (Ghost ghost : ghostLinkedList) {
+                if (ghost != null){
+                    if (ghost.x == player.x && ghost.y == player.y){
+                        System.out.println("Choque");
+                        player.x = 20; //Returns player to start position
+                        player.y = 20;
+                        lives--;
+                        if (lives == 0){
+                            this.setVisible(false);
+                            JOptionPane.showMessageDialog(this, "Has perdido el juego", "No hay vidas restantes", JOptionPane.PLAIN_MESSAGE);
+                            running = false;
+                        }
+                    }
                 }
             }
         }

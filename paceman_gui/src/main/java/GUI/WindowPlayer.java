@@ -2,6 +2,8 @@ package GUI;
 
 import AbstractFactory.Pinky;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.Socket;
@@ -68,7 +70,7 @@ public class WindowPlayer extends WindowClient  {
         double delta = 0;
         int counter = 0;
         observers = new LinkedList<>();
-        while(true) {
+        while(running) {
             counter++;
             long now = System.nanoTime();
             delta += (now -lastTime)/ns;
@@ -89,10 +91,13 @@ public class WindowPlayer extends WindowClient  {
                     System.out.println("Desconectado del servidor");
                 }
                 checkResources();
+                checkColissions();
                 moveGhost();
                 counter = 0;
             }
         }
+        disconnectObservers();
+
     }
 
     /**
@@ -107,6 +112,12 @@ public class WindowPlayer extends WindowClient  {
         observers.add(observer);
 
     }
+    private void disconnectObservers(){
+        for (Window observer : observers) {
+            observer.panelObserver.disconnect();
+
+        }
+    }
 
     /**
      * Updates its clients with positions and the map status
@@ -118,8 +129,8 @@ public class WindowPlayer extends WindowClient  {
     }
 
     public void updateClients(Integer numLevel) {
-        for (Integer i = 0; i < observers.size(); i++) {
-            observers.get(i).panelObserver.upDate(player.x, player.y, cLevel, getNumPoints(),numLevel);
+        for (Window observer : observers) {
+            observer.panelObserver.upDate(player.x, player.y, cLevel, getNumPoints(), numLevel);
         }
     }
 
