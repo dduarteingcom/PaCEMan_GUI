@@ -49,12 +49,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Projects/PaCEMan_GUI/Server/cmake-build-debug",
-		"source" : "C:/Projects/PaCEMan_GUI/Server"
+		"build" : "C:/Users/andre/Desktop/Paradigmas/PaCEMan_GUI/Server/cmake-build-debug",
+		"source" : "C:/Users/andre/Desktop/Paradigmas/PaCEMan_GUI/Server"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 5
+		"minor" : 4
 	}
 }

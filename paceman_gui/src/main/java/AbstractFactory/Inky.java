@@ -23,7 +23,6 @@ public class Inky extends Ghost{
             Random random = new Random();
             Integer destinyX;
             Integer destinyY;
-            System.out.println("crea nuevo path");
             Pathfinder.Point start = new Pathfinder.Point(posX, posY, null);
             destinyX = random.nextInt(15)+1;
             destinyY = random.nextInt(13)+1;
@@ -33,8 +32,6 @@ public class Inky extends Ghost{
             }
             Pathfinder.Point end = new Pathfinder.Point(destinyX, destinyY, null);
             path = Pathfinder.FindPath(nlevel, start, end);
-            System.out.println("Inicio" + posX + " " + posY);
-            System.out.println("Destino " + destinyX + " " +destinyY);
             if (path != null) {
                 Pathfinder.Point current = start;
                 for (Pathfinder.Point point : path) {
@@ -47,7 +44,6 @@ public class Inky extends Ghost{
                 System.out.println("No path found");
         }
         else{
-            System.out.println("sigue su path");
             move(nlevel, path.getFirst().ymovement, path.getFirst().xmovement);
             path.removeFirst();
 

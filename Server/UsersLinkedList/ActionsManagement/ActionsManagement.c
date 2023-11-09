@@ -46,10 +46,28 @@ void createObject(struct userList * list, int operation){
  * @param userTargeted user to attach the command to
  */
 void createGhostCommand(struct user * userTargeted){
+    char * fila = (char *)malloc(sizeof(char ));
+    char * columna = (char *)malloc(sizeof(char ));
     char * message = strdup("ghost_");
     char * phantom = (char *)malloc(sizeof(char ));
     printf("Escriba el nombre del tipo de fantasma a aparecer: \n");
     scanf("%s", phantom);
+    if (strcmp(phantom, "Pinky") != 0 && (strcmp(phantom, "Clyde") != 0) && (strcmp(phantom, "Inky") != 0) && (strcmp(phantom, "Blinky") != 0)){
+        printf("Coloque el nombre del fantasma correcto: Pinky, Inky, Blinky o Clyde \n");
+        free(fila);
+        free(columna);
+        free(message);
+        free(phantom);
+        createGhostCommand(userTargeted);
+    }
+    printf("Escriba la fila para aparecer: \n");
+    scanf("%s", fila);
+    printf("Escriba la columna para aparecer: \n");
+    scanf("%s", columna);
+    strcat(phantom, "_");
+    strcat(phantom, fila);
+    strcat(phantom, "_");
+    strcat(phantom, columna);
     strcat(message, phantom);
     free(phantom);
     queueCommand(userTargeted, message);
@@ -96,7 +114,7 @@ void createFruitCommand(struct user * userTargeted){
     strcat(points, columna);
     strcat(message, points);
     free(points);
-    queueCommand(userTargeted, message);
+    queueCommand(userTargeted, message); //fuit_points_column_fila
     free(fila);
     free(columna);
 }
