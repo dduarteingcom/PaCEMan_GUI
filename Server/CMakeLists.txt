@@ -16,5 +16,6 @@ add_executable(Server main.c
         UsersLinkedList/UserCommandsList/ComList.c
         UsersLinkedList/UserCommandsList/ComList.h
         UsersLinkedList/ActionsManagement/ActionsManagement.c
-        UsersLinkedList/ActionsManagement/ActionsManagement.h)
+        UsersLinkedList/ActionsManagement/ActionsManagement.h
+        Constants.h)
 target_link_libraries(Server ws2_32)

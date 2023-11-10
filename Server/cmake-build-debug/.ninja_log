@@ -1,8 +1,13 @@
 # ninja log v5
-0	621	7212885614841116	CMakeFiles/Server.dir/main.c.obj	246f879d92c7e3e1
-11	102	7212885880526691	CMakeFiles/Server.dir/UsersLinkedList/UserCommandsList/ComList.c.obj	fc69d128e0ddee78
+2	541	7212906965693653	CMakeFiles/Server.dir/main.c.obj	9d41258411538e66
+8	77	7212906260604753	CMakeFiles/Server.dir/UsersLinkedList/UserCommandsList/ComList.c.obj	fc69d128e0ddee78
 7	107	7212885880596462	CMakeFiles/Server.dir/UsersLinkedList/UsersList.c.obj	627dd7e2387024e0
-18	112	7212885880646299	CMakeFiles/Server.dir/UsersLinkedList/ActionsManagement/ActionsManagement.c.obj	debf5b64e4d90396
-2	707	7212885886579674	CMakeFiles/Server.dir/main.c.obj	9d41258411538e66
-15	712	7212885886649440	CMakeFiles/Server.dir/ServerSocket/SocketManagement.c.obj	8d4661ab59099680
-712	797	7212885887444942	Server.exe	a41ac4b2cb588525
+541	609	7212906966357907	Server.exe	a41ac4b2cb588525
+13	80	7212906260644615	CMakeFiles/Server.dir/UsersLinkedList/ActionsManagement/ActionsManagement.c.obj	debf5b64e4d90396
+4	685	7212906266675196	CMakeFiles/Server.dir/ServerSocket/SocketManagement.c.obj	8d4661ab59099680
+4	53	7212912242854210	CMakeFiles/Server.dir/UsersLinkedList/UserCommandsList/ComList.c.obj	fc69d128e0ddee78
+2	919	7212912251514562	CMakeFiles/Server.dir/main.c.obj	9d41258411538e66
+920	986	7212912252166461	Server.exe	a41ac4b2cb588525
+4	68	7212915595623465	CMakeFiles/Server.dir/UsersLinkedList/ActionsManagement/ActionsManagement.c.obj	debf5b64e4d90396
+1	628	7212915601193191	CMakeFiles/Server.dir/main.c.obj	9d41258411538e66
+628	690	7212915601819625	Server.exe	a41ac4b2cb588525
