@@ -21,6 +21,7 @@ public class Blinky extends Ghost{
         y = posY;
         this.image = new ImageIcon("src/media/blinky.png").getImage();
         createGhost();
+        this.isAlive=true;
     }
     @Override
     public void createMovement(Integer[][] nlevel){

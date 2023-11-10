@@ -2,6 +2,8 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
 import AbstractFactory.*;
@@ -45,6 +47,9 @@ public class WindowClient extends JPanel implements Runnable {
     private Integer numGhosts;
 
     private Integer speed;
+    boolean running;
+
+    boolean powerActivated;
 
 
     /**
@@ -53,6 +58,7 @@ public class WindowClient extends JPanel implements Runnable {
     Integer[][] cLevel;
 
     WindowClient() {
+        running = true;
         ghostLinkedList = new LinkedList<>();
         this.player = new Player();
         this.score = new Score();
@@ -140,6 +146,56 @@ public class WindowClient extends JPanel implements Runnable {
             for (Ghost ghost : ghostLinkedList) {
                 if (ghost != null){
                     ghost.draw(g);
+                }
+            }
+        }
+    }
+
+    void checkColissions(){ //Checks for colissions between player and ghosts
+        if (ghostLinkedList != null && ghostLinkedList.size() > 0) {
+            for (Ghost ghost : ghostLinkedList) {
+                if (ghost != null){
+                    if (ghost.x == player.x && ghost.y == player.y){
+                        System.out.println("Choque");
+                        if(!powerActivated){
+                            player.x = 20; //Returns player to start position
+                            player.y = 20;
+                            lives--;
+                        }
+                        else {
+                            ghost.setAlive(false);
+                            ghost.y=10000;
+                            ghost.x=10000;
+                            Timer timer = new Timer(1000, new ActionListener() {
+                                int contador = 10; // Establecer el tiempo inicial en segundos
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    if (contador > 0) {
+
+                                        contador--;
+                                    }
+                                    else {
+                                        ghost.x=20;
+                                        ghost.y=20;
+                                        ghost.setPosX(1);
+                                        ghost.setPosY(1);
+                                        ghost.setAlive(true);
+                                        System.out.println("Here");
+                                        ((Timer) e.getSource()).stop(); // Detener el temporizador cuando el tiempo llega a cero
+                                    }
+                                }
+                            });
+                            timer.start();
+                        }
+
+
+
+                        if (lives == 0){
+                            this.setVisible(false);
+                            JOptionPane.showMessageDialog(this, "Has perdido el juego", "No hay vidas restantes", JOptionPane.PLAIN_MESSAGE);
+                            running = false;
+                        }
+                    }
                 }
             }
         }

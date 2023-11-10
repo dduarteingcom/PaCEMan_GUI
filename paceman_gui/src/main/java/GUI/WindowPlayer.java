@@ -2,6 +2,8 @@ package GUI;
 
 import AbstractFactory.Pinky;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.Socket;
@@ -25,9 +27,7 @@ public class WindowPlayer extends WindowClient {
 
 
     WindowPlayer(String playername) {
-
-        this.toNextLevel = 0;
-        countPoints();
+        
         this.lastExtraLife = 0;
 
         this.currentValueFruit=0;
@@ -35,7 +35,8 @@ public class WindowPlayer extends WindowClient {
         this.toNextLevel = 0;
         countPoints();
         this.playername = playername;
-        numObservers = 0;
+        this.numObservers = 0;
+        this.powerActivated=false;
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -79,7 +80,7 @@ public class WindowPlayer extends WindowClient {
         double delta = 0;
         int counter = 0;
         observers = new LinkedList<>();
-        while(true) {
+        while(running) {
             counter++;
             long now = System.nanoTime();
             delta += (now -lastTime)/ns;
@@ -100,11 +101,14 @@ public class WindowPlayer extends WindowClient {
                     System.out.println("Error: refused");
                 }
                 checkResources();
+                checkColissions();
                 moveGhost();
                 updateGhosts();
                 counter = 0;
             }
         }
+        disconnectObservers();
+
     }
 
     /**
@@ -137,6 +141,12 @@ public class WindowPlayer extends WindowClient {
         observers.add(observer);
 
     }
+    private void disconnectObservers(){
+        for (Window observer : observers) {
+            observer.panelObserver.disconnect();
+
+        }
+    }
 
     /**
      * Updates its clients with positions and the map status
@@ -147,9 +157,11 @@ public class WindowPlayer extends WindowClient {
         }
     }
 
-    private void updateClients(Integer numLevel) {
-        for (Integer i = 0; i < observers.size(); i++) {
-            observers.get(i).panelObserver.upDate(player.x, player.y, cLevel, getNumPoints(),numLevel);
+
+    public void updateClients(Integer numLevel) {
+        for (Window observer : observers) {
+            observer.panelObserver.upDate(player.x, player.y, cLevel, getNumPoints(), numLevel);
+
         }
     }
 
@@ -168,8 +180,25 @@ public class WindowPlayer extends WindowClient {
             else if (valuePos==2){
                 Integer newScore = getNumPoints()+getCurrentValueFruit();
                 setNumPoints(newScore);
+            } else if (valuePos==3) {
+                Timer timer = new Timer(1000, new ActionListener() {
+                    int contador = 10; // Establecer el tiempo inicial en segundos
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (contador > 0) {
+                            powerActivated=true;
+                            contador--;
+                        } else {
+                            powerActivated=false;
+                            ((Timer) e.getSource()).stop(); // Detener el temporizador cuando el tiempo llega a cero
+                        }
+                    }
+                });
+                timer.start();
             }
         }
+        
     }
 
     /**
@@ -248,9 +277,8 @@ public class WindowPlayer extends WindowClient {
     }
     private void processMessageBack(String message){
         String command = message.split("_")[0];
-
-
         if(command.equals("ghost")){
+            System.out.println(message);
             String ghostName = message.split("_")[1];
             System.out.println("Generate ghost, type: " + ghostName);
             Integer columna = Integer.valueOf(message.split("_")[2]);

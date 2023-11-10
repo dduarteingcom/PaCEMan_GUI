@@ -5,7 +5,7 @@ public class Levels {
      * 0 = There's nothing
      * 1 = There's a dot
      * 2 = There's a fruit
-     * 3 = There's a dot
+     * 3 = There's a pill
      * 4 = There's a block
      * 5 = There's PaCEman
      * 6 = There's a Ghost

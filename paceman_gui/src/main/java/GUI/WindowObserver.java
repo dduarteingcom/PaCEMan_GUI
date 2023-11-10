@@ -1,5 +1,6 @@
 package GUI;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class WindowObserver extends WindowClient{
@@ -29,6 +30,23 @@ public class WindowObserver extends WindowClient{
         setNumLevel(numlevel);
     }
 
+    public void disconnect(){
+        running = false;
+        this.removeAll();
+        JPanel panel = new JPanel();
+        panel.setLayout(null);
+        ImageIcon backgroundImage = new ImageIcon("src/media/disconnected.png");
+        Image img=backgroundImage.getImage();
+        Image temp=img.getScaledInstance(650,650,Image.SCALE_SMOOTH);
+        backgroundImage=new ImageIcon(temp);
+        JLabel backgroundLabel = new JLabel(backgroundImage);
+        backgroundLabel.setBounds(0, 0, backgroundImage.getIconWidth(), backgroundImage.getIconHeight());
+        panel.add(backgroundLabel);
+        this.add(panel);
+
+
+    }
+
     /**
      * It's the game loop
      */
@@ -39,7 +57,7 @@ public class WindowObserver extends WindowClient{
         double amountOfTicks =60.0;
         double ns = 1000000000 / amountOfTicks;
         double delta = 0;
-        while(true) {
+        while(running) {
             long now = System.nanoTime();
             delta += (now -lastTime)/ns;
             lastTime = now;

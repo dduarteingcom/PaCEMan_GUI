@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Ghost extends Rectangle {
+public class Ghost extends Rectangle  {
     Image image;
     Integer posX;
     Integer posY;
@@ -17,6 +17,8 @@ public class Ghost extends Rectangle {
     String name;
     LinkedList<Pathfinder.Point> path;
 
+    Boolean isAlive;
+
 
 
 
@@ -25,42 +27,44 @@ public class Ghost extends Rectangle {
     }
 
     public void move(Integer[][]nlevel, Integer yDirection, Integer xDirection){
-        getPosition();
-        //Checking colissions
-        //He's moving horizontally
-        if(yDirection==0){
-            //He's moving to the left
-            if(xDirection==-1){
-                if(nlevel[posY][posX-1]==4){
-                    xDirection=0;
+        if(isAlive) {
+            getPosition();
+            //Checking colissions
+            //He's moving horizontally
+            if (yDirection == 0) {
+                //He's moving to the left
+                if (xDirection == -1) {
+                    if (nlevel[posY][posX - 1] == 4) {
+                        xDirection = 0;
+                    }
+                }
+                //He's moving to the right
+                else if (xDirection == 1) {
+                    if (nlevel[posY][posX + 1] == 4) {
+                        xDirection = 0;
+                    }
                 }
             }
-            //He's moving to the right
-            else if (xDirection==1) {
-                if(nlevel[posY][posX+1]==4){
-                    xDirection=0;
+            //He's moving vertically
+            else if (xDirection == 0) {
+                //He is moving upward
+                if (yDirection == -1) {
+                    if (nlevel[posY - 1][posX] == 4) {
+                        yDirection = 0;
+                    }
                 }
-            }
-        }
-        //He's moving vertically
-        else if(xDirection==0){
-            //He is moving upward
-            if(yDirection==-1){
-                if(nlevel[posY-1][posX]==4){
-                    yDirection=0;
+                //He is moving downward
+                else if (yDirection == 1) {
+                    if (nlevel[posY + 1][posX] == 4) {
+                        yDirection = 0;
+                    }
                 }
-            }
-            //He is moving downward
-            else if(yDirection==1){
-                if(nlevel[posY+1][posX]==4){
-                    yDirection=0;
-                }
-            }
 
+            }
+            //Movement
+            y = y + (speed * yDirection);
+            x = x + (speed * xDirection);
         }
-        //Movement
-        y = y +(speed*yDirection);
-        x = x +(speed*xDirection);
 
 
     }
@@ -97,5 +101,17 @@ public class Ghost extends Rectangle {
 
     public Integer getPosY() {
         return posY;
+    }
+
+    public void setAlive(Boolean alive) {
+        isAlive = alive;
+    }
+
+    public void setPosX(Integer posX) {
+        this.posX = posX;
+    }
+
+    public void setPosY(Integer posY) {
+        this.posY = posY;
     }
 }

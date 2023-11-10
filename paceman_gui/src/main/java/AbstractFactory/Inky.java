@@ -16,6 +16,7 @@ public class Inky extends Ghost{
         y = posY;
         this.image = new ImageIcon("src/media/inky.png").getImage();
         createGhost();
+        this.isAlive=true;
     }
     @Override
     public void createMovement(Integer[][] nlevel){

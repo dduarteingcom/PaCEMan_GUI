@@ -16,6 +16,7 @@ public class Clyde extends Ghost{
         y = posY;
         this.image = new ImageIcon("src/media/clyde.png").getImage();
         createGhost();
+        this.isAlive=true;
     }
     @Override
     public void createMovement(Integer[][] nlevel){
