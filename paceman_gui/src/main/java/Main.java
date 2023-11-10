@@ -1,5 +1,5 @@
-import GUI.Window;
-import GUI.WindowMenu;
+import Windows.Window;
+import Windows.WindowMenu;
 
 public class Main {
     public static void main(String[] args){

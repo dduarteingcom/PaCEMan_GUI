@@ -1,5 +1,7 @@
 package GUI;
 
+import Windows.WindowClient;
+
 import java.awt.*;
 
 public class ObserverLabel extends Rectangle {

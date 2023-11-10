@@ -1,4 +1,4 @@
-package GUI;
+package Windows;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
 import AbstractFactory.*;
+import GUI.Levels;
+import GUI.Player;
+import GUI.Score;
 
 public class WindowClient extends JPanel implements Runnable {
     public static final int WINDOW_WIDTH = 470;

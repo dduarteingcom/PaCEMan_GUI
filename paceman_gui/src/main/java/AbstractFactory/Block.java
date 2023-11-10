@@ -1,10 +1,7 @@
 package AbstractFactory;
 
-import GUI.WindowClient;
-
 import javax.swing.*;
 import java.awt.*;
-import GUI.WindowClient;
 
 
 public class Block extends Resource {

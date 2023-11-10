@@ -18,10 +18,10 @@ public class Player extends Rectangle {
     private Image image;
     //Arduino ard = Arduino.getInstance();
     Arduino ard;
-    Integer posX;
-    Integer posY;
-    Boolean permission;
-    Player(){
+    public Integer posX;
+    public Integer posY;
+    public Boolean permission;
+    public Player(){
         this.speed=20;
         this.xDirection =0;
         this.yDirection=0;
@@ -71,7 +71,7 @@ public class Player extends Rectangle {
      * @param e event
      * @param nlevel current level
      */
-     void keyPressed(KeyEvent e, Integer[][] nlevel) {
+     public void keyPressed(KeyEvent e, Integer[][] nlevel) {
         if(e.getKeyCode()==KeyEvent.VK_LEFT) {
             if(y % 20 == 0) {
                 xDirection = -1;
@@ -102,7 +102,7 @@ public class Player extends Rectangle {
      * Indicates when PaCEman must stop moving when the key is not pressed anymore.
      * @param e Event
      */
-    void keyReleased(KeyEvent e){
+    public void keyReleased(KeyEvent e){
         if(e.getKeyCode()==KeyEvent.VK_LEFT || e.getKeyCode()==KeyEvent.VK_RIGHT) {
                 xDirection = 0;
         }
@@ -163,7 +163,7 @@ public class Player extends Rectangle {
      * Draws PaCEman on the Panel
      * @param g The Graphics
      */
-    void draw(Graphics g){
+    public void draw(Graphics g){
         g.drawImage(image,x,y,20,20,null);
     }
 

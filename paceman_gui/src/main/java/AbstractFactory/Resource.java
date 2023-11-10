@@ -1,8 +1,7 @@
 package AbstractFactory;
 
-import GUI.WindowClient;
+import Windows.WindowClient;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class Resource extends Rectangle {

@@ -1,4 +1,4 @@
-package GUI;
+package Windows;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 //WindowMenu es clase hija de Window. Se encuentra implementada con un Singleton para asegurar que solo exista un menu principal.
 //Actua de referencia para juegos y expectadores. LLeva una lista enlazada de los juegos y expectadores.
-public class WindowMenu extends Window{
+public class WindowMenu extends Window {
     LinkedList<Window> games = new LinkedList<>();
 
     private WindowMenu(){

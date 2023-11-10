@@ -1,11 +1,9 @@
 package AbstractFactory;
 
 import GUI.Pathfinder;
-import GUI.WindowClient;
 
 import java.awt.*;
 import java.util.LinkedList;
-import java.util.List;
 
 public class Ghost extends Rectangle  {
     Image image;

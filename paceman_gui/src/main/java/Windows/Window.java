@@ -1,11 +1,10 @@
-package GUI;
+package Windows;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.LinkedList;
 
 public class Window extends JFrame {
-    WindowPlayer  panelPlayer;
+    WindowPlayer panelPlayer;
     WindowObserver panelObserver;
 
 

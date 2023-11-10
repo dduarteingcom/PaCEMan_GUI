@@ -1,15 +1,18 @@
-package GUI;
+package Windows;
 
 import AbstractFactory.Pinky;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Random;
 import AbstractFactory.Ghost;
+import GUI.Levels;
+import Windows.Window;
+import Windows.WindowClient;
+import Windows.WindowMenu;
 
 
 public class WindowPlayer extends WindowClient {
@@ -472,7 +475,5 @@ public class WindowPlayer extends WindowClient {
             observers.get(i).panelObserver.updateLives(getLives());
         }
     }
-
-
 }
 

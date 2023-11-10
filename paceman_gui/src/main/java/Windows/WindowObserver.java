@@ -1,9 +1,12 @@
-package GUI;
+package Windows;
+
+import GUI.ObserverLabel;
+import Windows.WindowClient;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class WindowObserver extends WindowClient{
+public class WindowObserver extends WindowClient {
     private Integer id;
     private ObserverLabel label;
     WindowObserver(){
