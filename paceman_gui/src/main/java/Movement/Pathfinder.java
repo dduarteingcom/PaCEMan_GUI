@@ -1,4 +1,4 @@
-package GUI;
+package Movement;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

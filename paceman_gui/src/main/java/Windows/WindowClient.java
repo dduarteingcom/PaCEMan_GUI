@@ -7,9 +7,9 @@ import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
 import AbstractFactory.*;
-import GUI.Levels;
-import GUI.Player;
-import GUI.Score;
+import Data.Levels;
+import GUIElements.Player;
+import GUIElements.Score;
 
 public class WindowClient extends JPanel implements Runnable {
     public static final int WINDOW_WIDTH = 470;
@@ -224,22 +224,30 @@ public class WindowClient extends JPanel implements Runnable {
     public void createGhost(Integer x, Integer y, Character type) {
         switch (type){
             case 'p':
-                pinky = ghostFactory.createGhost(x*20, y*20, type);
-                ghostLinkedList.add(pinky);
-                pCreated=true;
-                break;
+                if(!pCreated) {
+                    pinky = ghostFactory.createGhost(x * 20, y * 20, type);
+                    ghostLinkedList.add(pinky);
+                    pCreated = true;
+                    break;
+                }
             case 'b':
-                blinky = ghostFactory.createGhost(x*20, y*20, type);
-                bCreated=true;
-                ghostLinkedList.add(blinky);
+                if(!bCreated) {
+                    blinky = ghostFactory.createGhost(x * 20, y * 20, type);
+                    bCreated = true;
+                    ghostLinkedList.add(blinky);
+                }
             case 'i':
-                inky = ghostFactory.createGhost(x*20, y*20, type);
-                iCreated=true;
-                ghostLinkedList.add(inky);
+                if(!iCreated) {
+                    inky = ghostFactory.createGhost(x * 20, y * 20, type);
+                    iCreated = true;
+                    ghostLinkedList.add(inky);
+                }
             case 'c':
-                clyde = ghostFactory.createGhost(x*20, y*20, type);
-                cCreated=true;
-                ghostLinkedList.add(clyde);
+                if(!cCreated) {
+                    clyde = ghostFactory.createGhost(x * 20, y * 20, type);
+                    cCreated = true;
+                    ghostLinkedList.add(clyde);
+                }
 
         }
         numGhosts++;

@@ -1,6 +1,6 @@
 package AbstractFactory;
 
-import GUI.Pathfinder;
+import Movement.Pathfinder;
 
 import javax.swing.*;
 import java.util.Random;

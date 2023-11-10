@@ -1,4 +1,4 @@
-package GUI;
+package Data;
 
 public class Levels {
     /*******************************************************

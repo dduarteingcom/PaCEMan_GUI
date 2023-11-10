@@ -1,13 +1,9 @@
 package AbstractFactory;
 
-import GUI.Pathfinder;
-import org.w3c.dom.Node;
+import Movement.Pathfinder;
 
 import javax.swing.*;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
-import java.util.PriorityQueue;
 
 public class Blinky extends Ghost{
 

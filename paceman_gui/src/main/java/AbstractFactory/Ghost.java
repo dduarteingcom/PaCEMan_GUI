@@ -1,6 +1,6 @@
 package AbstractFactory;
 
-import GUI.Pathfinder;
+import Movement.Pathfinder;
 
 import java.awt.*;
 import java.util.LinkedList;

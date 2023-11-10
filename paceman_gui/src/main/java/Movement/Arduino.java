@@ -1,14 +1,14 @@
-package GUI;
+package Movement;
 
 import jssc.SerialPort;
 import jssc.SerialPortEvent;
 import jssc.SerialPortException;
 
-class Arduino {
+public class Arduino {
     SerialPort port = new SerialPort("COM4");
     SerialPortEvent event;
 
-    String msg = null;
+    public String msg = null;
     private Arduino(){
         try {
             port.openPort();

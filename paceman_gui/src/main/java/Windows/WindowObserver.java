@@ -1,7 +1,6 @@
 package Windows;
 
-import GUI.ObserverLabel;
-import Windows.WindowClient;
+import GUIElements.ObserverLabel;
 
 import javax.swing.*;
 import java.awt.*;

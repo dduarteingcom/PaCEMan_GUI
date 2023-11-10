@@ -37,7 +37,6 @@ public class Window extends JFrame {
         this.setVisible(true);
         this.setLocationRelativeTo(null);
     }
-
     public String getPlayer() {
         return player;
     }

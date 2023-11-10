@@ -1,4 +1,4 @@
-package GUI;
+package GUIElements;
 
 import Windows.WindowClient;
 

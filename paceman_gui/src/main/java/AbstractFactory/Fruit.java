@@ -1,7 +1,5 @@
 package AbstractFactory;
 
-import GUI.Levels;
-
 import javax.swing.*;
 import java.awt.*;
 

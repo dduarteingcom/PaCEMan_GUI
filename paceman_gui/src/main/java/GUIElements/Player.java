@@ -1,13 +1,10 @@
-package GUI;
+package GUIElements;
+
+import Movement.Arduino;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
-import jssc.SerialPort;
-import static jssc.SerialPort.MASK_RXCHAR;
-import jssc.SerialPortEvent;
-import jssc.SerialPortException;
-import jssc.SerialPortList;
 
 
 public class Player extends Rectangle {
