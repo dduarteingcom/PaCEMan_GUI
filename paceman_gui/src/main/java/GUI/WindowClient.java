@@ -138,6 +138,10 @@ public class WindowClient extends JPanel implements Runnable {
 
     }
 
+    /**
+     * Draws all the elements that are moving
+     * @param g The graphics
+     */
     void drawOnMove(Graphics g) {
         this.player.draw(g);
         this.score.draw(g, lives, numPoints, numLevel);
@@ -187,9 +191,6 @@ public class WindowClient extends JPanel implements Runnable {
                             });
                             timer.start();
                         }
-
-
-
                         if (lives == 0){
                             this.setVisible(false);
                             JOptionPane.showMessageDialog(this, "Has perdido el juego", "No hay vidas restantes", JOptionPane.PLAIN_MESSAGE);
@@ -201,14 +202,6 @@ public class WindowClient extends JPanel implements Runnable {
         }
     }
 
-    public void setNumPoints(Integer num) {
-        this.numPoints = num;
-    }
-
-    public Integer getNumPoints() {
-        return this.numPoints;
-    }
-
     public void moveGhost() {
         if (ghostLinkedList != null && ghostLinkedList.size() > 0) {
             for (Ghost ghost : ghostLinkedList) {
@@ -218,6 +211,13 @@ public class WindowClient extends JPanel implements Runnable {
             }
         }
     }
+
+    /**
+     * Creates a ghost on the panel
+     * @param x Horizontal position
+     * @param y Vertical postition
+     * @param type The ghost that is going to be created
+     */
     public void createGhost(Integer x, Integer y, Character type) {
         switch (type){
             case 'p':
@@ -263,9 +263,12 @@ public class WindowClient extends JPanel implements Runnable {
 
     public Integer getSpeed(){return this.speed;}
     public void setSpeed(Integer speed){this.speed = speed;}
+    public void setNumPoints(Integer num) {
+        this.numPoints = num;
+    }
 
-
-
-
+    public Integer getNumPoints() {
+        return this.numPoints;
+    }
 
 }

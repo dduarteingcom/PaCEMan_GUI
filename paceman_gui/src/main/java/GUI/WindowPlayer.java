@@ -56,7 +56,6 @@ public class WindowPlayer extends WindowClient {
 
             }
         });
-
         addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -141,6 +140,7 @@ public class WindowPlayer extends WindowClient {
         observers.add(observer);
 
     }
+
     private void disconnectObservers(){
         for (Window observer : observers) {
             observer.panelObserver.disconnect();
@@ -157,7 +157,10 @@ public class WindowPlayer extends WindowClient {
         }
     }
 
-
+    /**
+     * It is an overcharge of the previous method;
+     * @param numLevel The number of the current level.
+     */
     public void updateClients(Integer numLevel) {
         for (Window observer : observers) {
             observer.panelObserver.upDate(player.x, player.y, cLevel, getNumPoints(), numLevel);
@@ -222,6 +225,12 @@ public class WindowPlayer extends WindowClient {
         }
     }
 
+    /**
+     * Checks if the location is valid to create a new resource
+     * @param posX Horizontal Position
+     * @param posY Vertical Position
+     * @return Wheter the location is available.
+     */
     private Boolean locAvailable(Integer posX, Integer posY){
         int valcellFound = cLevel[posX][posY];
         if(!posX.equals(player.posX) || !posY.equals(player.posY)){
@@ -243,6 +252,13 @@ public class WindowPlayer extends WindowClient {
     public void setCurrentValueFruit(Integer currentValueFruit) {
         this.currentValueFruit = currentValueFruit;
     }
+
+    /**
+     * Creates a pill on the Panel
+     * @param value the Value of the fruit
+     * @param posX Horizontal Position
+     * @param posY Vertical Position
+     */
     public void createFruit(Integer value, Integer posX, Integer posY) {
         System.out.println("Entré");
         setCurrentValueFruit(value);
@@ -251,11 +267,21 @@ public class WindowPlayer extends WindowClient {
         }
 
     }
+
+    /**
+     * Creates a pill on the Panel
+     * @param posX Horizontal Position
+     * @param posY Vertical Position
+     */
     public void createPill(Integer posX, Integer posY) {
         if (locAvailable(posX, posY)) {
             cLevel[posX][posY] = 3;
         }
     }
+
+    /**
+     * Allows to pass to the next level
+     */
     public void nextLevel() {
         player.posX=0;
         player.posY=0;
@@ -285,7 +311,6 @@ public class WindowPlayer extends WindowClient {
             Integer fila = Integer.valueOf(message.split("_")[3]);
             String nameOfUser = message.split("_")[4];
             if(nameOfUser.equals(playername)){
-
                 switch (ghostName){
                     case "Pinky":
                         createGhost(columna, fila, 'p');
@@ -304,10 +329,7 @@ public class WindowPlayer extends WindowClient {
                         createGhostsOb(columna,fila,'i');
                         break;
                 }
-
             }
-
-
         } else if (command.equals("pill")) {
             Integer columna = Integer.valueOf((message.split("_")[1]));
             Integer fila = Integer.valueOf((message.split("_")[2]));
@@ -392,6 +414,9 @@ public class WindowPlayer extends WindowClient {
         this.toNextLevel = toNextLevel;
     }
 
+    /**
+     * Counts all the dots of the current level
+     */
     void countPoints(){
         for (Integer i=0;i<cLevel.length;i++){
             for(Integer j=0;j<cLevel[0].length;j++){
@@ -401,11 +426,21 @@ public class WindowPlayer extends WindowClient {
             }
         }
     }
+    /**
+     * Creates a Ghost on the observers
+     * @param posX Horizontal position.
+     * @param posY Vertical position.
+     * @param type The Ghost that is going to be created.
+     */
     private void createGhostsOb(Integer posX, Integer posY, Character type){
         for (Integer i = 0; i < observers.size(); i++) {
             observers.get(i).panelObserver.createGhost(posX,posY,type);
         }
     }
+
+    /**
+     * Updates the position of the Ghosts on the Observers
+     */
     private void updateGhosts(){
         if(cCreated){
             for (Integer i = 0; i < observers.size(); i++) {
@@ -428,6 +463,10 @@ public class WindowPlayer extends WindowClient {
             }
         }
     }
+
+    /**
+     * Updates the player's lives on the observers
+     */
     private void updateLives(){
         for (Integer i = 0; i < observers.size(); i++) {
             observers.get(i).panelObserver.updateLives(getLives());

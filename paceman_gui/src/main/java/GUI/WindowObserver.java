@@ -15,6 +15,7 @@ public class WindowObserver extends WindowClient{
      * @param x Horizontal position in the panel.
      * @param y Vertical position in the panel.
      * @param nlevel Current level
+     * @param score Current score
      */
     void upDate(Integer x, Integer y,Integer[][]nlevel, Integer score){
        player.x=x;
@@ -22,6 +23,15 @@ public class WindowObserver extends WindowClient{
        this.cLevel =nlevel;
        setNumPoints(score);
     }
+
+    /**
+     * Overcharge ot the previous method, the difference is that this one receives the number of the current level
+     * @param x Horizontal position in the panel.
+     * @param y Vertical position in the panel.
+     * @param nlevel Current level
+     * @param score Current score
+     * @param numlevel Number of the current level.
+     */
     void upDate(Integer x, Integer y,Integer[][]nlevel, Integer score,Integer numlevel){
         player.x=x;
         player.y=y;
@@ -82,22 +92,50 @@ public class WindowObserver extends WindowClient{
 
 
     }
+    /***
+     * Updates Clydes's position
+     * @param x Horizontal Position
+     * @param y Vertical Position
+     */
     void updateClyde(Integer x, Integer y) {
         clyde.x = x;
         clyde.y = y;
     }
+
+    /**
+     * Updates Blinky's position
+     * @param x Horizontal Position
+     * @param y Vertical Position
+     */
     void updateBlinky(Integer x, Integer y) {
         blinky.x = x;
         blinky.y = y;
     }
+
+    /**
+     * Updates Inky's position
+     * @param x Horizontal Position
+     * @param y Vertical Position
+     */
     void updateInky(Integer x, Integer y) {
         inky.x = x;
         inky.y = y;
     }
+
+    /**
+     * Updates Pinky's position
+     * @param x Horizontal Position
+     * @param y Vertical Position
+     */
     void updatePinky(Integer x, Integer y) {
         pinky.x = x;
         pinky.y = y;
     }
+
+    /**
+     * Updates the player's lives
+     * @param lives
+     */
     void updateLives(Integer lives){
         setLives(lives);
     }
