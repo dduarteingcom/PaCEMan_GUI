@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Projects/PaCEMan_GUI/Server/cmake-build-debug",
-		"source" : "C:/Projects/PaCEMan_GUI/Server"
+		"build" : "D:/Alexis/A_TEC/Semestre_4/Paradigmas/PaCEMan_GUI/Server/cmake-build-debug",
+		"source" : "D:/Alexis/A_TEC/Semestre_4/Paradigmas/PaCEMan_GUI/Server"
 	},
 	"version" : 
 	{
