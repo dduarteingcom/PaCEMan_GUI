@@ -42,6 +42,9 @@ public class WindowObserver extends WindowClient {
         setNumLevel(numlevel);
     }
 
+    /**
+     * Disconnects observers
+     */
     public void disconnect(){
         running = false;
         this.removeAll();
@@ -65,10 +68,10 @@ public class WindowObserver extends WindowClient {
     @Override
     public void run(){
         //game loop
-        long lastTime = System.nanoTime();
-        double amountOfTicks =60.0;
-        double ns = 1000000000 / amountOfTicks;
-        double delta = 0;
+        Long lastTime = System.nanoTime();
+        Double amountOfTicks =60.0;
+        Double ns = 1000000000 / amountOfTicks;
+        Double delta = 0.0;
         while(running) {
             long now = System.nanoTime();
             delta += (now -lastTime)/ns;

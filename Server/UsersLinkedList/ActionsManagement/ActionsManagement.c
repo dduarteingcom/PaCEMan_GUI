@@ -61,6 +61,7 @@ void createGhostCommand(struct user * userTargeted){
         free(phantom);
         createGhostCommand(userTargeted);
     }
+    int isValid = 0;
     printf("Escriba la fila para aparecer: \n");
     scanf("%s", fila);
     printf("Escriba la columna para aparecer: \n");
@@ -128,10 +129,7 @@ void createFruitCommand(struct user * userTargeted){
  */
 void changeGhostSpeedCommand(struct user * userTargeted){
     char * speed = (char *)malloc(sizeof(char *));
-    char * message = strdup("speed_");
-    printf("Escriba la velocidad a setear: \n");
-    scanf("%s", speed);
-    strcat(message, speed);
+    char * message = strdup("speed");
     queueCommand(userTargeted, message);
     free(speed);
 }
@@ -152,3 +150,4 @@ void queueCommand(struct user * userTargeted, char * message){
     free(suppName);
     free(suppSpace);
 }
+

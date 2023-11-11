@@ -36,12 +36,24 @@ public class Pathfinder {
         public Point offset(int ox, int oy) { return new Point(x + ox, y + oy, this);  }
     }
 
+    /**
+     * Check if that cell can be occupied by the object
+     * @param map array with the map
+     * @param point cell to check
+     * @return true if wakable
+     */
     public static boolean IsWalkable(Integer[][] map, Point point) {
         if (point.y < 0 || point.y > map.length - 1) return false;
         if (point.x < 0 || point.x > map[0].length - 1) return false;
         return map[point.y][point.x] != 4;
     }
 
+    /**
+     * Find nearest neighbors
+     * @param map array with map
+     * @param point cell to check
+     * @return list with cells
+     */
     public static LinkedList<Point> FindNeighbors(Integer[][] map, Point point) {
         LinkedList<Point> neighbors = new LinkedList<>();
         Point up = point.offset(0,  1);
@@ -55,6 +67,13 @@ public class Pathfinder {
         return neighbors;
     }
 
+    /**
+     * Finds the path to the player
+     * @param map array with map
+     * @param start point to start
+     * @param end point to arraive
+     * @return list with path
+     */
     public static LinkedList<Point> FindPath(Integer[][] map, Point start, Point end) {
         boolean finished = false;
         List<Point> used = new ArrayList<>();

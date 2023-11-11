@@ -5,10 +5,14 @@ import jssc.SerialPortEvent;
 import jssc.SerialPortException;
 
 public class Arduino {
-    SerialPort port = new SerialPort("COM5");
+    SerialPort port = new SerialPort("COM4");
     SerialPortEvent event;
 
     public String msg = null;
+
+    /**
+     * Creates the instance to access connection to the arduino.
+     */
     private Arduino(){
         try {
             port.openPort();
@@ -28,14 +32,26 @@ public class Arduino {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Creates the singleton class
+     */
     private static class Singleton{
         private static final Arduino INSTANCE = new Arduino();
     }
 
+    /**
+     * Gets the Arduino Singleton Instance
+     * @return the arduino singleton class
+     */
     public static Arduino getInstance(){
         return Singleton.INSTANCE;
     }
 
+    /**
+     * The event listener
+     * @return event reported by the serial port
+     */
     public SerialPortEvent getlistener(){
         return event;
     }

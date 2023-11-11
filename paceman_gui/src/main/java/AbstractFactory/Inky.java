@@ -16,6 +16,7 @@ public class Inky extends Ghost{
         y = posY;
         this.image = new ImageIcon("src/media/inky.png").getImage();
         createGhost();
+        System.out.println("Here 0");
         this.isAlive=true;
     }
     @Override

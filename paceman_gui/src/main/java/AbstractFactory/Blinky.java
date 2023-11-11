@@ -50,6 +50,6 @@ public class Blinky extends Ghost{
             path.removeFirst();
 
         }
-        }
+    }
 
 }

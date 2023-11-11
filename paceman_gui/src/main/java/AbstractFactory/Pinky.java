@@ -22,9 +22,9 @@ public class Pinky extends Ghost{
     @Override
     public void createMovement(Integer[][] nlevel){
         Random random = new Random();
-        int randomNumber = random.nextInt(2);
-        int change = random.nextInt(2);
-        int other;
+        Integer randomNumber = random.nextInt(2);
+        Integer change = random.nextInt(2);
+        Integer other;
         if (randomNumber ==1){
             other = 0;
         }

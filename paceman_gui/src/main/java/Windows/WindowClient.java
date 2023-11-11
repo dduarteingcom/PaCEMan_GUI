@@ -12,8 +12,8 @@ import GUIElements.Player;
 import GUIElements.Score;
 
 public class WindowClient extends JPanel implements Runnable {
-    public static final int WINDOW_WIDTH = 470;
-    public static final int WINDOW_HEIGHT = 300;
+    public static final Integer WINDOW_WIDTH = 470;
+    public static final Integer WINDOW_HEIGHT = 300;
     static final Dimension SCREEN_SIZE = new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT);
     private Graphics graphics;
     Player player;
@@ -39,6 +39,7 @@ public class WindowClient extends JPanel implements Runnable {
 
     private Integer numPoints;
     private Integer numLevel;
+    Double speed_mod;
 
 
     Boolean pCreated;
@@ -46,7 +47,7 @@ public class WindowClient extends JPanel implements Runnable {
     Boolean bCreated;
     Boolean iCreated;
 
-
+    int speed_changes;
     private Integer numGhosts;
 
     private Integer speed;
@@ -61,6 +62,8 @@ public class WindowClient extends JPanel implements Runnable {
     Integer[][] cLevel;
 
     WindowClient() {
+        this.speed_changes = 0;
+        this.speed_mod = 1.0;
         running = true;
         ghostLinkedList = new LinkedList<>();
         this.player = new Player();
@@ -149,7 +152,7 @@ public class WindowClient extends JPanel implements Runnable {
         this.player.draw(g);
         this.score.draw(g, lives, numPoints, numLevel);
 
-        if (ghostLinkedList != null && ghostLinkedList.size() > 0) {
+        if (ghostLinkedList != null && !ghostLinkedList.isEmpty()) {
             for (Ghost ghost : ghostLinkedList) {
                 if (ghost != null){
                     ghost.draw(g);
@@ -158,6 +161,9 @@ public class WindowClient extends JPanel implements Runnable {
         }
     }
 
+    /**
+     * Check if a collision occurred
+     */
     void checkColissions(){ //Checks for colissions between player and ghosts
         if (ghostLinkedList != null && ghostLinkedList.size() > 0) {
             for (Ghost ghost : ghostLinkedList) {
@@ -187,7 +193,6 @@ public class WindowClient extends JPanel implements Runnable {
                                         ghost.setPosX(1);
                                         ghost.setPosY(1);
                                         ghost.setAlive(true);
-                                        System.out.println("Here");
                                         ((Timer) e.getSource()).stop(); // Detener el temporizador cuando el tiempo llega a cero
                                     }
                                 }
@@ -205,8 +210,11 @@ public class WindowClient extends JPanel implements Runnable {
         }
     }
 
+    /**
+     * Moves ghosts around
+     */
     public void moveGhost() {
-        if (ghostLinkedList != null && ghostLinkedList.size() > 0) {
+        if (ghostLinkedList != null && !ghostLinkedList.isEmpty()) {
             for (Ghost ghost : ghostLinkedList) {
                 if (ghost != null){
                     ghost.createMovement(cLevel);
@@ -235,19 +243,19 @@ public class WindowClient extends JPanel implements Runnable {
                     blinky = ghostFactory.createGhost(x * 20, y * 20, type);
                     bCreated = true;
                     ghostLinkedList.add(blinky);
-                }
+                }break;
             case 'i':
                 if(!iCreated) {
                     inky = ghostFactory.createGhost(x * 20, y * 20, type);
                     iCreated = true;
                     ghostLinkedList.add(inky);
-                }
+                }break;
             case 'c':
                 if(!cCreated) {
                     clyde = ghostFactory.createGhost(x * 20, y * 20, type);
                     cCreated = true;
                     ghostLinkedList.add(clyde);
-                }
+                }break;
 
         }
         numGhosts++;

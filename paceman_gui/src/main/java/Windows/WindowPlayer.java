@@ -92,12 +92,12 @@ public class WindowPlayer extends WindowClient {
                 }
 
             }
-            if ((menu != null)&& (menu.getGames().size() != 0)&&(counter == (2000000/menu.getGames().size()))){
+            if ((menu != null)&& (menu.getGames().size() != 0)&&(counter == (2000000/(menu.getGames().size())*speed_mod))){
                 player.arduino(cLevel);
                 try {
                     getMessageFromServer();
                 } catch (IOException e) {
-                    System.out.println("Error: refused");
+
                 }
                 checkResources();
                 checkColissions();
@@ -260,7 +260,6 @@ public class WindowPlayer extends WindowClient {
      * @param posY Vertical Position
      */
     public void createFruit(Integer value, Integer posX, Integer posY) {
-        System.out.println("Entré");
         setCurrentValueFruit(value);
         if (locAvailable(posX,posY)){
             cLevel[posX][posY]=2;
@@ -310,7 +309,7 @@ public class WindowPlayer extends WindowClient {
             Integer columna = Integer.valueOf(message.split("_")[2]);
             Integer fila = Integer.valueOf(message.split("_")[3]);
             String nameOfUser = message.split("_")[4];
-            if(nameOfUser.equals(playername)){
+            if(nameOfUser.equals(playername)&& positionAvailable(columna,fila)){
                 switch (ghostName){
                     case "Pinky":
                         createGhost(columna, fila, 'p');
@@ -352,10 +351,21 @@ public class WindowPlayer extends WindowClient {
 
         }else if (command.equals("speed")) {
 
-            String nameOfUser = message.split("_")[2];
+            String nameOfUser = message.split("_")[1];
             if(nameOfUser.equals(playername)) {
-                Integer speed = Integer.valueOf((message.split("_")[1]));
-                System.out.println("Change ghost speed to " + speed);
+                System.out.println("Ghost speed aumented");
+                speed_changes++;
+                if (speed_changes == 1){
+                    this.speed_mod = 0.7;
+
+                }
+                else if (speed_changes == 2){
+                    this.speed_mod = 0.5;
+                }
+                else{
+                    speed_changes = 0;
+                    this.speed_mod = 1.0;
+                }
             }
         }
         else if (command.equals("addLife")) {
@@ -470,6 +480,21 @@ public class WindowPlayer extends WindowClient {
     private void updateLives(){
         for (Integer i = 0; i < observers.size(); i++) {
             observers.get(i).panelObserver.updateLives(getLives());
+        }
+    }
+    private Boolean positionAvailable(Integer posX, Integer posY){
+        int valcellFound = cLevel[posX][posY];
+        if(!posX.equals(player.posX) || !posY.equals(player.posY)){
+            if(valcellFound!=4 ) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            System.out.println("Posición no permitida");
+            return false;
         }
     }
 }

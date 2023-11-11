@@ -14,7 +14,6 @@ public class EnemyFactory implements GhostFactory{
             return new Clyde(posX, posY);
         else if (type == 'i') {
             return new Inky(posX, posY);
-
         }
         return null;
     }
