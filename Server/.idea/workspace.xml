@@ -3,9 +3,9 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
-  <component name="CMakePresetLoader"><![CDATA[{
-  "useNewFormat": true
-}]]></component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
   <component name="CMakeReloadState">
     <option name="reloaded" value="true" />
   </component>
@@ -21,24 +21,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b2319e3-0c5e-4166-b639-f4514e25e2c3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServerSocket/SocketManagement.c" beforeDir="false" afterPath="$PROJECT_DIR$/ServerSocket/SocketManagement.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UsersLinkedList/ActionsManagement/ActionsManagement.c" beforeDir="false" afterPath="$PROJECT_DIR$/UsersLinkedList/ActionsManagement/ActionsManagement.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-6668f62bbc02926876fd.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-4a0393b60a900683095f.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2023-11-10T03-03-04-0660.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-Server-Debug-a6bb4fa93fc17aa314f7.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Server.dir/ServerSocket/SocketManagement.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Server.dir/ServerSocket/SocketManagement.c.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Server.dir/UsersLinkedList/ActionsManagement/ActionsManagement.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Server.dir/UsersLinkedList/ActionsManagement/ActionsManagement.c.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Server.dir/main.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Server.dir/main.c.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Server.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Server.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/build.ninja" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../paceman_gui/src/main/java/GUIElements/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/../paceman_gui/src/main/java/GUIElements/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../paceman_gui/src/main/java/Movement/Arduino.java" beforeDir="false" afterPath="$PROJECT_DIR$/../paceman_gui/src/main/java/Movement/Arduino.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../paceman_gui/src/main/java/Windows/WindowPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../paceman_gui/src/main/java/Windows/WindowPlayer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,10 +45,10 @@
     <option name="majorVersion" value="2023" />
     <option name="minorVersion" value="2.2" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2Xxz0Ej5BDGQXkzRdxipZNS6bUs" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -77,7 +62,7 @@
     "WebServerToolWindowFactoryState": "false",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "Server__fix__attempt",
+    "git-widget-placeholder": "Daniel'sBranch",
     "last_opened_file_path": "D:/Alexis/A_TEC/Semestre_4/Paradigmas/PaCEMan_GUI/Server",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -93,12 +78,12 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+    <configuration name="Server" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Server" TARGET_NAME="Server" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Server" RUN_TARGET_NAME="Server">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Server" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Server" TARGET_NAME="Server" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Server" RUN_TARGET_NAME="Server">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -113,6 +98,7 @@
       <option name="presentableId" value="Default" />
       <updated>1699585294002</updated>
       <workItem from="1699585296092" duration="3117000" />
+      <workItem from="1699662688513" duration="6000" />
     </task>
     <servers />
   </component>

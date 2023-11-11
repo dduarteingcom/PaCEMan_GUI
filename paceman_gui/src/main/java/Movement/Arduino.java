@@ -5,7 +5,7 @@ import jssc.SerialPortEvent;
 import jssc.SerialPortException;
 
 public class Arduino {
-    SerialPort port = new SerialPort("COM4");
+    SerialPort port = new SerialPort("COM5");
     SerialPortEvent event;
 
     public String msg = null;

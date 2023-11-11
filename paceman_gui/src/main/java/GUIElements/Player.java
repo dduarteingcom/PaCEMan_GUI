@@ -14,17 +14,13 @@ public class Player extends Rectangle {
     Integer yDirection;
     private Image image;
 
-    Arduino ard;
     public Integer posX;
     public Integer posY;
     public Boolean permission;
-    public Player(){
 
     Arduino ard = Arduino.getInstance();
-    Integer posX;
-    Integer posY;
-    Boolean permission = false;
-
+    public Player(){
+        Boolean permission = false;
         this.speed=20;
         this.xDirection =0;
         this.yDirection=0;
