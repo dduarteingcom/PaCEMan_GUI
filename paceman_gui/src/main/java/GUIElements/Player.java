@@ -13,12 +13,18 @@ public class Player extends Rectangle {
     Integer xDirection;
     Integer yDirection;
     private Image image;
-    //Arduino ard = Arduino.getInstance();
+
     Arduino ard;
     public Integer posX;
     public Integer posY;
     public Boolean permission;
     public Player(){
+
+    Arduino ard = Arduino.getInstance();
+    Integer posX;
+    Integer posY;
+    Boolean permission = false;
+
         this.speed=20;
         this.xDirection =0;
         this.yDirection=0;
@@ -30,7 +36,7 @@ public class Player extends Rectangle {
     }
     public void arduino(Integer[][] nlevel){
         if (permission) {
-            if (ard.msg != null) {
+            if (ard.msg != null && !ard.msg.equals("0")) {
                 switch (ard.msg) {
                     case "1":
                         if (x % 20 == 0) {
