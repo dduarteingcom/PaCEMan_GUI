@@ -78,7 +78,6 @@ char * recieveFromClient(const SOCKET * clientSocket){
  * @param message message to send to the client
  */
 void sendDataToClient(const SOCKET * clientSocket, const char * message){
-
     send(*clientSocket, message, strlen(message), 0);
 }
 

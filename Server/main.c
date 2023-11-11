@@ -4,10 +4,8 @@
 #include "ServerSocket/SocketManagement.h"
 #include "UsersLinkedList/ActionsManagement/ActionsManagement.h"
 #include <pthread.h>
+#include "Constants.h"
 
-void * ServerThread(void *vargp);
-int mainControlMenu(struct userList * clientList);
-struct userList * clientList;
 
 int main() {
     clientList = initializeList();
@@ -15,7 +13,7 @@ int main() {
     pthread_create(&tid, NULL, ServerThread, (void *)clientList);
     int option = -1;
     while(option != 0){
-        option = mainControlMenu(clientList);
+        option = mainControlMenu();
     }
     pthread_exit(NULL);
     free(clientList);
@@ -29,24 +27,19 @@ int main() {
  */
 void * ServerThread(void *vargp){
 
-    WSADATA * wsaData = (WSADATA*) malloc(sizeof(WSADATA));
+    wsaData = (WSADATA*) malloc(sizeof(WSADATA));
     SOCKET serverSocket, clientSocket;
-    struct sockaddr_in serverAddr, clientAddr;
-    int clientAddrLen = sizeof(clientAddr);
 
     serverSocket = startUpServer(serverSocket,wsaData, serverAddr);
 
-    SOCKET * newClientSocket = (SOCKET *)malloc(sizeof(SOCKET));
-    *newClientSocket = checkNewConnection(serverSocket, clientSocket, clientAddr, clientAddrLen);
-    char * messageFromClient;
-    char * message;
+    newClientSocket = (SOCKET *)malloc(sizeof(SOCKET));
     while(1){
+        *newClientSocket = checkNewConnection(serverSocket, clientSocket, clientAddr, clientAddrLen);
         messageFromClient = recieveFromClient(newClientSocket);
-        struct user * client = checkAndUpdateUserInfo(clientList, messageFromClient);
+        client = checkAndUpdateUserInfo(clientList, messageFromClient);
         message = getCommandReady(client);
         sendDataToClient(newClientSocket, message);
         closesocket(*newClientSocket);
-        *newClientSocket = checkNewConnection(serverSocket, clientSocket, clientAddr, clientAddrLen);
     }
 }
 
@@ -55,7 +48,7 @@ void * ServerThread(void *vargp){
  * @param clientList list of clients
  * @return the option selected
  */
-int mainControlMenu(struct userList * clientList){
+int mainControlMenu(){
     int * option = (int *)malloc(sizeof(int));
     printf("Opcion a ejecutar: \n 0 - Salir \n 1 - Crear fantasma \n 2 - Crear partilla \n"
            "3 - Crear fruta \n 4 - Cambiar velocidad de fantasmas \n 5 - Imprimir"

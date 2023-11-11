@@ -13,7 +13,7 @@
  */
 void createObject(struct userList * list, int operation){
     printf("Id del usuario: \n");
-    char * userCode = (char *)malloc(sizeof(char *));
+    char * userCode = (char *)malloc(sizeof(char));
     scanf("%s", userCode);
     struct user * userTargeted = findUserByCode(list, userCode);
     if(userTargeted == NULL){
@@ -34,6 +34,7 @@ void createObject(struct userList * list, int operation){
                 break;
             case 5:
                 printDataFromUser(userTargeted);
+                break;
             default:
                 break;
         }
@@ -69,8 +70,10 @@ void createGhostCommand(struct user * userTargeted){
     strcat(phantom, "_");
     strcat(phantom, columna);
     strcat(message, phantom);
-    free(phantom);
     queueCommand(userTargeted, message);
+    free(fila);
+    free(columna);
+    free(phantom);
 }
 
 /**
@@ -89,9 +92,9 @@ void createPillCommand(struct user * userTargeted){
     strcat(columna,"_"); //columna + "_"
     strcat(columna, fila); //columna + "_" + fila
     strcat(message, columna); // operacion_columna_fila
+    queueCommand(userTargeted, message);
     free(fila);
     free(columna);
-    queueCommand(userTargeted, message);
 }
 /**
  * @brief sends a command to create a fruit
@@ -113,10 +116,11 @@ void createFruitCommand(struct user * userTargeted){
     strcat(points,"_");
     strcat(points, columna);
     strcat(message, points);
-    free(points);
+
     queueCommand(userTargeted, message); //fuit_points_column_fila
     free(fila);
     free(columna);
+    free(points);
 }
 /**
  * @brief sends a command to change the ghost speed
@@ -128,8 +132,8 @@ void changeGhostSpeedCommand(struct user * userTargeted){
     printf("Escriba la velocidad a setear: \n");
     scanf("%s", speed);
     strcat(message, speed);
-    free(speed);
     queueCommand(userTargeted, message);
+    free(speed);
 }
 /**
  * @brief sends the command to the user
@@ -145,4 +149,6 @@ void queueCommand(struct user * userTargeted, char * message){
     printf("message: %s \n", message);
     addCommandLast(userTargeted->commands, createCommand(message));
     printf("Listo. El comando se ha salvado. \n");
+    free(suppName);
+    free(suppSpace);
 }
