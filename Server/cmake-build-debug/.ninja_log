@@ -11,3 +11,8 @@
 4	68	7212915595623465	CMakeFiles/Server.dir/UsersLinkedList/ActionsManagement/ActionsManagement.c.obj	debf5b64e4d90396
 1	628	7212915601193191	CMakeFiles/Server.dir/main.c.obj	9d41258411538e66
 628	690	7212915601819625	Server.exe	a41ac4b2cb588525
+4	88	7213132458845878	CMakeFiles/Server.dir/UsersLinkedList/UsersList.c.obj	627dd7e2387024e0
+8	89	7213132458855842	CMakeFiles/Server.dir/UsersLinkedList/ActionsManagement/ActionsManagement.c.obj	debf5b64e4d90396
+13	94	7213132458925607	CMakeFiles/Server.dir/UsersLinkedList/UserCommandsList/ComList.c.obj	fc69d128e0ddee78
+2	1112	7213132469059570	CMakeFiles/Server.dir/main.c.obj	9d41258411538e66
+1112	1377	7213132471691438	Server.exe	a41ac4b2cb588525
