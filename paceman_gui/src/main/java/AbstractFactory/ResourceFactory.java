@@ -18,15 +18,8 @@ public class ResourceFactory implements ElementsFactory {
         else if (type == "f") {
             return new Fruit(g,posX,posY);
         }
-
-        else if (type == "p") {
+        else  {
             return new Pill(g,posX,posY);
         }
-        else  {
-            return new Block(g,posX,posY,type);
-        }
-
     }
-
-
 }

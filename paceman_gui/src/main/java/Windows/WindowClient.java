@@ -113,10 +113,11 @@ public class WindowClient extends JPanel implements Runnable {
      */
     void drawStaticE(Graphics g) {
         for (int i = 0; i < cLevel.length; i++) {
-            elementsFactory = new ResourceFactory();
+
 
             for (int j = 0; j < cLevel[0].length; j++) {
                 if (cLevel[i][j] == 4) {
+                    elementsFactory = new BlocksFactory();
                     //Draws the blocks
                     switch (numLevel) {
                         case 1:
@@ -130,6 +131,7 @@ public class WindowClient extends JPanel implements Runnable {
                             break;
 
                     }
+                    elementsFactory = new ResourceFactory();
                 } else if (cLevel[i][j] == 1) {
                     //Draws the dots
                     elementsFactory.createElement(g, j * 20, i * 20, "d");

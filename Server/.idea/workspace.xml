@@ -22,7 +22,8 @@
   <component name="ChangeListManager">
     <list default="true" id="0b2319e3-0c5e-4166-b639-f4514e25e2c3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UsersLinkedList/ActionsManagement/ActionsManagement.c" beforeDir="false" afterPath="$PROJECT_DIR$/UsersLinkedList/ActionsManagement/ActionsManagement.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Constants.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../paceman_gui/src/main/java/Movement/Arduino.java" beforeDir="false" afterPath="$PROJECT_DIR$/../paceman_gui/src/main/java/Movement/Arduino.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +68,7 @@
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -118,7 +120,10 @@
       <updated>1699585294002</updated>
       <workItem from="1699585296092" duration="3117000" />
       <workItem from="1699662688513" duration="1279000" />
-      <workItem from="1699672807677" duration="6095000" />
+      <workItem from="1699672807677" duration="6325000" />
+      <workItem from="1699884892973" duration="3577000" />
+      <workItem from="1699892754469" duration="1272000" />
+      <workItem from="1699984367442" duration="847000" />
     </task>
     <servers />
   </component>
